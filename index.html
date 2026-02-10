@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rwanda Truth - Against Genocide Denial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.6;
+            padding-bottom: 100px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ffeaa7;
+            font-size: 14px;
+        }
+        
+        .warning a {
+            color: #856404;
+            font-weight: bold;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a202c;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 10px 0;
+        }
+        
+        .nav-item {
+            text-align: center;
+            color: #cbd5e0;
+            padding: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .nav-item:hover {
+            background: #2d3748;
+            color: white;
+        }
+        
+        .nav-item.active {
+            color: #4299e1;
+            border-top: 3px solid #4299e1;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-text {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .pillar {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .pillar:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pillar-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .pillar h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .pillar p {
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .pillars {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Warning Banner -->
+    <div class="warning">
+        ⚠️ This site contains historical evidence of genocide. May be distressing. 
+        <a href="#">Mental Health Resources</a>
+    </div>
+    
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Rwanda Truth</h1>
+        <p>Ubwenge bwa Nyakuri - Fighting genocide denial with evidence, testimony, and truth</p>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <h2 style="text-align: center; margin: 40px 0 30px; color: #2c3e50;">
+            Our Pillars of Truth
+        </h2>
+        
+        <div class="pillars">
+            <!-- Shield -->
+            <div class="pillar" onclick="showSection('shield')">
+                <div class="pillar-icon">🛡️</div>
+                <h3>THE SHIELD</h3>
+                <p>Debunking denialist claims with evidence from ICTR, Gacaca, and survivor testimonies</p>
+            </div>
+            
+            <!-- Forge -->
+            <div class="pillar" onclick="showSection('forge')">
+                <div class="pillar-icon">🔥</div>
+                <h3>THE FORGE</h3>
+                <p>Understanding how denial works and building tools to counter misinformation</p>
+            </div>
+            
+            <!-- Memorial -->
+            <div class="pillar" onclick="showSection('memorial')">
+                <div class="pillar-icon">🕯️</div>
+                <h3>THE MEMORIAL</h3>
+                <p>Honoring victims through testimony, documentation, and preserving memory</p>
+            </div>
+            
+            <!-- Home -->
+            <div class="pillar" onclick="showSection('home')">
+                <div class="pillar-icon">🏠</div>
+                <h3>HOME</h3>
+                <p>About this project, methodology, and resources for learning and support</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 50px 0; color: #4a5568; font-style: italic;">
+            "Hitamo inzira yo gutangira. Zose ziri inzira zinyuranye ziganisha ku kuri."
+            <div style="margin-top: 10px; font-style: normal;">
+                Choose a path to begin. All are gateways to the truth.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="nav-bottom">
+        <a href="#" class="nav-item active" onclick="setActive('shield')">
+            <div class="nav-icon">🛡️</div>
+            <div class="nav-text">SHIELD</div>
+        </a>
+        <a href="#" class="nav-item" onclick="setActive('forge')">
+            <div class="nav-icon">🔥</div>
+            <div class="nav-text">FORGE</div>
+        </a>
+        <a href="#" class="nav-item" onclick="setActive('memorial')">
+            <div class="nav-icon">🕯️</div>
+            <div class="nav-text">MEMORIAL</div>
+        </a>
+        <a href="#" class="nav-item" onclick="setActive('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-text">HOME</div>
+        </a>
+    </div>
+    
+    <script>
+        function showSection(section) {
+            alert('This will show the ' + section.toUpperCase() + ' section.\n\nIn the full app, this would load:\n- Evidence database\n- Interactive tools\n- Respectful content presentation');
+        }
+        
+        function setActive(section) {
+            // Remove active class from all
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active to clicked
+            event.target.closest('.nav-item').classList.add('active');
+            
+            showSection(section);
+        }
+        
+        // Support link
+        document.querySelector('.warning a').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Mental Health Resources:\n\n• Rwanda Biomedical Centre: 112 (Toll-free)\n• Ndera Neuropsychiatric Hospital\n• Tel: 3256 (Free psychological support)\n\nIn production: Links to actual services');
+        });
+    </script>
+</body>
+</html>
