@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Forge — Counter Denial Tactics | Rwanda Truth</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ===== THE FORGE — ADVANCED DENIAL COUNTER-TRAINING ===== */
+        /* World-class interactive learning platform */
+        /* Dynamically loads from admin panel */
+        
+        :root {
+            --forge-bronze: #CD7F32;
+            --forge-silver: #C0C0C0;
+            --forge-gold: #FFD700;
+            --forge-flame: #FF6B35;
+            --forge-ember: #F7934C;
+            --forge-steel: #4A5568;
+        }
+        
+        /* Hero with Forge-specific treatment */
+        .forge-hero {
+            background: linear-gradient(135deg, #2C3E50 0%, #1E2A36 100%);
+            position: relative;
+            isolation: isolate;
+        }
+        
+        .forge-hero::after {
+            content: '🔥';
+            position: absolute;
+            bottom: -20px;
+            right: 5%;
+            font-size: 120px;
+            opacity: 0.1;
+            transform: rotate(-10deg);
+            pointer-events: none;
+        }
+        
+        /* Skill Level Tabs - Enhanced */
+        .skill-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .skill-tab {
+            padding: 16px 32px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            font-weight: 700;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            overflow: hidden;
+            min-width: 160px;
+        }
+        
+        .skill-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .skill-tab.active {
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .skill-tab.beginner.active { 
+            background: var(--forge-bronze); 
+            border-color: var(--forge-bronze); 
+        }
+        
+        .skill-tab.intermediate.active { 
+            background: var(--forge-silver); 
+            border-color: var(--forge-silver); 
+            color: #1A202C; 
+        }
+        
+        .skill-tab.advanced.active { 
+            background: var(--forge-gold); 
+            border-color: var(--forge-gold); 
+            color: #1A202C; 
+        }
+        
+        .tab-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+        
+        .tab-desc {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        .active .tab-desc {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .skill-badge {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 20px;
+        }
+        
+        /* Level indicators */
+        .level-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .level-beginner { background: #CD7F32; color: white; }
+        .level-intermediate { background: #C0C0C0; color: #1A202C; }
+        .level-advanced { background: #FFD700; color: #1A202C; }
+        
+        /* Tactic Grid */
+        .tactics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .tactic-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            position: relative;
+        }
+        
+        .tactic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: var(--rwanda-blue);
+        }
+        
+        .tactic-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .tactic-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .tactic-title {
+            flex: 1;
+        }
+        
+        .tactic-title h3 {
+            margin-bottom: 5px;
+            color: var(--memorial-gray);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tactic-example {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .tactic-body {
+            padding: 25px;
+        }
+        
+        .definition-box {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--rwanda-blue);
+        }
+        
+        .response-framework {
+            background: #f0f7ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .framework-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .step-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--memorial-gray);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .step-item strong {
+            color: var(--rwanda-blue);
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        /* Interactive Scenario Training */
+        .scenario-section {
+            background: linear-gradient(135deg, #1A2530 0%, #2C3E50 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 24px;
+            margin: 60px 0;
+            position: relative;
+            isolation: isolate;
+        }
+        
+        .scenario-section::before {
+            content: '⚔️';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 80px;
+            opacity: 0.1;
+        }
+        
+        .scenario-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .scenario-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .denial-claim {
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            border-left: 6px solid var(--rwanda-yellow);
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .response-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .response-option {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .response-option:hover {
+            background: rgba(0, 161, 222, 0.3);
+            border-color: var(--rwanda-blue);
+            transform: translateY(-2px);
+        }
+        
+        .response-option.selected {
+            background: var(--rwanda-blue);
+            border-color: white;
+            box-shadow: 0 10px 25px rgba(0, 161, 222, 0.4);
+        }
+        
+        .feedback-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+        
+        .feedback-box.correct {
+            background: rgba(0, 128, 0, 0.2);
+            border: 2px solid var(--rwanda-green);
+            display: block;
+            color: white;
+        }
+        
+        .feedback-box.incorrect {
+            background: rgba(229, 62, 62, 0.2);
+            border: 2px solid #e53e3e;
+            display: block;
+            color: white;
+        }
+        
+        .strategy-callout {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .strategy-card {
+            text-align: center;
+            padding: 25px 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        
+        .strategy-card:hover {
+            background: var(--rwanda-blue);
+            color: white;
+        }
+        
+        .strategy-card:hover h4,
+        .strategy-card:hover p {
+            color: white;
+        }
+        
+        .strategy-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: var(--rwanda-blue);
+            color: white;
+            border-radius: 50%;
+            line-height: 36px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .strategy-card:hover .strategy-number {
+            background: white;
+            color: var(--rwanda-blue);
+        }
+        
+        /* Resource Library */
+        .resource-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .resource-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+        
+        .resource-item:hover {
+            border-color: var(--rwanda-blue);
+            box-shadow: 0 10px 25px rgba(0, 161, 222, 0.1);
+        }
+        
+        .resource-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Progress Tracker */
+        .progress-tracker {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 40px 0;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--rwanda-blue), var(--rwanda-green));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+        
+        .achievement-badges {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            padding: 8px 16px;
+            background: #f1f5f9;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .badge.unlocked {
+            background: var(--forge-gold);
+            color: #1A202C;
+            font-weight: 600;
+        }
+        
+        /* Empty states */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: #f8fafc;
+            border-radius: 16px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 15px;
+            color: var(--memorial-gray);
+        }
+        
+        /* Scenario level badge */
+        .scenario-level-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 15px;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 1024px) {
+            .tactics-grid,
+            .framework-steps,
+            .strategy-grid,
+            .resource-preview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .tactics-grid,
+            .framework-steps,
+            .strategy-grid,
+            .resource-preview,
+            .response-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .forge-hero::after {
+                font-size: 80px;
+                bottom: -10px;
+            }
+            
+            .scenario-section {
+                padding: 40px 20px;
+            }
+            
+            .denial-claim {
+                font-size: 1.1rem;
+            }
+            
+            .skill-tab {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @keyframes forgeGlow {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .forge-glow {
+            animation: forgeGlow 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Warning Bar -->
+    <div class="warning-bar">
+        ⚠️ <strong>Content Warning:</strong> This site contains historical evidence of the 1994 Genocide against the Tutsi in Rwanda.
+        <a href="#support" id="supportLink">Mental Health Support Resources</a>
+    </div>
+    
+    <!-- Header -->
+    <header class="hero forge-hero">
+        <h1>THE FORGE</h1>
+        <p>Build the skills to recognize, counter, and dismantle genocide denial tactics</p>
+        <div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <span class="skill-badge" style="background: var(--forge-bronze); color: white;">🔰 BEGINNER - Core concepts</span>
+            <span class="skill-badge" style="background: var(--forge-silver); color: #1A202C;">⚔️ INTERMEDIATE - Deeper analysis</span>
+            <span class="skill-badge" style="background: var(--forge-gold); color: #1A202C;">🛡️ ADVANCED - Research level</span>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                HOME
+            </a>
+            <a href="shield.html" class="nav-item">
+                <span class="nav-icon">🛡️</span>
+                THE SHIELD
+            </a>
+            <a href="forge.html" class="nav-item active">
+                <span class="nav-icon">🔥</span>
+                THE FORGE
+            </a>
+            <a href="memorial.html" class="nav-item">
+                <span class="nav-icon">🕯️</span>
+                THE MEMORIAL
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Skill Level Selector - Enhanced -->
+        <div class="skill-tabs">
+            <button class="skill-tab beginner active" onclick="setSkillLevel('beginner')">
+                <span class="tab-title">🔰 BEGINNER</span>
+                <span class="tab-desc">Core tactics & basic scenarios</span>
+            </button>
+            <button class="skill-tab intermediate" onclick="setSkillLevel('intermediate')">
+                <span class="tab-title">⚔️ INTERMEDIATE</span>
+                <span class="tab-desc">Complex tactics & scenarios</span>
+            </button>
+            <button class="skill-tab advanced" onclick="setSkillLevel('advanced')">
+                <span class="tab-title">🛡️ ADVANCED</span>
+                <span class="tab-desc">All content • Research level</span>
+            </button>
+        </div>
+        
+        <!-- Current Level Indicator -->
+        <div style="text-align: center; margin-bottom: 30px; padding: 15px; background: #f0f7ff; border-radius: 8px;">
+            <span id="currentLevelDescription" style="font-weight: 600; color: var(--memorial-gray);">
+                🔰 You are viewing BEGINNER content — Core denial tactics and introductory scenarios
+            </span>
+        </div>
+        
+        <!-- Introduction -->
+        <div class="introduction-box">
+            <h2>⚔️ Understanding Genocide Denial Tactics</h2>
+            <p>Denial is not simply disagreement with facts — it is a deliberate strategy to distort history, undermine survivors, and prevent accountability. THE FORGE teaches you to recognize these patterns and respond with precision.</p>
+            <p>Each tactic below includes the denial pattern, an example, and a proven response framework developed from analysis of denialist rhetoric.</p>
+        </div>
+        
+        <!-- Dynamic Tactics Grid -->
+        <h2 style="text-align: center; margin: 60px 0 20px;">Denial Tactics by Skill Level</h2>
+        <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: #666;">
+            <span class="level-beginner" style="padding: 4px 12px;">BEGINNER</span> Core tactics everyone should know<br>
+            <span class="level-intermediate" style="padding: 4px 12px;">INTERMEDIATE</span> More sophisticated denial patterns<br>
+            <span class="level-advanced" style="padding: 4px 12px;">ADVANCED</span> Complex, research-level analysis
+        </p>
+        
+        <div id="tacticsGrid" class="tactics-grid">
+            <!-- Tactics will be loaded dynamically from admin -->
+            <div class="empty-state" style="grid-column: 1/-1;">
+                <h3>🧰 Loading denial tactics...</h3>
+                <p>Please wait while we load the training content.</p>
+            </div>
+        </div>
+        
+        <!-- Interactive Scenario Training - Now Level-Specific -->
+        <section class="scenario-section">
+            <div class="scenario-container">
+                <span style="background: var(--rwanda-yellow); color: #1A202C; padding: 8px 20px; border-radius: 50px; font-weight: bold; display: inline-block; margin-bottom: 20px;">
+                    🎯 INTERACTIVE SCENARIO TRAINING
+                </span>
+                
+                <h2 style="color: white; font-size: 2rem; margin-bottom: 20px;">
+                    <span id="scenarioLevelTitle">Beginner</span> Scenarios
+                </h2>
+                <p style="color: rgba(255,255,255,0.9); margin-bottom: 30px;">
+                    <span id="scenarioLevelDescription">These scenarios focus on core denial claims and basic response strategies.</span>
+                </p>
+                
+                <div id="scenarioContainer">
+                    <div id="denialClaim" class="denial-claim">
+                        Loading scenario...
+                    </div>
+                    
+                    <div id="responseOptions" class="response-options">
+                        <!-- Response options will be loaded dynamically -->
+                    </div>
+                    
+                    <div id="feedbackBox" class="feedback-box">
+                        <strong id="feedbackTitle"></strong>
+                        <p id="feedbackMessage"></p>
+                        <div id="feedbackEvidence" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);"></div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn" onclick="nextScenario()" style="background: white; color: var(--memorial-gray);">
+                        🔄 Next Scenario
+                    </button>
+                    <button class="btn btn-outline" onclick="resetProgress()" style="border-color: white; color: white;">
+                        ↩️ Reset Progress
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- The A.S.C.R. Response Framework -->
+        <div class="strategy-callout">
+            <h2 style="text-align: center; margin-bottom: 20px;">⚔️ The A.S.C.R. Response Framework</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: #666;">
+                A proven, repeatable method for countering genocide denial in real time.
+                Used by educators, advocates, and researchers worldwide.
+            </p>
+            
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <div class="strategy-number">A</div>
+                    <h4 style="margin-bottom: 10px;">Acknowledge</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Never dismiss or mock. Acknowledge the question or claim respectfully.</p>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-number">S</div>
+                    <h4 style="margin-bottom: 10px;">State Facts</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Present verified, documented evidence. Be precise and specific.</p>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-number">C</div>
+                    <h4 style="margin-bottom: 10px;">Cite Sources</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Name your source: ICTR, UN, academic research, survivor testimony.</p>
+                </div>
+                
+                <div class="strategy-card">
+                    <div class="strategy-number">R</div>
+                    <h4 style="margin-bottom: 10px;">Redirect</h4>
+                    <p style="color: #666; font-size: 0.95rem;">Guide the conversation toward accountability, memory, and education.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dynamic Resource Library - Now Level-Specific -->
+        <h2 style="text-align: center; margin: 80px 0 20px;">📚 Denial Counter-Toolkit</h2>
+        <p style="text-align: center; max-width: 700px; margin: 0 auto 40px; color: #666;">
+            Resources matched to your skill level. <span id="resourceLevelText">Beginner resources shown.</span>
+        </p>
+        
+        <div id="resourcesGrid" class="resource-preview">
+            <!-- Resources will be loaded dynamically from admin -->
+            <div class="empty-state" style="grid-column: 1/-1;">
+                <h3>📚 Loading resources...</h3>
+                <p>Please wait while we load the resource library.</p>
+            </div>
+        </div>
+        
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <h3 style="margin-bottom: 0;">🔥 Your Forge Progress</h3>
+                <span id="currentLevelBadge" style="background: var(--forge-bronze); color: white; padding: 6px 16px; border-radius: 50px; font-size: 0.9rem; font-weight: 600;">
+                    LEVEL: BEGINNER
+                </span>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span>Scenarios Completed (Current Level)</span>
+                    <span><strong id="progressCount">0</strong>/<span id="totalScenarios">0</span></span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">
+                    Complete scenarios to unlock achievements and advance to higher levels.
+                </p>
+            </div>
+            
+            <div id="achievementBadges" class="achievement-badges">
+                <span class="badge">🏅 Shield Bearer</span>
+                <span class="badge">🔰 Denial Spotter</span>
+                <span class="badge">⚔️ Response Ready</span>
+                <span class="badge">🛡️ Truth Guardian</span>
+            </div>
+        </div>
+        
+        <!-- Next Steps -->
+        <div style="text-align: center; margin: 80px 0; padding: 40px; background: #f0f7ff; border-radius: 16px;">
+            <h3 style="margin-bottom: 20px;">🛡️ Ready to Apply These Skills?</h3>
+            <p style="max-width: 600px; margin: 0 auto 30px; color: #4a5568;">
+                Take what you've learned to THE SHIELD, where every denial claim is met with documented, verified evidence.
+            </p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="shield.html" class="btn">Go to THE SHIELD →</a>
+                <a href="index.html" class="btn btn-outline">← Return Home</a>
+            </div>
+        </div>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <h3 style="margin-bottom: 15px;">Rwanda Truth Platform</h3>
+        <p>Building the global standard for countering genocide denial</p>
+        
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="shield.html">The Shield</a>
+            <a href="forge.html">The Forge</a>
+            <a href="memorial.html">The Memorial</a>
+            <a href="#methodology">Our Methodology</a>
+            <a href="#resources">Educational Resources</a>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 0.85rem; opacity: 0.8;">
+            This platform is dedicated to the memory of more than one million Tutsi lives lost in the 1994 Genocide against the Tutsi in Rwanda.<br>
+            We stand with survivors, and we commit to truth, memory, and prevention.
+        </p>
+    </footer>
+    
+   <script>
+    // ==================== THE FORGE — COMPLETELY FIXED PROGRESS BAR ====================
+    // ✅ Progress bar updates immediately when you answer correctly
+    // ✅ Badges unlock at 1, 3, 6, 10 completions
+    // ✅ Level filtering works perfectly
+    // ✅ All content loads from admin
+    
+    const STORAGE_KEYS = {
+        TACTICS: 'rwandaTruthForgeTactics',
+        SCENARIOS: 'rwandaTruthForgeScenarios',
+        RESOURCES: 'rwandaTruthResources'
+    };
+    
+    // ==================== GLOBAL STATE ====================
+    let tactics = [];
+    let scenarios = [];
+    let resources = [];
+    let filteredScenarios = [];
+    let currentScenarioIndex = 0;
+    let currentLevel = 'beginner';
+    
+    // USER PROGRESS - stored in sessionStorage
+    let userProgress = {
+        completed: [],        // Array of completed scenario IDs
+        badges: {
+            shieldBearer: false,
+            denialSpotter: false,
+            responseReady: false,
+            truthGuardian: false
+        }
+    };
+    
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🔥 THE FORGE initializing...');
+        loadAllData();
+        
+        // Add support link handler
+        const supportLink = document.getElementById('supportLink');
+        if (supportLink) {
+            supportLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112 (toll-free)\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n\nINTERNATIONAL:\n• Contact local mental health services\n• Genocide survivor organizations\n• Trauma counseling services');
+            });
+        }
+    });
+    
+    function loadAllData() {
+        // Load tactics
+        try {
+            const saved = localStorage.getItem(STORAGE_KEYS.TACTICS);
+            tactics = saved ? JSON.parse(saved) : [];
+            console.log(`📦 Loaded ${tactics.length} tactics`);
+        } catch (error) {
+            console.error('Error loading tactics:', error);
+            tactics = [];
+        }
+        
+        // Load scenarios
+        try {
+            const saved = localStorage.getItem(STORAGE_KEYS.SCENARIOS);
+            scenarios = saved ? JSON.parse(saved) : [];
+            console.log(`📦 Loaded ${scenarios.length} scenarios`);
+        } catch (error) {
+            console.error('Error loading scenarios:', error);
+            scenarios = [];
+        }
+        
+        // Load resources
+        try {
+            const saved = localStorage.getItem(STORAGE_KEYS.RESOURCES);
+            resources = saved ? JSON.parse(saved) : [];
+            console.log(`📦 Loaded ${resources.length} resources`);
+        } catch (error) {
+            console.error('Error loading resources:', error);
+            resources = [];
+        }
+        
+        // Load user progress from sessionStorage
+        loadUserProgress();
+        
+        // Render everything with beginner level
+        renderTacticsByLevel('beginner');
+        filterScenariosByLevel('beginner');
+        renderResourcesByLevel('beginner');
+        updateLevelUI('beginner');
+        
+        console.log('✅ THE FORGE ready!');
+    }
+    
+    // ==================== USER PROGRESS ====================
+    function loadUserProgress() {
+        try {
+            const saved = sessionStorage.getItem('forgeProgress');
+            if (saved) {
+                userProgress = JSON.parse(saved);
+                console.log(`📊 Loaded progress: ${userProgress.completed.length} completed scenarios`);
+            } else {
+                // Initialize empty progress
+                userProgress = {
+                    completed: [],
+                    badges: {
+                        shieldBearer: false,
+                        denialSpotter: false,
+                        responseReady: false,
+                        truthGuardian: false
+                    }
+                };
+                console.log('📊 No existing progress found - starting fresh');
+            }
+        } catch (error) {
+            console.error('Error loading progress:', error);
+            userProgress = {
+                completed: [],
+                badges: {
+                    shieldBearer: false,
+                    denialSpotter: false,
+                    responseReady: false,
+                    truthGuardian: false
+                }
+            };
+        }
+    }
+    
+    function saveUserProgress() {
+        sessionStorage.setItem('forgeProgress', JSON.stringify(userProgress));
+        console.log(`💾 Saved progress: ${userProgress.completed.length} completed scenarios`);
+    }
+    
+    // ==================== FIXED: PROGRESS BAR & BADGES ====================
+    function markScenarioCompleted(scenarioId) {
+        // Check if already completed
+        if (!userProgress.completed.includes(scenarioId)) {
+            // Add to completed list
+            userProgress.completed.push(scenarioId);
+            console.log(`✅ Scenario ${scenarioId} completed! Total: ${userProgress.completed.length}`);
+            
+            // SAVE IMMEDIATELY
+            saveUserProgress();
+            
+            // UPDATE PROGRESS BAR IMMEDIATELY
+            updateProgressUI();
+            
+            // CHECK BADGES IMMEDIATELY
+            checkBadges();
+        } else {
+            console.log(`ℹ️ Scenario ${scenarioId} already completed`);
+        }
+    }
+    
+    function updateProgressUI() {
+        // Get all scenario IDs in CURRENT level
+        const currentLevelIds = filteredScenarios.map(s => s.id);
+        
+        // Count how many of THOSE the user has completed
+        const completedInCurrentLevel = userProgress.completed.filter(id => 
+            currentLevelIds.includes(id)
+        ).length;
+        
+        const totalInCurrentLevel = filteredScenarios.length;
+        
+        // Update the text displays
+        const progressCountEl = document.getElementById('progressCount');
+        const totalScenariosEl = document.getElementById('totalScenarios');
+        const progressFillEl = document.getElementById('progressFill');
+        
+        if (progressCountEl) progressCountEl.textContent = completedInCurrentLevel;
+        if (totalScenariosEl) totalScenariosEl.textContent = totalInCurrentLevel;
+        
+        // Calculate and set progress bar width
+        if (progressFillEl) {
+            const percentage = totalInCurrentLevel > 0 ? (completedInCurrentLevel / totalInCurrentLevel) * 100 : 0;
+            progressFillEl.style.width = percentage + '%';
+            console.log(`📊 Progress: ${completedInCurrentLevel}/${totalInCurrentLevel} (${percentage.toFixed(0)}%)`);
+        }
+    }
+    
+    function checkBadges() {
+        const totalCompleted = userProgress.completed.length;
+        const badges = document.querySelectorAll('.badge');
+        
+        console.log(`🏆 Checking badges: ${totalCompleted} total scenarios completed`);
+        
+        // Shield Bearer - 1 scenario
+        if (totalCompleted >= 1 && !userProgress.badges.shieldBearer) {
+            userProgress.badges.shieldBearer = true;
+            if (badges[0]) {
+                badges[0].classList.add('unlocked');
+                badges[0].innerHTML = '🏅 Shield Bearer (Unlocked)';
+                console.log('🏅 Badge unlocked: Shield Bearer');
+            }
+            saveUserProgress();
+        }
+        
+        // Denial Spotter - 3 scenarios
+        if (totalCompleted >= 3 && !userProgress.badges.denialSpotter) {
+            userProgress.badges.denialSpotter = true;
+            if (badges[1]) {
+                badges[1].classList.add('unlocked');
+                badges[1].innerHTML = '🔰 Denial Spotter (Unlocked)';
+                console.log('🔰 Badge unlocked: Denial Spotter');
+            }
+            saveUserProgress();
+        }
+        
+        // Response Ready - 6 scenarios
+        if (totalCompleted >= 6 && !userProgress.badges.responseReady) {
+            userProgress.badges.responseReady = true;
+            if (badges[2]) {
+                badges[2].classList.add('unlocked');
+                badges[2].innerHTML = '⚔️ Response Ready (Unlocked)';
+                console.log('⚔️ Badge unlocked: Response Ready');
+            }
+            saveUserProgress();
+        }
+        
+        // Truth Guardian - 10 scenarios
+        if (totalCompleted >= 10 && !userProgress.badges.truthGuardian) {
+            userProgress.badges.truthGuardian = true;
+            if (badges[3]) {
+                badges[3].classList.add('unlocked');
+                badges[3].innerHTML = '🛡️ Truth Guardian (Unlocked)';
+                console.log('🛡️ Badge unlocked: Truth Guardian');
+            }
+            saveUserProgress();
+        }
+    }
+    
+    function resetProgress() {
+        if (confirm('Reset your progress and achievements?')) {
+            // Reset progress object
+            userProgress = {
+                completed: [],
+                badges: {
+                    shieldBearer: false,
+                    denialSpotter: false,
+                    responseReady: false,
+                    truthGuardian: false
+                }
+            };
+            
+            // Clear from storage
+            sessionStorage.removeItem('forgeProgress');
+            
+            // Reset progress bar
+            const progressFill = document.getElementById('progressFill');
+            const progressCount = document.getElementById('progressCount');
+            
+            if (progressFill) progressFill.style.width = '0%';
+            if (progressCount) progressCount.textContent = '0';
+            
+            // Reset badges
+            const badges = document.querySelectorAll('.badge');
+            if (badges[0]) {
+                badges[0].innerHTML = '🏅 Shield Bearer';
+                badges[0].classList.remove('unlocked');
+            }
+            if (badges[1]) {
+                badges[1].innerHTML = '🔰 Denial Spotter';
+                badges[1].classList.remove('unlocked');
+            }
+            if (badges[2]) {
+                badges[2].innerHTML = '⚔️ Response Ready';
+                badges[2].classList.remove('unlocked');
+            }
+            if (badges[3]) {
+                badges[3].innerHTML = '🛡️ Truth Guardian';
+                badges[3].classList.remove('unlocked');
+            }
+            
+            alert('Progress reset. Start training again!');
+            console.log('🔄 Progress reset');
+            
+            // Reload first scenario
+            if (filteredScenarios.length > 0) {
+                loadScenario(0);
+            }
+        }
+    }
+    
+    // ==================== SKILL LEVEL FILTERING ====================
+    function setSkillLevel(level) {
+        currentLevel = level;
+        
+        // Update active tab
+        document.querySelectorAll('.skill-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        event.target.closest('.skill-tab').classList.add('active');
+        
+        // Update UI
+        updateLevelUI(level);
+        
+        // Filter all content
+        renderTacticsByLevel(level);
+        filterScenariosByLevel(level);
+        renderResourcesByLevel(level);
+    }
+    
+    function updateLevelUI(level) {
+        const badge = document.getElementById('currentLevelBadge');
+        const description = document.getElementById('currentLevelDescription');
+        const scenarioTitle = document.getElementById('scenarioLevelTitle');
+        const scenarioDesc = document.getElementById('scenarioLevelDescription');
+        const resourceText = document.getElementById('resourceLevelText');
+        
+        if (level === 'beginner') {
+            if (badge) {
+                badge.style.background = 'var(--forge-bronze)';
+                badge.style.color = 'white';
+                badge.textContent = 'LEVEL: BEGINNER';
+            }
+            if (description) description.innerHTML = '🔰 You are viewing BEGINNER content — Core denial tactics and introductory scenarios';
+            if (scenarioTitle) scenarioTitle.innerHTML = 'Beginner';
+            if (scenarioDesc) scenarioDesc.innerHTML = 'These scenarios focus on core denial claims and basic response strategies.';
+            if (resourceText) resourceText.innerHTML = 'Beginner resources shown.';
+        } else if (level === 'intermediate') {
+            if (badge) {
+                badge.style.background = 'var(--forge-silver)';
+                badge.style.color = '#1A202C';
+                badge.textContent = 'LEVEL: INTERMEDIATE';
+            }
+            if (description) description.innerHTML = '⚔️ You are viewing INTERMEDIATE content — Complex tactics and deeper scenario analysis';
+            if (scenarioTitle) scenarioTitle.innerHTML = 'Intermediate';
+            if (scenarioDesc) scenarioDesc.innerHTML = 'These scenarios involve more sophisticated denial tactics and require deeper analysis.';
+            if (resourceText) resourceText.innerHTML = 'Intermediate resources shown.';
+        } else {
+            if (badge) {
+                badge.style.background = 'var(--forge-gold)';
+                badge.style.color = '#1A202C';
+                badge.textContent = 'LEVEL: ADVANCED';
+            }
+            if (description) description.innerHTML = '🛡️ You are viewing ADVANCED content — All tactics, research-level scenarios, and scholarly resources';
+            if (scenarioTitle) scenarioTitle.innerHTML = 'Advanced';
+            if (scenarioDesc) scenarioDesc.innerHTML = 'These scenarios involve complex denial patterns and require research-level knowledge.';
+            if (resourceText) resourceText.innerHTML = 'All resources shown.';
+        }
+    }
+    
+    // ==================== TACTICS ====================
+    function renderTacticsByLevel(level) {
+        const grid = document.getElementById('tacticsGrid');
+        if (!grid) return;
+        
+        let filteredTactics = [];
+        if (level === 'beginner') {
+            filteredTactics = tactics.filter(t => t.level === 'beginner');
+        } else if (level === 'intermediate') {
+            filteredTactics = tactics.filter(t => t.level === 'beginner' || t.level === 'intermediate');
+        } else {
+            filteredTactics = tactics;
+        }
+        
+        if (filteredTactics.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state" style="grid-column: 1/-1;">
+                    <h3>🧰 No denial tactics available for this level</h3>
+                    <p>Please check back later or try a different skill level.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        filteredTactics.forEach(tactic => {
+            let stepsHTML = '';
+            if (tactic.steps && tactic.steps.length === 4) {
+                stepsHTML = `
+                    <div class="framework-steps">
+                        <div class="step-item"><strong>1.</strong> ${tactic.steps[0]}</div>
+                        <div class="step-item"><strong>2.</strong> ${tactic.steps[1]}</div>
+                        <div class="step-item"><strong>3.</strong> ${tactic.steps[2]}</div>
+                        <div class="step-item"><strong>4.</strong> ${tactic.steps[3]}</div>
+                    </div>
+                `;
+            }
+            
+            let levelBadge = '';
+            if (tactic.level === 'beginner') levelBadge = '<span class="level-beginner" style="padding: 2px 8px; font-size: 0.7rem;">BEGINNER</span>';
+            else if (tactic.level === 'intermediate') levelBadge = '<span class="level-intermediate" style="padding: 2px 8px; font-size: 0.7rem;">INTERMEDIATE</span>';
+            else levelBadge = '<span class="level-advanced" style="padding: 2px 8px; font-size: 0.7rem;">ADVANCED</span>';
+            
+            html += `
+                <div class="tactic-card" data-level="${tactic.level}">
+                    <div class="tactic-header">
+                        <div class="tactic-icon">${tactic.icon || '📌'}</div>
+                        <div class="tactic-title">
+                            <h3>
+                                ${tactic.name}
+                                ${levelBadge}
+                            </h3>
+                            <div class="tactic-example">"${tactic.example || 'Example claim'}"</div>
+                        </div>
+                    </div>
+                    <div class="tactic-body">
+                        <div class="definition-box">
+                            <strong style="color: var(--memorial-gray);">What it is:</strong>
+                            <p style="margin-top: 10px;">${tactic.definition}</p>
+                        </div>
+                        
+                        <div class="response-framework">
+                            <strong>📋 Response Strategy — "${tactic.strategy || 'Response Framework'}"</strong>
+                            ${stepsHTML}
+                        </div>
+                        
+                        ${tactic.realExample ? `
+                            <button class="btn btn-sm" onclick='showTacticExample(${JSON.stringify(tactic.realExample)})' style="margin-top: 15px;">
+                                See real-world example →
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        });
+        
+        grid.innerHTML = html;
+    }
+    
+    // ==================== SCENARIOS ====================
+    function filterScenariosByLevel(level) {
+        // Filter scenarios based on level
+        if (level === 'beginner') {
+            filteredScenarios = scenarios.filter(s => s && s.level === 'beginner');
+        } else if (level === 'intermediate') {
+            filteredScenarios = scenarios.filter(s => s && (s.level === 'beginner' || s.level === 'intermediate'));
+        } else {
+            filteredScenarios = scenarios; // Advanced shows all
+        }
+        
+        console.log(`🎯 Filtered scenarios for ${level}: ${filteredScenarios.length} found`);
+        
+        // Update total counter
+        const totalScenariosEl = document.getElementById('totalScenarios');
+        if (totalScenariosEl) totalScenariosEl.textContent = filteredScenarios.length;
+        
+        // Update progress UI for this level
+        updateProgressUI();
+        
+        // Load first scenario
+        if (filteredScenarios.length > 0) {
+            loadScenario(0);
+        } else {
+            const denialClaim = document.getElementById('denialClaim');
+            const responseOptions = document.getElementById('responseOptions');
+            const feedbackBox = document.getElementById('feedbackBox');
+            
+            if (denialClaim) denialClaim.textContent = 'No training scenarios available for this level.';
+            if (responseOptions) responseOptions.innerHTML = '';
+            if (feedbackBox) feedbackBox.style.display = 'none';
+        }
+    }
+    
+    function loadScenario(index) {
+        if (filteredScenarios.length === 0) return;
+        
+        currentScenarioIndex = index;
+        const scenario = filteredScenarios[currentScenarioIndex];
+        
+        if (!scenario) return;
+        
+        const denialClaim = document.getElementById('denialClaim');
+        if (denialClaim) denialClaim.textContent = `"${scenario.claim || 'No claim provided'}"`;
+        
+        let optionsHTML = '';
+        if (scenario.responses && scenario.responses.length > 0) {
+            scenario.responses.forEach((response, i) => {
+                if (response && response.text) {
+                    optionsHTML += `
+                        <div class="response-option" onclick="selectResponse(${i})">
+                            ${response.text}
+                        </div>
+                    `;
+                }
+            });
+        }
+        
+        const responseOptions = document.getElementById('responseOptions');
+        if (responseOptions) responseOptions.innerHTML = optionsHTML;
+        
+        const feedbackBox = document.getElementById('feedbackBox');
+        if (feedbackBox) {
+            feedbackBox.style.display = 'none';
+            feedbackBox.className = 'feedback-box';
+        }
+    }
+    
+    function selectResponse(index) {
+        if (filteredScenarios.length === 0) return;
+        
+        const scenario = filteredScenarios[currentScenarioIndex];
+        if (!scenario || !scenario.responses || !scenario.responses[index]) return;
+        
+        const response = scenario.responses[index];
+        const isCorrect = (index === scenario.correctIndex);
+        
+        // Remove all selected states
+        document.querySelectorAll('.response-option').forEach(opt => {
+            opt.classList.remove('selected');
+        });
+        
+        // Mark selected
+        if (event && event.target) {
+            event.target.classList.add('selected');
+        }
+        
+        // Show feedback
+        const feedbackBox = document.getElementById('feedbackBox');
+        const feedbackTitle = document.getElementById('feedbackTitle');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const feedbackEvidence = document.getElementById('feedbackEvidence');
+        
+        if (feedbackBox && feedbackTitle && feedbackMessage && feedbackEvidence) {
+            feedbackBox.className = 'feedback-box ' + (isCorrect ? 'correct' : 'incorrect');
+            feedbackBox.style.display = 'block';
+            feedbackTitle.innerHTML = response.feedback || (isCorrect ? '✅ CORRECT' : '❌ INCORRECT');
+            feedbackMessage.innerHTML = response.explanation || 'No explanation provided.';
+            feedbackEvidence.innerHTML = response.evidence ? `<strong>EVIDENCE:</strong> ${response.evidence}` : '';
+        }
+        
+        // If correct, mark scenario as completed - THIS UPDATES THE PROGRESS BAR
+        if (isCorrect) {
+            markScenarioCompleted(scenario.id);
+        }
+    }
+    
+    function nextScenario() {
+        if (filteredScenarios.length === 0) return;
+        
+        let nextIndex = currentScenarioIndex + 1;
+        if (nextIndex >= filteredScenarios.length) {
+            nextIndex = 0;
+        }
+        loadScenario(nextIndex);
+    }
+    
+    // ==================== RESOURCES ====================
+    function renderResourcesByLevel(level) {
+        const grid = document.getElementById('resourcesGrid');
+        if (!grid) return;
+        
+        let filteredResources = [];
+        if (level === 'beginner') {
+            filteredResources = resources.filter(r => r && r.level === 'beginner');
+        } else if (level === 'intermediate') {
+            filteredResources = resources.filter(r => r && (r.level === 'beginner' || r.level === 'intermediate'));
+        } else {
+            filteredResources = resources;
+        }
+        
+        if (filteredResources.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state" style="grid-column: 1/-1;">
+                    <h3>📚 No resources available for this level</h3>
+                    <p>Resources matched to your skill level will appear here.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = '';
+        filteredResources.forEach(resource => {
+            html += `
+                <div class="resource-item">
+                    <div class="resource-icon">${resource.icon || '📄'}</div>
+                    <h4 style="margin-bottom: 10px;">${resource.title || 'Untitled'}</h4>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">${resource.description || 'No description'}</p>
+                    <button class="btn btn-sm" onclick="downloadResource('${resource.url || ''}')">
+                        Download ${resource.type || 'PDF'}
+                    </button>
+                </div>
+            `;
+        });
+        
+        grid.innerHTML = html;
+    }
+    
+    // ==================== UTILITY FUNCTIONS ====================
+    function showTacticExample(example) {
+        alert(example || 'Real-world example not available.');
+    }
+    
+    function downloadResource(url) {
+        if (!url) {
+            alert('Download coming soon. This resource is being prepared.');
+        } else {
+            alert(`Download started for: ${url}`);
+        }
+    }
+    
+    // Make functions global
+    window.setSkillLevel = setSkillLevel;
+    window.selectResponse = selectResponse;
+    window.nextScenario = nextScenario;
+    window.resetProgress = resetProgress;
+    window.showTacticExample = showTacticExample;
+    window.downloadResource = downloadResource;
+</script>
+</body>
+</html>

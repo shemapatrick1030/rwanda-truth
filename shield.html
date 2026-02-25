@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Shield - Evidence Against Denial | Rwanda Truth</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styles */
+        .introduction {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 50px;
+            border-left: 4px solid var(--rwanda-blue);
+        }
+        
+        .introduction h2 {
+            color: var(--memorial-gray);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .introduction p {
+            color: #4a5568;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0 60px;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .category-card h3 {
+            color: var(--memorial-gray);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .category-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .section-title h2 {
+            color: var(--memorial-gray);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .evidence-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .evidence-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .card-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .claim-type {
+            display: inline-block;
+            background: var(--rwanda-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .evidence-section {
+            margin-bottom: 25px;
+        }
+        
+        .evidence-section h4 {
+            color: var(--memorial-gray);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h4::before {
+            content: '✓';
+            background: var(--rwanda-green);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .evidence-section p {
+            color: #4a5568;
+            line-height: 1.7;
+            padding-left: 34px;
+        }
+        
+        .source-tag {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+        
+        .source-tag.ictr { background: #e3f2fd; color: #1976d2; }
+        .source-tag.un { background: #e8f5e9; color: #2e7d32; }
+        .source-tag.academic { background: #fff3e0; color: #ef6c00; }
+        .source-tag.gacaca { background: #f3e5f5; color: #7b1fa2; }
+        
+        .evidence-level {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .level-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e2e8f0;
+        }
+        
+        .level-beginner .level-dot:nth-child(1) { background: var(--rwanda-green); }
+        .level-intermediate .level-dot:nth-child(-n+2) { background: var(--rwanda-yellow); }
+        .level-advanced .level-dot { background: #e53e3e; }
+        
+        .navigation-prompt {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: #f0f7ff;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .introduction {
+                padding: 25px;
+            }
+            
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .evidence-section p {
+                padding-left: 0;
+            }
+            
+            .evidence-section h4 {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .evidence-section h4::before {
+                margin-bottom: 5px;
+            }
+        }
+        /* Make sure filter buttons work with dynamic content */
+.filter-btn {
+    cursor: pointer !important;
+}
+
+/* Evidence cards from admin */
+.evidence-card {
+    display: block;
+}
+
+/* Search results styling */
+#searchResults {
+    transition: all 0.3s ease;
+}
+
+/* Empty state styling */
+.no-evidence-message {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 10px;
+    margin: 40px 0;
+}
+    </style>
+</head>
+<body>
+    <!-- Warning Bar -->
+    <div class="warning-bar">
+        ⚠️ <strong>Content Warning:</strong> This site contains historical evidence of the 1994 Genocide against the Tutsi in Rwanda.
+        <a href="#support" id="supportLink">Mental Health Support Resources</a>
+    </div>
+    
+    <!-- Header -->
+    <header class="hero shield-hero">
+        <h1>THE SHIELD</h1>
+        <p>Evidence-based refutations of genocide denial claims</p>
+    </header>
+    
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                HOME
+            </a>
+            <a href="shield.html" class="nav-item active">
+                <span class="nav-icon">🛡️</span>
+                THE SHIELD
+            </a>
+            <a href="forge.html" class="nav-item">
+                <span class="nav-icon">🔥</span>
+                THE FORGE
+            </a>
+            <a href="memorial.html" class="nav-item">
+                <span class="nav-icon">🕯️</span>
+                THE MEMORIAL
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Search Section -->
+    <section class="container mt-5">
+        <div class="search-container">
+            <input type="text" 
+                   id="searchInput" 
+                   class="search-input" 
+                   placeholder="Search for denial claims, evidence types, or keywords..."
+                   aria-label="Search evidence database">
+            <button class="search-button" onclick="performSearch()">
+                🔍
+            </button>
+        </div>
+        
+        <div class="filter-buttons" id="filterButtons">
+            <button class="filter-btn active" onclick="filterByType('all')">All Claims</button>
+            <button class="filter-btn" onclick="filterByType('common')">Common Claims</button>
+            <button class="filter-btn" onclick="filterByType('statistical')">Statistical</button>
+            <button class="filter-btn" onclick="filterByType('false-equivalence')">False Equivalence</button>
+            <button class="filter-btn" onclick="filterByType('historical-distortion')">Historical Distortion</button>
+        </div>
+        
+        <div id="searchResults" class="text-center mb-4" style="display: none;">
+            <p id="resultsCount"></p>
+            <button class="btn btn-sm btn-outline mt-2" onclick="clearSearch()">Clear Search</button>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introduction -->
+        <section class="introduction">
+            <h2>Evidence Against Genocide Denial</h2>
+            <p>This section provides direct, evidence-based responses to common genocide denial claims about the 1994 Genocide against the Tutsi in Rwanda.</p>
+            <p>Each claim is matched with verified evidence from international courts, academic research, survivor testimonies, and historical documents.</p>
+            <p>All information is presented to support education, truth preservation, and counter misinformation.</p>
+        </section>
+        
+        <!-- Evidence Categories -->
+        <div class="categories">
+            <div class="category-card">
+                <span class="category-icon">⚖️</span>
+                <h3>Legal Evidence</h3>
+                <p>International Criminal Tribunal for Rwanda (ICTR) verdicts and legal documentation establishing genocidal intent and planning.</p>
+            </div>
+            
+            <div class="category-card">
+                <span class="category-icon">📊</span>
+                <h3>Demographic Data</h3>
+                <p>Census records, population studies, and statistical evidence documenting the scale and systematic nature of killings.</p>
+            </div>
+            
+            <div class="category-card">
+                <span class="category-icon">🎤</span>
+                <h3>Survivor Testimonies</h3>
+                <p>First-hand accounts from survivors providing crucial evidence about events, planning, and implementation.</p>
+            </div>
+            
+            <div class="category-card">
+                <span class="category-icon">📜</span>
+                <h3>Historical Documents</h3>
+                <p>Government records, radio transcripts, and contemporaneous documents showing planning and execution.</p>
+            </div>
+        </div>
+        
+        <!-- Evidence Claims Section -->
+        <div class="section-title">
+            <h2>Common Denial Claims & Evidence</h2>
+            <p>Select a claim to see evidence-based refutation and source documentation</p>
+        </div>
+        
+        <div class="evidence-grid" id="evidenceGrid">
+            <!-- Claim 1 -->
+            <article class="evidence-card" data-type="common" data-tags="ictr un academic gacaca">
+                <div class="card-header">
+                    <span class="claim-type">Common Denial Claim</span>
+                    <h3>"It was a civil war, not genocide"</h3>
+                </div>
+                <div class="card-body">
+                    <div class="evidence-section">
+                        <h4>Legal Determination</h4>
+                        <p>The International Criminal Tribunal for Rwanda (ICTR) established in multiple verdicts that the events constituted genocide with specific intent to destroy Tutsi as a group.</p>
+                        <span class="source-tag ictr">ICTR Verdicts</span>
+                        <span class="source-tag un">UN Documentation</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Evidence of Intent</h4>
+                        <p>Radio broadcasts, government documents, and perpetrator testimonies show explicit calls for extermination of Tutsi specifically, not just political opponents.</p>
+                        <span class="source-tag academic">Academic Research</span>
+                        <span class="source-tag">Radio Transcripts</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Systematic Nature</h4>
+                        <p>The killings followed specific patterns: lists of Tutsi were prepared, roadblocks checked identity cards, and specific groups were targeted regardless of political affiliation.</p>
+                        <span class="source-tag gacaca">Gacaca Records</span>
+                        <span class="source-tag">Survivor Accounts</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="evidence-level level-beginner">
+                        <span>Evidence Level:</span>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <span>Beginner</span>
+                    </div>
+                    <button class="btn" onclick="showDetailedEvidence('civil-war-claim')">View Detailed Evidence</button>
+                </div>
+            </article>
+            
+            <!-- Claim 2 -->
+            <article class="evidence-card" data-type="statistical" data-tags="academic un statistical">
+                <div class="card-header">
+                    <span class="claim-type">Statistical Denial</span>
+                    <h3>"The death toll is exaggerated"</h3>
+                </div>
+                <div class="card-body">
+                    <div class="evidence-section">
+                        <h4>Demographic Studies</h4>
+                        <p>Multiple independent demographic studies estimate approximately 1,000,000 Tutsi were killed between April and July 1994, representing about 75% of the Tutsi population in Rwanda.</p>
+                        <span class="source-tag academic">Demographic Research</span>
+                        <span class="source-tag un">UN Reports</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Census Data</h4>
+                        <p>Comparison of pre-1994 and post-1994 census data shows dramatic demographic changes specifically affecting the Tutsi population.</p>
+                        <span class="source-tag">Rwandan Census</span>
+                        <span class="source-tag academic">Statistical Analysis</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Documentation Methods</h4>
+                        <p>Multiple methodologies including survivor testimony cross-referencing, grave documentation, and population projection models converge on similar figures.</p>
+                        <span class="source-tag academic">Research Methodology</span>
+                        <span class="source-tag">Documentation Projects</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="evidence-level level-intermediate">
+                        <span>Evidence Level:</span>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <span>Intermediate</span>
+                    </div>
+                    <button class="btn" onclick="showDetailedEvidence('death-toll-claim')">View Detailed Evidence</button>
+                </div>
+            </article>
+            
+            <!-- Claim 3 -->
+            <article class="evidence-card" data-type="false-equivalence" data-tags="ictr gacaca academic un">
+                <div class="card-header">
+                    <span class="claim-type">False Equivalence</span>
+                    <h3>"There was violence on both sides"</h3>
+                </div>
+                <div class="card-body">
+                    <div class="evidence-section">
+                        <h4>Legal Distinction</h4>
+                        <p>ICTR and Gacaca courts made clear distinctions between genocide crimes (targeting Tutsi as a group) and other crimes committed during the period.</p>
+                        <span class="source-tag ictr">ICTR Classification</span>
+                        <span class="source-tag gacaca">Gacaca Categories</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Different Intent</h4>
+                        <p>Genocide requires specific intent to destroy a group. Other violence, while tragic, did not meet this legal threshold or demonstrate the same systematic planning.</p>
+                        <span class="source-tag academic">Legal Analysis</span>
+                        <span class="source-tag">Intent Documentation</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Scale and System</h4>
+                        <p>The genocide was state-planned and systematically executed against Tutsi civilians, while other violence was different in scale, organization, and targeting.</p>
+                        <span class="source-tag un">UN Commission</span>
+                        <span class="source-tag academic">Comparative Studies</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="evidence-level level-intermediate">
+                        <span>Evidence Level:</span>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <span>Intermediate</span>
+                    </div>
+                    <button class="btn" onclick="showDetailedEvidence('both-sides-claim')">View Detailed Evidence</button>
+                </div>
+            </article>
+            
+            <!-- Claim 4 -->
+            <article class="evidence-card" data-type="historical-distortion" data-tags="ictr academic document">
+                <div class="card-header">
+                    <span class="claim-type">Historical Distortion</span>
+                    <h3>"It was spontaneous chaos"</h3>
+                </div>
+                <div class="card-body">
+                    <div class="evidence-section">
+                        <h4>Planning Evidence</h4>
+                        <p>Documents show weapons distribution lists, militia training, and propaganda campaigns began months before April 1994.</p>
+                        <span class="source-tag ictr">ICTR Evidence</span>
+                        <span class="source-tag">Government Documents</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Organization</h4>
+                        <p>Roadblocks with lists, coordinated attacks across regions, and use of government resources indicate organized planning, not spontaneous violence.</p>
+                        <span class="source-tag">Military Documents</span>
+                        <span class="source-tag academic">Research Studies</span>
+                    </div>
+                    
+                    <div class="evidence-section">
+                        <h4>Timeline Evidence</h4>
+                        <p>Killings followed similar patterns nationwide immediately after the president's assassination, indicating prior planning and coordination.</p>
+                        <span class="source-tag un">UN Timeline</span>
+                        <span class="source-tag">Event Documentation</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="evidence-level level-advanced">
+                        <span>Evidence Level:</span>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <div class="level-dot"></div>
+                        <span>Advanced</span>
+                    </div>
+                    <button class="btn" onclick="showDetailedEvidence('spontaneous-claim')">View Detailed Evidence</button>
+                </div>
+            </article>
+        </div>
+        
+        <!-- Navigation Prompt -->
+        <div class="navigation-prompt">
+            <h3 style="color: var(--memorial-gray); margin-bottom: 20px;">Continue Your Learning</h3>
+            <p style="margin-bottom: 25px; color: #4a5568; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Now that you've seen evidence against specific claims, learn how to recognize and counter denial tactics in THE FORGE.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="index.html" class="btn btn-outline">← Return to Home</a>
+                <a href="forge.html" class="btn">Continue to THE FORGE →</a>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <h3 style="margin-bottom: 15px;">Rwanda Truth Platform</h3>
+        <p>Evidence-based resources against genocide denial</p>
+        
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="shield.html">The Shield</a>
+            <a href="forge.html">The Forge</a>
+            <a href="memorial.html">The Memorial</a>
+            <a href="#methodology">Methodology</a>
+            <a href="#sources">Source Verification</a>
+            <a href="#educators">For Educators</a>
+            <a href="#support">Support Resources</a>
+        </div>
+        
+        <p>
+            This evidence is presented for educational purposes. All claims are backed by verified documentation 
+            from international courts, academic research, and historical records.
+        </p>
+        <p style="margin-top: 15px; font-size: 0.85rem;">
+            Content will be expanded through partnerships with researchers and educators.
+        </p>
+    </footer>
+    
+   <script>
+// ==================== RWANDA TRUTH SHIELD - HYBRID MODE ====================
+// Keeps hardcoded examples + loads published evidence from admin
+// Search + filter work on ALL cards (both static and dynamic)
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Shield page initializing...');
+    
+    // ========== LOAD ADMIN EVIDENCE ==========
+    let adminEvidence = [];
+    try {
+        const saved = localStorage.getItem('rwandaTruthEvidence');
+        if (saved) {
+            const allEvidence = JSON.parse(saved);
+            adminEvidence = allEvidence.filter(item => item.status === 'published');
+            console.log(`📦 Loaded ${adminEvidence.length} published evidence items from admin`);
+        }
+    } catch (error) {
+        console.error('Error loading admin evidence:', error);
+    }
+    
+    // ========== ADD ADMIN EVIDENCE TO GRID ==========
+    // This KEEPS your 4 hardcoded examples and APPENDS admin cards after them
+    if (adminEvidence.length > 0) {
+        const evidenceGrid = document.getElementById('evidenceGrid');
+        
+        adminEvidence.forEach(evidence => {
+            const card = createEvidenceCard(evidence);
+            evidenceGrid.appendChild(card);
+        });
+        
+        console.log(`✅ Added ${adminEvidence.length} admin evidence cards`);
+    }
+    
+    // ========== REATTACH FILTER BUTTONS ==========
+    // Make sure filter buttons work with ALL cards
+    setupFilterButtons();
+    
+    console.log('✨ Shield page ready!');
+});
+
+// ==================== CREATE EVIDENCE CARD FROM ADMIN DATA ====================
+function createEvidenceCard(evidence) {
+    const card = document.createElement('article');
+    card.className = 'evidence-card';
+    card.setAttribute('data-type', evidence.type || 'common');
+    
+    // Get claim type display name
+    const typeNames = {
+        'common': 'Common Denial Claim',
+        'statistical': 'Statistical Denial',
+        'false-equivalence': 'False Equivalence',
+        'historical-distortion': 'Historical Distortion',
+        'legal-misrepresentation': 'Legal Misrepresentation'
+    };
+    
+    // Build sections HTML
+    let sectionsHTML = '';
+    evidence.sections.forEach(section => {
+        let tagsHTML = '';
+        if (section.tags && section.tags.length > 0) {
+            section.tags.forEach(tag => {
+                tagsHTML += `<span class="source-tag ${tag}">${tag.toUpperCase()}</span>`;
+            });
+        }
+        
+        sectionsHTML += `
+            <div class="evidence-section">
+                <h4>${escapeHTML(section.title)}</h4>
+                <p>${escapeHTML(section.content)}</p>
+                ${tagsHTML ? `<div>${tagsHTML}</div>` : ''}
+            </div>
+        `;
+    });
+    
+    // Build sources HTML
+    let sourcesHTML = '';
+    if (evidence.sources && evidence.sources.length > 0) {
+        evidence.sources.slice(0, 3).forEach(source => {
+            let displayName = source;
+            try {
+                const url = new URL(source);
+                displayName = url.hostname.replace('www.', '');
+            } catch {
+                displayName = source.substring(0, 20) + (source.length > 20 ? '...' : '');
+            }
+            sourcesHTML += `<span class="source-tag">${escapeHTML(displayName)}</span>`;
+        });
+    }
+    
+    // Build level class
+    let levelClass = '';
+    let levelLabel = '';
+    switch(evidence.level) {
+        case 'beginner':
+            levelClass = 'level-beginner';
+            levelLabel = 'Beginner';
+            break;
+        case 'intermediate':
+            levelClass = 'level-intermediate';
+            levelLabel = 'Intermediate';
+            break;
+        case 'advanced':
+            levelClass = 'level-advanced';
+            levelLabel = 'Advanced';
+            break;
+        default:
+            levelClass = 'level-beginner';
+            levelLabel = 'Beginner';
+    }
+    
+    const evidenceId = evidence.id || 'evidence-' + Date.now() + Math.random();
+    
+    card.innerHTML = `
+        <div class="card-header">
+            <span class="claim-type">${typeNames[evidence.type] || 'Evidence Claim'}</span>
+            <h3>"${escapeHTML(evidence.claim)}"</h3>
+        </div>
+        <div class="card-body">
+            ${sectionsHTML}
+            ${sourcesHTML ? `<div style="margin-top: 15px;">${sourcesHTML}</div>` : ''}
+        </div>
+        <div class="card-footer">
+            <div class="evidence-level ${levelClass}">
+                <span>Evidence Level:</span>
+                <div class="level-dot"></div>
+                <div class="level-dot"></div>
+                <div class="level-dot"></div>
+                <span>${levelLabel}</span>
+            </div>
+            <button class="btn" onclick="showEvidenceDetails('${evidenceId}')">View Detailed Evidence</button>
+        </div>
+    `;
+    
+    // Store evidence data in the card element
+    card.evidenceData = evidence;
+    card.evidenceId = evidenceId;
+    
+    return card;
+}
+
+// ==================== HELPER: ESCAPE HTML ====================
+function escapeHTML(text) {
+    if (!text) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+// ==================== SHOW EVIDENCE DETAILS ====================
+function showEvidenceDetails(evidenceId) {
+    // Try to find in admin evidence first
+    let evidence = null;
+    
+    try {
+        const saved = localStorage.getItem('rwandaTruthEvidence');
+        if (saved) {
+            const allEvidence = JSON.parse(saved);
+            evidence = allEvidence.find(item => item.id === evidenceId);
+        }
+    } catch (error) {
+        console.error('Error loading evidence:', error);
+    }
+    
+    if (evidence) {
+        let message = `📋 DETAILED EVIDENCE\n`;
+        message += `========================\n\n`;
+        message += `CLAIM: "${evidence.claim}"\n\n`;
+        message += `EVIDENCE SECTIONS:\n`;
+        
+        evidence.sections.forEach((section, i) => {
+            message += `\n${i+1}. ${section.title}\n`;
+            message += `   ${section.content}\n`;
+            message += `   Tags: ${section.tags.join(', ').toUpperCase()}\n`;
+        });
+        
+        if (evidence.sources && evidence.sources.length > 0) {
+            message += `\nSOURCES:\n`;
+            evidence.sources.forEach((source, i) => {
+                message += `   ${i+1}. ${source}\n`;
+            });
+        }
+        
+        alert(message);
+    } else {
+        // Fallback to hardcoded examples
+        const claimDetails = {
+            'civil-war-claim': 'Detailed evidence includes:\n• ICTR Akayesu verdict establishing genocide\n• Radio RTLM transcripts with extermination calls\n• Government documents showing planning\n• Survivor testimonies of systematic targeting',
+            'death-toll-claim': 'Detailed evidence includes:\n• UN Demographic Project studies\n• Rwandan government census comparisons\n• Multiple academic research papers\n• Grave documentation projects',
+            'both-sides-claim': 'Detailed evidence includes:\n• ICTR legal distinctions between crimes\n• Gacaca court categorization system\n• Academic analysis of different intents\n• Documentation of systematic planning',
+            'spontaneous-claim': 'Detailed evidence includes:\n• Weapons distribution records\n• Militia training documentation\n• Government meeting minutes\n• Coordinated attack patterns'
+        };
+        
+        alert('DETAILED EVIDENCE PREVIEW:\n\n' + (claimDetails[evidenceId] || 'Evidence documentation coming soon.'));
+    }
+}
+
+// ==================== SEARCH FUNCTION (WORKS WITH ALL CARDS) ====================
+function performSimpleSearch() {
+    console.log('🔍 Searching all evidence cards...');
+    
+    const searchInput = document.getElementById('searchInput');
+    if (!searchInput) return;
+    
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const allCards = document.querySelectorAll('.evidence-card');
+    const resultsContainer = document.getElementById('searchResults');
+    const resultsCount = document.getElementById('resultsCount');
+    
+    if (!searchTerm) {
+        // Show all cards
+        allCards.forEach(card => { card.style.display = 'block'; });
+        if (resultsContainer) resultsContainer.style.display = 'none';
+        removeAllHighlights();
+        
+        // Reset filter button to "All Claims"
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('onclick')?.includes('all')) {
+                btn.classList.add('active');
+            }
+        });
+        return;
+    }
+    
+    let visibleCount = 0;
+    removeAllHighlights();
+    
+    allCards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+        if (cardText.includes(searchTerm)) {
+            card.style.display = 'block';
+            visibleCount++;
+            highlightSearchInCard(card, searchTerm);
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    // Update filter buttons to show we're in search mode
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show results
+    if (resultsCount) {
+        if (visibleCount > 0) {
+            resultsCount.textContent = `Found ${visibleCount} result${visibleCount !== 1 ? 's' : ''} for "${searchTerm}"`;
+            resultsCount.style.color = 'var(--rwanda-green)';
+            if (resultsContainer) resultsContainer.style.display = 'block';
+        } else {
+            resultsCount.textContent = `No results found for "${searchTerm}"`;
+            resultsCount.style.color = 'var(--error)';
+            if (resultsContainer) resultsContainer.style.display = 'block';
+        }
+    }
+}
+
+// ==================== FILTER FUNCTION (WORKS WITH ALL CARDS) ====================
+function filterByType(type) {
+    console.log(`🎯 Filtering by type: ${type}`);
+    
+    // Clear search
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+    
+    // Hide search results
+    const resultsContainer = document.getElementById('searchResults');
+    if (resultsContainer) resultsContainer.style.display = 'none';
+    
+    // Remove highlights
+    removeAllHighlights();
+    
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Filter ALL cards (both static and dynamic)
+    const allCards = document.querySelectorAll('.evidence-card');
+    allCards.forEach(card => {
+        const cardType = card.getAttribute('data-type');
+        card.style.display = (type === 'all' || cardType === type) ? 'block' : 'none';
+    });
+}
+
+// ==================== SETUP FILTER BUTTONS ====================
+function setupFilterButtons() {
+    // Remove old onclick handlers and attach fresh ones
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+        // Store the original onclick
+        const originalOnClick = btn.getAttribute('onclick');
+        if (originalOnClick) {
+            // Replace with our enhanced function
+            const type = originalOnClick.match(/'([^']+)'/)?.[1] || 'all';
+            btn.onclick = function(e) {
+                e.preventDefault();
+                filterByType(type);
+            };
+        }
+    });
+    console.log('🔧 Filter buttons reattached');
+}
+
+// ==================== CLEAR SEARCH ====================
+function clearSearch() {
+    console.log('🧹 Clearing search');
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+    
+    // Show all cards
+    const allCards = document.querySelectorAll('.evidence-card');
+    allCards.forEach(card => { card.style.display = 'block'; });
+    
+    // Hide results
+    const resultsContainer = document.getElementById('searchResults');
+    if (resultsContainer) resultsContainer.style.display = 'none';
+    
+    // Remove highlights
+    removeAllHighlights();
+    
+    // Reset filter to "All Claims"
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick')?.includes('all')) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// ==================== HIGHLIGHT FUNCTIONS ====================
+function removeAllHighlights() {
+    const highlights = document.querySelectorAll('.search-highlight');
+    highlights.forEach(highlight => {
+        const text = document.createTextNode(highlight.textContent);
+        if (highlight.parentNode) {
+            highlight.parentNode.replaceChild(text, highlight);
+        }
+    });
+}
+
+function highlightSearchInCard(card, searchTerm) {
+    if (!searchTerm || searchTerm.length < 2) return;
+    
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    
+    function highlightNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            if (regex.test(text)) {
+                const span = document.createElement('span');
+                span.className = 'search-highlight';
+                span.style.backgroundColor = '#FAD201';
+                span.style.padding = '2px';
+                span.style.borderRadius = '2px';
+                span.style.fontWeight = 'bold';
+                
+                const newText = text.replace(regex, '<span class="search-highlight" style="background-color: #FAD201; padding: 2px; border-radius: 2px; font-weight: bold;">$1</span>');
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = newText;
+                
+                if (node.parentNode) {
+                    const fragment = document.createDocumentFragment();
+                    while (tempDiv.firstChild) {
+                        fragment.appendChild(tempDiv.firstChild);
+                    }
+                    node.parentNode.replaceChild(fragment, node);
+                }
+                return true;
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            if (['BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION'].includes(node.tagName)) {
+                return false;
+            }
+            
+            const childNodes = Array.from(node.childNodes);
+            childNodes.forEach(child => highlightNode(child));
+        }
+        return false;
+    }
+    
+    const cardBody = card.querySelector('.card-body');
+    if (cardBody) highlightNode(cardBody);
+}
+
+// ==================== WRAPPER FOR EXISTING FUNCTIONS ====================
+// This preserves the original function names so your HTML onclick works
+window.performSearch = performSimpleSearch;
+window.filterByType = filterByType;
+window.clearSearch = clearSearch;
+window.showDetailedEvidence = showEvidenceDetails;
+
+// ==================== SUPPORT RESOURCES ====================
+document.addEventListener('DOMContentLoaded', function() {
+    const supportLink = document.getElementById('supportLink');
+    if (supportLink) {
+        supportLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Call 112 (toll-free emergency)\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n• Local health centers\n\nINTERNATIONAL:\n• Local mental health services\n• Genocide survivor organizations\n• Trauma counseling services');
+        });
+    }
+});
+
+console.log('✅ Shield script loaded - Hybrid Mode active');
+</script>
+</body>
+</html>

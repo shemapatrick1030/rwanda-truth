@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Memorial — Rwanda Truth</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ===== THE MEMORIAL — DIGITAL REMEMBRANCE ===== */
+        /* Your original cinematic candles - FULLY RESTORED */
+
+        :root {
+            --memorial-gray: #2C3E50;
+            --memorial-charcoal: #1A2530;
+            --memorial-amber: #F6AD55;
+            --memorial-candle: #FEEBC8;
+            --memorial-stone: #E2E8F0;
+            --memorial-script: #4A5568;
+            --memorial-fade: rgba(44, 62, 80, 0.05);
+        }
+
+        /* ===== HERO — SACRED SPACE ===== */
+        .memorial-hero {
+            background: linear-gradient(135deg, var(--memorial-charcoal) 0%, var(--memorial-gray) 100%);
+            position: relative;
+            isolation: isolate;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .memorial-hero::before {
+            content: '🕯️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            opacity: 0.08;
+            pointer-events: none;
+            animation: candleFlicker 4s infinite ease-in-out;
+        }
+
+        @keyframes candleFlicker {
+
+            0%,
+            100% {
+                opacity: 0.08;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 0.12;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .memorial-hero h1 {
+            color: white;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .memorial-hero h1::before {
+            content: '🕯️';
+            display: block;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .memorial-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--memorial-amber);
+        }
+
+        /* ===== REMEMBRANCE NOTE ===== */
+        .remembrance-note {
+            background: white;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 900px;
+            margin: -40px auto 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===== SURVIVOR VOICES ===== */
+        .voices-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background-image: url('data:image/jpeg;base64,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');
+            padding: 80px 0;
+        }
+
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            color: var(--memorial-gray);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 2px;
+            background: var(--memorial-amber);
+            margin: 15px auto 0;
+        }
+
+        .testimonies-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .testimony-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .testimony-quote {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--memorial-gray);
+            margin-bottom: 25px;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 4px solid var(--memorial-amber);
+        }
+
+        .testimony-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--memorial-gray), var(--memorial-charcoal));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* ===== TIMELINE - FIXED ===== */
+        .timeline-section {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                    rgba(44, 62, 80, 0.1),
+                    rgba(44, 62, 80, 0.5),
+                    rgba(44, 62, 80, 0.1));
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            position: relative;
+            width: 100%;
+        }
+
+        .timeline-date {
+            width: 130px;
+            text-align: center;
+            padding: 12px 10px;
+            background: var(--memorial-gray);
+            color: white;
+            border-radius: 40px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(44, 62, 80, 0.3);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            width: calc(50% - 80px);
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid var(--memorial-amber);
+            z-index: 2;
+        }
+
+        .timeline-content h4 {
+            color: var(--memorial-gray);
+            margin-bottom: 10px;
+        }
+
+        .timeline-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(44, 62, 80, 0.1);
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* ===== YOUR ORIGINAL CINEMATIC CANDLES ===== */
+        .honor-section {
+            background: linear-gradient(135deg, #1A2530 0%, #2C3E50 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .honor-section::before {
+            content: '🕯️🕯️🕯️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 150px;
+            opacity: 0.03;
+            letter-spacing: 20px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .candle-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 80px 0;
+            flex-wrap: wrap;
+            perspective: 1000px;
+        }
+
+        .candle-wrapper {
+            position: relative;
+            width: 70px;
+            height: 140px;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        .candle-wrapper:hover {
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        .candle-wax {
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            width: 30px;
+            height: 100px;
+            background: linear-gradient(145deg, #FFF9E6 0%, #FFEFD5 30%, #FFE5C0 70%, #FFDAB9 100%);
+            border-radius: 6px 6px 3px 3px;
+            box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.05), inset 2px 2px 5px rgba(255, 255, 255, 0.8), 0 5px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .candle-wax::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 5px;
+            width: 20px;
+            height: 8px;
+            background: linear-gradient(145deg, #FFE5C0, #FFDAB9);
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .candle-base {
+            position: absolute;
+            bottom: -8px;
+            left: 12px;
+            width: 46px;
+            height: 12px;
+            background: linear-gradient(145deg, #D4AF37 0%, #B8860B 50%, #8B6914 100%);
+            border-radius: 6px;
+            box-shadow: inset -1px -1px 3px rgba(0, 0, 0, 0.3), inset 1px 1px 3px rgba(255, 255, 255, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .candle-wick {
+            position: absolute;
+            bottom: 95px;
+            left: 34px;
+            width: 2px;
+            height: 16px;
+            background: linear-gradient(135deg, #2C3E50, #1A1A1A);
+            border-radius: 1px;
+            z-index: 15;
+        }
+
+        .candle-wick::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 6px;
+            height: 6px;
+            background: #1A1A1A;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .flame-container {
+            position: absolute;
+            bottom: 105px;
+            left: 28px;
+            width: 16px;
+            height: 30px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 20;
+        }
+
+        .flame-inner {
+            position: absolute;
+            bottom: 0;
+            left: 2px;
+            width: 12px;
+            height: 20px;
+            background: radial-gradient(circle at 50% 0%, #FFE55C 0%, #FFB347 60%, #FF8C42 100%);
+            border-radius: 50% 50% 30% 30% / 60% 60% 30% 30%;
+            transform-origin: bottom center;
+            animation: flameFlicker 0.08s infinite alternate;
+            filter: blur(0.5px);
+            box-shadow: 0 0 20px rgba(255, 200, 100, 0.8);
+        }
+
+        .flame-outer {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 16px;
+            height: 28px;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 140, 0, 0.6) 0%, rgba(255, 100, 0, 0.3) 70%, transparent 100%);
+            border-radius: 50% 50% 30% 30%;
+            filter: blur(3px);
+            animation: flameSway 0.15s infinite alternate;
+        }
+
+        .flame-tip {
+            position: absolute;
+            top: -8px;
+            left: 4px;
+            width: 8px;
+            height: 12px;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 200, 0.9) 0%, rgba(255, 200, 100, 0.4) 80%);
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: flameTipFlicker 0.1s infinite alternate;
+        }
+
+        .candle-glow {
+            position: absolute;
+            bottom: 80px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.5) 0%, rgba(255, 100, 0, 0.2) 50%, transparent 80%);
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(15px);
+            transition: opacity 0.5s ease;
+            z-index: 5;
+        }
+
+        .candle-wrapper.lit .flame-container {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .candle-wrapper.lit .candle-glow {
+            opacity: 1;
+        }
+
+        .candle-wrapper.lit .candle-wax {
+            background: linear-gradient(145deg, #FFF0D0 0%, #FFE5B0 30%, #FFD5A0 70%, #FFC090 100%);
+            box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.05), inset 2px 2px 10px rgba(255, 200, 100, 0.5), 0 5px 15px rgba(255, 100, 0, 0.3);
+        }
+
+        .candle-wrapper.lit .candle-wick::after {
+            background: #FF4500;
+            box-shadow: 0 0 8px #FF8C42;
+        }
+
+        .candle-wrapper.unlit .flame-container {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .candle-wrapper.unlit .candle-glow {
+            opacity: 0;
+        }
+
+        .candle-message {
+            font-size: 1.1rem;
+            margin-top: 50px;
+            min-height: 70px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .honor-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .honor-btn {
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .honor-btn:hover {
+            background: white;
+            color: var(--memorial-gray);
+        }
+
+        @keyframes flameFlicker {
+            0% {
+                transform: scaleY(1) translateX(0);
+                opacity: 0.9;
+            }
+
+            25% {
+                transform: scaleY(1.1) translateX(-0.5px);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scaleY(0.95) translateX(0.5px);
+                opacity: 0.95;
+            }
+
+            75% {
+                transform: scaleY(1.05) translateX(-0.3px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scaleY(1) translateX(0);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes flameSway {
+            0% {
+                transform: translateX(-1px) rotate(-1deg);
+            }
+
+            100% {
+                transform: translateX(1px) rotate(1deg);
+            }
+        }
+
+        @keyframes flameTipFlicker {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* ===== VICTIM PAGES STYLES ===== */
+        .victim-page {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .victim-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .victim-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 4px solid var(--memorial-amber);
+        }
+
+        .victim-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .victim-dates {
+            font-size: 1.2rem;
+            color: var(--memorial-gray);
+            margin: 10px 0;
+        }
+
+        .victim-place {
+            font-size: 1rem;
+            color: #718096;
+        }
+
+        .victim-story {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 4px solid var(--memorial-amber);
+        }
+
+        .victim-story h2 {
+            color: var(--memorial-gray);
+            margin-bottom: 15px;
+        }
+
+        .victim-candles {
+            text-align: center;
+            padding: 30px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .mini-candle {
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .mini-candle:hover {
+            transform: scale(1.2);
+        }
+
+        .victim-messages {
+            margin-top: 30px;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .message-list {
+            margin-top: 20px;
+        }
+
+        .message-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--memorial-amber);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--memorial-gray);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+      /* ===== NAMES GRID - WITH PURPLE BACKGROUND ===== */
+.names-section {
+    padding: 60px 20px;
+    background: #4B2E5B;  /* Rich purple - mourning color */
+    color: white;
+}
+
+.names-section .section-title h2 {
+    color: white;
+}
+
+.names-section .section-title p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.name-search {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 30px;
+    padding: 15px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    font-size: 1.1rem;
+    display: block;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.name-search::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.name-search:focus {
+    outline: none;
+    border-color: var(--memorial-amber);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.names-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.name-card {
+    background: rgba(255, 255, 255, 0.1);  /* Semi-transparent white */
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+    color: white;
+}
+
+.name-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--memorial-amber);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.name-card h4 {
+    color: white;
+    margin-bottom: 5px;
+}
+
+.name-card p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.name-card small {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+        /* Timeline toggle button */
+        #toggleTimelineBtn {
+            background: var(--memorial-gray);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
+        }
+
+        #toggleTimelineBtn:hover {
+            background: var(--memorial-amber);
+            color: var(--memorial-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(246, 173, 85, 0.3);
+        }
+
+        .timeline-item {
+            transition: opacity 0.3s ease;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .testimonies-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .timeline-date {
+                width: auto;
+                min-width: 100px;
+                margin-right: 0 !important;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .candle-grid {
+                gap: 30px;
+            }
+
+            .candle-wrapper {
+                width: 60px;
+                height: 120px;
+            }
+
+            .names-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Submission Section - Purple */
+.submission-section {
+    background: #4B2E5B !important;
+    color: white;
+}
+
+.submission-section h2 {
+    color: white !important;
+}
+
+.submission-section p {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+#submitNameForm {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#submitNameForm label {
+    color: white !important;
+}
+
+#submitNameForm input,
+#submitNameForm textarea {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+#submitNameForm input::placeholder,
+#submitNameForm textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#submitNameForm small {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+/* ===== TIMELINE SECTION WITH BACKGROUND ===== */
+.timeline-section {
+    padding: 80px 20px;
+    position: relative;
+    background: linear-gradient(135deg, 
+        rgba(75, 46, 91, 0.92), 
+        rgba(58, 35, 70, 0.95)),
+        url('data:image/jpeg;base64,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');
+    background-attachment: fixed;
+    color: white;
+}
+
+.timeline-section .section-title h2 {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-section .section-title p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.timeline::before {
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.1));
+}
+
+.timeline-date {
+    background: var(--memorial-amber);
+    color: #4B2E5B;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    border-left: 4px solid var(--memorial-amber);
+    color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-content h4 {
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-content p {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.timeline-category {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Add subtle overlay effect on hover */
+.timeline-content:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+    </style>
+</head>
+
+<body>
+    <!-- Warning Bar -->
+    <div class="warning-bar">
+        ⚠️ <strong>Content Warning:</strong> This site contains historical evidence and testimonies of the 1994 Genocide
+        against the Tutsi in Rwanda.
+        <a href="#support" id="supportLink">Mental Health Support Resources</a>
+    </div>
+
+    <!-- Header -->
+    <header class="hero memorial-hero">
+        <div>
+            <h1>THE MEMORIAL</h1>
+            <p>In memory of more than one million Tutsi lives lost in the 1994 Genocide against the Tutsi in Rwanda.</p>
+            <div class="memorial-stats">
+                <div><span class="stat-number">1,000,000+</span>
+                    <div>Lives Lost</div>
+                </div>
+                <div><span class="stat-number">1994</span>
+                    <div>100 Days</div>
+                </div>
+                <div><span class="stat-number">30+</span>
+                    <div>Years of Memory</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item">🏠 HOME</a>
+            <a href="shield.html" class="nav-item">🛡️ THE SHIELD</a>
+            <a href="forge.html" class="nav-item">🔥 THE FORGE</a>
+            <a href="memorial.html" class="nav-item active">🕯️ THE MEMORIAL</a>
+        </div>
+    </nav>
+
+    <main id="mainContent">
+        <!-- This will be dynamically replaced by victim page if ID is present -->
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ==================== FIREBASE CONFIG ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMkuxVxbRFk6xNQAoM7Q9Px5GVEEufTwA",
+            authDomain: "rwanda-truth-platform.firebaseapp.com",
+            projectId: "rwanda-truth-platform",
+            storageBucket: "rwanda-truth-platform.firebasestorage.app",
+            messagingSenderId: "181266362218",
+            appId: "1:181266362218:web:8dd29cd96b15096c397f13"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        console.log('🔥 Firebase connected!');
+
+        // ==================== GLOBAL DATA ====================
+        let testimonies = [];
+        let timelineEvents = [];
+        let victims = [];
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function () {
+            loadAllData();
+            setupSupportLink();
+
+            // Check if we're viewing a specific victim
+            const urlParams = new URLSearchParams(window.location.search);
+            const victimId = urlParams.get('id');
+
+            if (victimId) {
+                showVictimPage(victimId);
+            } else {
+                renderMemorialHome();
+            }
+        });
+
+        // ==================== LOAD DATA FROM FIREBASE ====================
+        async function loadAllData() {
+            try {
+                // Load testimonies (only published ones)
+                const testimoniesSnapshot = await db.collection('testimonies')
+                    .where('published', '==', true)
+                    .get();
+                testimonies = testimoniesSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                console.log(`📖 Loaded ${testimonies.length} testimonies`);
+
+                // Load timeline (ordered by date)
+                const timelineSnapshot = await db.collection('timeline')
+                    .orderBy('dateSort', 'asc')
+                    .get();
+                timelineEvents = timelineSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                console.log(`📅 Loaded ${timelineEvents.length} timeline events`);
+
+                // Load published victims
+                const victimsSnapshot = await db.collection('victims')
+                    .where('status', '==', 'published')
+                    .get();
+                victims = victimsSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                console.log(`🕯️ Loaded ${victims.length} published victims`);
+
+                // Re-render if already on home page
+                if (!document.getElementById('victim-page')) {
+                    renderTestimonies();
+                    renderTimeline();
+                    renderNamesGrid();
+                }
+            } catch (error) {
+                console.error('Error loading from Firebase:', error);
+                alert('Error loading data. Please refresh the page.');
+            }
+        }
+
+        function renderMemorialHome() {
+            const main = document.getElementById('mainContent');
+
+            main.innerHTML = `
+                <!-- Remembrance Note -->
+                <div class="container">
+                    <div class="remembrance-note">
+                        <h2>KWIBUKA — To Remember</h2>
+                        <p>"To remember is not only to look back. It is to carry forward. It is to say: you lived, you mattered, and your memory will not be erased."</p>
+                        <div class="remembrance-signature">— Rwanda Truth Platform</div>
+                    </div>
+                </div>
+                
+                <!-- Survivor Voices -->
+                <div class="voices-section">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Survivor Voices</h2>
+                            <p>First-person testimonies of resilience, loss, and memory.</p>
+                        </div>
+                        <div id="testimoniesGrid" class="testimonies-grid"></div>
+                    </div>
+                </div>
+                
+                <!-- Timeline -->
+                <div class="timeline-section">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>A Timeline of Memory</h2>
+                            <p>From genocide to remembrance — key moments in the pursuit of justice.</p>
+                        </div>
+                        <div id="timelineContainer" class="timeline"></div>
+                    </div>
+                </div>
+                
+                <!-- Names Section -->
+                <div id="namesSection" class="names-section">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>🕊️ Read the Names</h2>
+                            <p>Each name is a life. Each life matters. Click on any name to read their story.</p>
+                        </div>
+                        
+                        <input type="text" id="nameSearch" class="name-search" placeholder="Search for a name..." onkeyup="searchNames()">
+                        
+                        <div id="namesGrid" class="names-grid"></div>
+                    </div>
+                </div>
+                
+                <!-- Honor Wall -->
+                <div class="honor-section">
+                    <div class="container">
+                        <h2>Light a Candle of Remembrance</h2>
+                        <p>Each candle represents a life lost, a survivor's strength, or a commitment to memory.</p>
+                        
+                        <div class="candle-grid" id="candleGrid">
+                            ${Array(6).fill(0).map((_, i) => `
+                                <div class="candle-wrapper unlit" onclick="toggleCandle(this)">
+                                    <div class="candle-base"></div>
+                                    <div class="candle-wax"></div>
+                                    <div class="candle-wick"></div>
+                                    <div class="flame-container">
+                                        <div class="flame-outer"></div>
+                                        <div class="flame-inner"></div>
+                                        <div class="flame-tip"></div>
+                                    </div>
+                                    <div class="candle-glow"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <p id="candleMessage" class="candle-message">
+                            Click a candle to light it. Each flame is a promise: we remember.
+                        </p>
+                        
+                        <!-- Honor Actions -->
+                        <div class="honor-actions" style="margin-top: 40px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                            <button class="honor-btn" onclick="document.getElementById('namesSection').scrollIntoView({ behavior: 'smooth' })">
+                                🕊️ Read the Names
+                            </button>
+                            <button class="honor-btn" onclick="document.getElementById('submissionSection').scrollIntoView({ behavior: 'smooth' })">
+                                📝 Leave a Message
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submission Section -->
+                <div id="submissionSection" class="submission-section" style="background: #f8fafc; padding: 60px 20px;">
+                    <div class="container" style="max-width: 700px;">
+                        <h2 style="text-align: center; color: var(--memorial-gray); margin-bottom: 20px;">
+                            🕊️ Know Someone We Should Remember?
+                        </h2>
+                        <p style="text-align: center; color: #4a5568; margin-bottom: 40px;">
+                            If you lost a loved one in the 1994 Genocide against the Tutsi, 
+                            you can submit their name and story here. Our team will review and add them to our memorial.
+                        </p>
+                        
+                        <form id="submitNameForm" style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                            <div class="form-group">
+                                <label>Victim's Full Name *</label>
+                                <input type="text" id="submitName" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Your Name *</label>
+                                <input type="text" id="submitterName" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Your Email *</label>
+                                <input type="email" id="submitterEmail" class="form-control" required>
+                                <small>We'll notify you when their page is published.</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Victim's Story (optional)</label>
+                                <textarea id="submitStory" class="form-control" rows="4" placeholder="Tell us about them..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Relationship to Victim</label>
+                                <input type="text" id="submitRelationship" class="form-control" placeholder="e.g., Daughter, Son, Friend">
+                            </div>
+                            
+                            <button type="button" class="btn" style="width: 100%;" onclick="submitVictimName()">
+                                🕯️ Submit for Review
+                            </button>
+                        </form>
+                        
+                        <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #718096;">
+                            All submissions are reviewed to ensure accuracy and respect.
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            // Render all sections
+            renderTestimonies();
+            renderTimeline();
+            renderNamesGrid();
+        }
+
+        function renderTestimonies() {
+            const grid = document.getElementById('testimoniesGrid');
+            if (!grid) return;
+
+            if (testimonies.length === 0) {
+                grid.innerHTML = '<div class="empty-memorial">🕯️ Survivor testimonies are being gathered. Please check back soon.</div>';
+                return;
+            }
+
+            let html = '';
+            testimonies.forEach(t => {
+                const initials = t.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                html += `
+                    <div class="testimony-card">
+                        <div class="testimony-quote">"${t.quote}"</div>
+                        <div class="testimony-author">
+                            <div class="author-avatar">${initials}</div>
+                            <div>
+                                <h4>${t.name}</h4>
+                                <p>${t.location || 'Rwanda'}</p>
+                            </div>
+                        </div>
+                        ${t.videoId ? `
+                            <a href="https://youtu.be/${t.videoId}" target="_blank" class="btn" style="margin-top:20px; display:inline-block; background:#FF0000; color:white;">
+                                ▶️ Watch on RBA YouTube
+                            </a>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('timelineContainer');
+            if (!container) return;
+
+            if (timelineEvents.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:60px;">📅 Timeline coming soon</div>';
+                return;
+            }
+
+            const initialDisplay = 7;
+            const showAll = sessionStorage.getItem('showFullTimeline') === 'true';
+            const eventsToShow = showAll ? timelineEvents : timelineEvents.slice(0, initialDisplay);
+            const hasMore = timelineEvents.length > initialDisplay;
+
+            const categoryIcon = {
+                'Genocide': '⚔️',
+                'Justice': '⚖️',
+                'Memory': '🕯️',
+                'Survivor': '👤'
+            };
+
+            let html = '';
+            eventsToShow.forEach(event => {
+                const icon = categoryIcon[event.category] || '📌';
+
+                html += `
+                    <div class="timeline-item">
+                        <div class="timeline-date">${event.date || '1994'}</div>
+                        <div class="timeline-content">
+                            <h4>${event.title || 'Event'}</h4>
+                            
+                            ${event.imageUrl ? `
+                                <div style="margin: 20px 0; text-align: center; background: #f1f5f9; padding: 15px; border-radius: 12px;">
+                                    <img src="${event.imageUrl}" 
+                                         alt="${event.title}" 
+                                         style="max-width: 100%; max-height: 250px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); cursor: pointer;"
+                                         onclick="window.open(this.src, '_blank')"
+                                         loading="lazy">
+                                    <p style="font-size: 0.8rem; color: #4a5568; margin-top: 10px;">🔍 Click image to enlarge</p>
+                                </div>
+                            ` : ''}
+                            
+                            <p>${event.description || ''}</p>
+                            <span class="timeline-category">
+                                ${icon} ${event.category || 'Memory'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (hasMore) {
+                const btnText = showAll ? '📖 Show Less' : `📚 View Full Timeline (${timelineEvents.length} events)`;
+                html += `
+                    <div style="text-align: center; margin: 40px 0 20px;">
+                        <button id="toggleTimelineBtn" class="btn" style="padding: 15px 40px; font-size: 1.1rem;" onclick="toggleFullTimeline()">${btnText}</button>
+                    </div>
+                `;
+            }
+
+            if (!showAll && timelineEvents.length > initialDisplay) {
+                html += `<div style="text-align: center; margin-bottom: 20px; color: #718096; font-size: 0.9rem;">Showing ${initialDisplay} of ${timelineEvents.length} events</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function renderNamesGrid() {
+            const grid = document.getElementById('namesGrid');
+            if (!grid) {
+                console.log('Names grid element not found');
+                return;
+            }
+
+            console.log(`Rendering ${victims.length} published names`);
+
+            if (victims.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 40px; color: #718096;">🕊️ No names added yet. Be the first to submit a name above.</div>';
+                return;
+            }
+
+            let html = '';
+            victims.sort((a, b) => a.name.localeCompare(b.name)).forEach(v => {
+                html += `
+                    <div class="name-card" onclick="window.location.href='?id=${v.id}'">
+                        <h4>${v.name}</h4>
+                        <p>${v.born || ''} — ${v.died || ''}</p>
+                        <small>${v.place || 'Rwanda'}</small>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+            console.log(`✅ Names grid rendered with ${victims.length} names`);
+        }
+
+        window.searchNames = function () {
+            const searchTerm = document.getElementById('nameSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.name-card');
+
+            cards.forEach(card => {
+                const name = card.querySelector('h4').textContent.toLowerCase();
+                card.style.display = name.includes(searchTerm) ? 'block' : 'none';
+            });
+        };
+
+        async function showVictimPage(id) {
+            try {
+                const doc = await db.collection('victims').doc(id).get();
+                if (!doc.exists) {
+                    window.location.href = 'memorial.html';
+                    return;
+                }
+
+                const victim = { id: doc.id, ...doc.data() };
+
+                const main = document.getElementById('mainContent');
+
+                main.innerHTML = `
+                    <div class="container">
+                        <button class="back-button" onclick="window.location.href='memorial.html'">← Back to Memorial</button>
+                        
+                        <div class="victim-page">
+                            <div class="victim-header">
+                                <div class="victim-photo">
+                                    <img src="${victim.photo || 'https://via.placeholder.com/150?text=🕯️'}" alt="${victim.name}">
+                                </div>
+                                <h1>${victim.name}</h1>
+                                <p class="victim-dates">${victim.born || ''} — ${victim.died || ''}</p>
+                                <p class="victim-place">🕯️ ${victim.place || 'Rwanda'}</p>
+                            </div>
+                            
+                            <div class="victim-story">
+                                <h2>Their Story</h2>
+                                <p>${victim.story || 'No story provided yet.'}</p>
+                                ${victim.submittedBy ? `<p style="margin-top: 20px; font-style: italic; color: #718096;">— Submitted by ${victim.submittedBy}</p>` : ''}
+                            </div>
+                            
+                            <div class="victim-candles" id="victimCandles_${victim.id}">
+                                <h3>Light a Candle for ${victim.name.split(' ')[0]}</h3>
+                                <div class="mini-candles">
+                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 1)">🕯️</span>
+                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 2)">🕯️</span>
+                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 3)">🕯️</span>
+                                </div>
+                                <p id="candleCount_${victim.id}">${victim.candles || 0} candles lit</p>
+                            </div>
+                            
+                            <div class="victim-messages">
+                                <h3>Leave a Message</h3>
+                                <textarea id="messageText_${victim.id}" class="message-input" rows="3" placeholder="Share a memory or message..."></textarea>
+                                <button class="btn" onclick="postMessage('${victim.id}')">Post Message</button>
+                                
+                                <div id="messages_${victim.id}" class="message-list">
+                                    ${(victim.messages || []).map(m => `
+                                        <div class="message-item">
+                                            <p>"${m.text}"</p>
+                                            <small style="color: #718096;">— ${m.date}</small>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading victim:', error);
+                window.location.href = 'memorial.html';
+            }
+        }
+
+        window.submitVictimName = async function () {
+            const name = document.getElementById('submitName')?.value.trim();
+            const submitter = document.getElementById('submitterName')?.value.trim();
+            const email = document.getElementById('submitterEmail')?.value.trim();
+            const story = document.getElementById('submitStory')?.value.trim();
+            const relationship = document.getElementById('submitRelationship')?.value.trim();
+
+            if (!name || !submitter || !email) {
+                alert('Please fill in required fields');
+                return;
+            }
+
+            const newVictim = {
+                name: name,
+                born: '',
+                died: '',
+                place: '',
+                story: story || '',
+                submittedBy: `${submitter} (${relationship || 'Family'})`,
+                status: 'pending',
+                candles: 0,
+                messages: [],
+                email: email,
+                date: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                await db.collection('victims').add(newVictim);
+                alert('✅ Thank you. Your submission has been sent for review.');
+                document.getElementById('submitNameForm').reset();
+            } catch (error) {
+                alert('Error saving. Please try again.');
+                console.error('Firebase error:', error);
+            }
+        };
+
+        window.lightVictimCandle = async function (victimId, count) {
+            try {
+                const victimRef = db.collection('victims').doc(victimId);
+                await victimRef.update({
+                    candles: firebase.firestore.FieldValue.increment(count)
+                });
+
+                const candleEl = document.getElementById(`candleCount_${victimId}`);
+                if (candleEl) {
+                    const current = parseInt(candleEl.textContent) || 0;
+                    candleEl.textContent = `${current + count} candles lit`;
+                }
+            } catch (error) {
+                console.error('Error lighting candle:', error);
+            }
+        };
+
+        window.postMessage = async function (victimId) {
+            const messageText = document.getElementById(`messageText_${victimId}`)?.value.trim();
+            if (!messageText) return;
+
+            try {
+                const victimRef = db.collection('victims').doc(victimId);
+                const newMessage = {
+                    text: messageText,
+                    date: new Date().toLocaleDateString()
+                };
+
+                await victimRef.update({
+                    messages: firebase.firestore.FieldValue.arrayUnion(newMessage)
+                });
+
+                // Update display
+                const messagesDiv = document.getElementById(`messages_${victimId}`);
+                if (messagesDiv) {
+                    messagesDiv.insertAdjacentHTML('beforeend', `
+                        <div class="message-item">
+                            <p>"${messageText}"</p>
+                            <small style="color: #718096;">— ${newMessage.date}</small>
+                        </div>
+                    `);
+                }
+
+                document.getElementById(`messageText_${victimId}`).value = '';
+            } catch (error) {
+                console.error('Error posting message:', error);
+            }
+        };
+
+        window.toggleFullTimeline = function () {
+            const showFull = sessionStorage.getItem('showFullTimeline') === 'true';
+            sessionStorage.setItem('showFullTimeline', !showFull);
+            renderTimeline();
+
+            const timelineSection = document.querySelector('.timeline-section');
+            if (timelineSection) {
+                timelineSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+
+        window.toggleCandle = function (candleWrapper) {
+            if (candleWrapper.classList.contains('lit')) {
+                candleWrapper.classList.remove('lit');
+                candleWrapper.classList.add('unlit');
+            } else {
+                candleWrapper.classList.remove('unlit');
+                candleWrapper.classList.add('lit');
+            }
+
+            const litCandles = document.querySelectorAll('.candle-wrapper.lit').length;
+            const messageEl = document.getElementById('candleMessage');
+
+            if (messageEl) {
+                if (litCandles === 0) {
+                    messageEl.innerHTML = 'Click a candle to light it. Each flame is a promise: we remember.';
+                } else if (litCandles === 1) {
+                    messageEl.innerHTML = '🕯️ One flame burns in remembrance. A single light in the darkness.';
+                } else {
+                    messageEl.innerHTML = `🕯️ ${litCandles} flames burn bright tonight. Each light carries a name, a memory, a promise.`;
+                }
+            }
+        };
+
+        function setupSupportLink() {
+            const link = document.getElementById('supportLink');
+            if (link) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112\n• IBUKA (Survivors\' Organization)');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

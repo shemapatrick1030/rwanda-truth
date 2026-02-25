@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Rwanda Truth Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Admin-specific styles */
+        body {
+            background: #f8f9fa;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .admin-header h1 {
+            color: var(--memorial-gray);
+            margin-bottom: 10px;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tab-btn {
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .tab-btn:hover {
+            border-color: var(--rwanda-blue);
+            color: var(--rwanda-blue);
+        }
+        
+        .tab-btn.active {
+            background: var(--rwanda-blue);
+            color: white;
+            border-color: var(--rwanda-blue);
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--memorial-gray);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--rwanda-blue);
+            box-shadow: 0 0 0 3px rgba(0, 161, 222, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .evidence-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--rwanda-blue);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .section-header h4 {
+            color: var(--memorial-gray);
+            margin: 0;
+        }
+        
+        .remove-section {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .item-list {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+        }
+        
+        .list-item {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-info h4 {
+            margin-bottom: 8px;
+            color: var(--memorial-gray);
+        }
+        
+        .item-meta {
+            color: #718096;
+            font-size: 14px;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-draft { background: #fed7d7; color: #c53030; }
+        .status-published { background: #c6f6d5; color: #276749; }
+        .status-pending { background: #feebc8; color: #b7791f; }
+        
+        .tutorial-box {
+            background: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--rwanda-blue);
+        }
+        
+        .tutorial-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .tutorial-step {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--rwanda-blue);
+            color: white;
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .level-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .level-beginner { background: #CD7F32; color: white; }
+        .level-intermediate { background: #C0C0C0; color: #1A202C; }
+        .level-advanced { background: #FFD700; color: #1A202C; }
+        
+        .image-preview {
+            max-width: 100px;
+            max-height: 60px;
+            border-radius: 4px;
+            margin-top: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .victim-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .victim-tab {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .victim-tab.active {
+            background: var(--memorial-amber);
+            color: var(--memorial-gray);
+            border-color: var(--memorial-amber);
+        }
+        
+        @media (max-width: 768px) {
+            .admin-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                width: 100%;
+            }
+            
+            .list-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .item-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+        
+        .data-warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Warning Bar -->
+    <div class="warning-bar">
+        🔒 <strong>Admin Area - Private</strong> All actions are logged. Keep this page secure.
+    </div>
+    
+    <!-- Header -->
+    <header class="hero">
+        <h1>Admin Dashboard</h1>
+        <p>Complete content management for Rwanda Truth Platform</p>
+    </header>
+    
+    <!-- Main Admin Content -->
+    <main class="admin-container">
+        <!-- Tutorial Section -->
+        <section class="tutorial-box">
+            <h3>📚 Complete Content Management System</h3>
+            <p>Eight content areas — all stored in Firebase cloud database.</p>
+            
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <div class="step-number">🛡️</div>
+                    <h4>SHIELD</h4>
+                    <p>Evidence claims with sections, sources, and publish status.</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">🧰</div>
+                    <h4>FORGE - Tactics</h4>
+                    <p>Denial tactics with difficulty levels.</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">🎯</div>
+                    <h4>FORGE - Scenarios</h4>
+                    <p>Interactive Q&A with feedback and evidence.</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">📚</div>
+                    <h4>Resources</h4>
+                    <p>Downloadable resources with level filtering.</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">🕯️</div>
+                    <h4>MEMORIAL - Testimonies</h4>
+                    <p>Survivor voices with RBA video links.</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">📅</div>
+                    <h4>MEMORIAL - Timeline</h4>
+                    <p>Key dates with images and categories.</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">📖</div>
+                    <h4>MEMORIAL - Victim Pages</h4>
+                    <p>Individual pages for victims with community submissions.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Admin Tabs -->
+        <div class="admin-tabs" id="adminTabs">
+            <button class="tab-btn active" onclick="showTab('shield-add')">🛡️ SHIELD - Add</button>
+            <button class="tab-btn" onclick="showTab('shield-manage')">📋 SHIELD - Manage</button>
+            <button class="tab-btn" onclick="showTab('forge-tactics')">🧰 FORGE - Tactics</button>
+            <button class="tab-btn" onclick="showTab('forge-scenarios')">🎯 FORGE - Scenarios</button>
+            <button class="tab-btn" onclick="showTab('resources')">📚 Resources</button>
+            <button class="tab-btn" onclick="showTab('memorial-testimonies')">🕯️ MEMORIAL - Testimonies</button>
+            <button class="tab-btn" onclick="showTab('memorial-timeline')">📅 MEMORIAL - Timeline</button>
+            <button class="tab-btn" onclick="showTab('memorial-victims')">📖 MEMORIAL - Victim Pages</button>
+            <button class="tab-btn" onclick="showTab('export')">📤 Export</button>
+            <button class="tab-btn" onclick="showTab('help')">❓ Help</button>
+        </div>
+        
+        <!-- ========== SHIELD - ADD EVIDENCE ========== -->
+        <div id="shield-add" class="tab-content active">
+            <h2>Add New Evidence Claim</h2>
+            <form id="evidenceForm">
+                <div class="form-group">
+                    <label class="form-label">Denial Claim *</label>
+                    <input type="text" id="claimTitle" class="form-control" placeholder="Enter the exact denial claim" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Claim Type *</label>
+                    <select id="claimType" class="form-control" required>
+                        <option value="">Select a type...</option>
+                        <option value="common">Common Denial Claim</option>
+                        <option value="statistical">Statistical Denial</option>
+                        <option value="false-equivalence">False Equivalence</option>
+                        <option value="historical-distortion">Historical Distortion</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Difficulty Level *</label>
+                    <select id="evidenceLevel" class="form-control" required>
+                        <option value="beginner">🔰 Beginner</option>
+                        <option value="intermediate">⚔️ Intermediate</option>
+                        <option value="advanced">🛡️ Advanced</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Evidence Sections</label>
+                    <div id="evidenceSections"></div>
+                    <button type="button" class="btn btn-outline mt-2" onclick="addEvidenceSection()">➕ Add Section</button>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Source Links</label>
+                    <textarea id="sourceLinks" class="form-control" rows="3" placeholder="One link per line"></textarea>
+                </div>
+                
+                <div class="actions">
+                    <button type="button" class="btn" onclick="saveEvidenceDraft()">💾 Save Draft</button>
+                    <button type="button" class="btn" style="background: var(--rwanda-green);" onclick="saveEvidencePublished()">✅ Publish</button>
+                    <button type="button" class="btn btn-outline" onclick="clearEvidenceForm()">🗑️ Clear</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- ========== SHIELD - MANAGE EVIDENCE ========== -->
+        <div id="shield-manage" class="tab-content">
+            <h2>Manage Evidence</h2>
+            <div id="evidenceList" class="item-list"></div>
+        </div>
+        
+        <!-- ========== FORGE - TACTICS ========== -->
+        <div id="forge-tactics" class="tab-content">
+            <h2>Manage Denial Tactics</h2>
+            <div style="margin-bottom: 30px;">
+                <button class="btn" onclick="showTacticForm()">➕ Add New Tactic</button>
+            </div>
+            
+            <div id="tacticFormContainer" style="display: none; background: #f8fafc; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 id="tacticFormTitle">Add New Tactic</h3>
+                <div class="form-group">
+                    <label class="form-label">Tactic Name *</label>
+                    <input type="text" id="tacticName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Icon</label>
+                    <input type="text" id="tacticIcon" class="form-control" value="📌">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Example Claim *</label>
+                    <input type="text" id="tacticExample" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Definition *</label>
+                    <textarea id="tacticDefinition" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Response Strategy *</label>
+                    <input type="text" id="tacticStrategy" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Framework Steps</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <input type="text" id="step1" class="form-control" placeholder="Step 1">
+                        <input type="text" id="step2" class="form-control" placeholder="Step 2">
+                        <input type="text" id="step3" class="form-control" placeholder="Step 3">
+                        <input type="text" id="step4" class="form-control" placeholder="Step 4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Difficulty Level</label>
+                    <select id="tacticLevel" class="form-control">
+                        <option value="beginner">🔰 Beginner</option>
+                        <option value="intermediate">⚔️ Intermediate</option>
+                        <option value="advanced">🛡️ Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Real World Example</label>
+                    <textarea id="tacticRealExample" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="actions">
+                    <button type="button" class="btn" onclick="saveTactic()">💾 Save Tactic</button>
+                    <button type="button" class="btn btn-outline" onclick="cancelTacticForm()">Cancel</button>
+                </div>
+            </div>
+            
+            <div id="tacticsList" class="item-list"></div>
+        </div>
+        
+        <!-- ========== FORGE - SCENARIOS ========== -->
+        <div id="forge-scenarios" class="tab-content">
+            <h2>Manage Scenarios</h2>
+            <div style="margin-bottom: 30px;">
+                <button class="btn" onclick="showScenarioForm()">➕ Add New Scenario</button>
+            </div>
+            
+            <div id="scenarioFormContainer" style="display: none; background: #f8fafc; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 id="scenarioFormTitle">Add New Scenario</h3>
+                <div class="form-group">
+                    <label class="form-label">Denial Claim *</label>
+                    <textarea id="scenarioClaim" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tactic Type</label>
+                    <select id="scenarioTactic" class="form-control">
+                        <option value="minimization">Minimization</option>
+                        <option value="deflection">Deflection</option>
+                        <option value="false-equivalence">False Equivalence</option>
+                        <option value="distortion">Historical Distortion</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Difficulty Level</label>
+                    <select id="scenarioLevel" class="form-control">
+                        <option value="beginner">🔰 Beginner</option>
+                        <option value="intermediate">⚔️ Intermediate</option>
+                        <option value="advanced">🛡️ Advanced</option>
+                    </select>
+                </div>
+                
+                <div id="responsesContainer"></div>
+                
+                <div class="actions">
+                    <button type="button" class="btn" onclick="saveScenario()">💾 Save Scenario</button>
+                    <button type="button" class="btn btn-outline" onclick="cancelScenarioForm()">Cancel</button>
+                </div>
+            </div>
+            
+            <div id="scenariosList" class="item-list"></div>
+        </div>
+        
+        <!-- ========== RESOURCES ========== -->
+        <div id="resources" class="tab-content">
+            <h2>Manage Resources</h2>
+            <div style="margin-bottom: 30px;">
+                <button class="btn" onclick="showResourceForm()">➕ Add New Resource</button>
+            </div>
+            
+            <div id="resourceFormContainer" style="display: none; background: #f8fafc; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 id="resourceFormTitle">Add New Resource</h3>
+                <div class="form-group">
+                    <label class="form-label">Title *</label>
+                    <input type="text" id="resourceTitle" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Icon</label>
+                    <input type="text" id="resourceIcon" class="form-control" value="📄">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description *</label>
+                    <textarea id="resourceDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Difficulty Level</label>
+                    <select id="resourceLevel" class="form-control">
+                        <option value="beginner">🔰 Beginner</option>
+                        <option value="intermediate">⚔️ Intermediate</option>
+                        <option value="advanced">🛡️ Advanced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select id="resourceType" class="form-control">
+                        <option value="PDF">PDF</option>
+                        <option value="DOC">Document</option>
+                        <option value="LINK">Link</option>
+                        <option value="VIDEO">Video</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">URL / Filename</label>
+                    <input type="text" id="resourceUrl" class="form-control">
+                </div>
+                <div class="actions">
+                    <button type="button" class="btn" onclick="saveResource()">💾 Save Resource</button>
+                    <button type="button" class="btn btn-outline" onclick="cancelResourceForm()">Cancel</button>
+                </div>
+            </div>
+            
+            <div id="resourcesList" class="item-list"></div>
+        </div>
+        
+        <!-- ========== MEMORIAL - TESTIMONIES ========== -->
+        <div id="memorial-testimonies" class="tab-content">
+            <h2>🕯️ Survivor Testimonies</h2>
+            <p class="data-warning">These testimonies appear on THE MEMORIAL page. Handle with respect and care.</p>
+            
+            <div style="margin-bottom: 30px;">
+                <button class="btn" onclick="showTestimonyForm()">➕ Add Testimony</button>
+            </div>
+            
+            <div id="testimonyFormContainer" style="display: none; background: #f8fafc; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 id="testimonyFormTitle">Add Survivor Testimony</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Survivor Name *</label>
+                    <input type="text" id="testimonyName" class="form-control" placeholder="e.g., Karangwa JMV">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" id="testimonyLocation" class="form-control" placeholder="e.g., Sainte Famille, Kigali">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Year Recorded</label>
+                    <input type="text" id="testimonyYear" class="form-control" placeholder="e.g., 2025">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Testimony Quote *</label>
+                    <textarea id="testimonyQuote" class="form-control" rows="5" placeholder="Enter the survivor's words..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">📺 RBA YouTube Video ID</label>
+                    <input type="text" id="testimonyVideoId" class="form-control" placeholder="e.g., v-TlXpDxcvc">
+                    <small style="color: #666;">Only the ID after v= . Example: https://youtu.be/<strong>v-TlXpDxcvc</strong> → enter <strong>v-TlXpDxcvc</strong></small>
+                </div>
+                
+                <div class="actions">
+                    <button type="button" class="btn" onclick="saveTestimony()">💾 Save Testimony</button>
+                    <button type="button" class="btn btn-outline" onclick="cancelTestimonyForm()">Cancel</button>
+                </div>
+            </div>
+            
+            <div id="testimoniesList" class="item-list"></div>
+        </div>
+        
+        <!-- ========== MEMORIAL - TIMELINE (WITH IMAGES) ========== -->
+        <div id="memorial-timeline" class="tab-content">
+            <h2>📅 Remembrance Timeline</h2>
+            <p class="data-warning">Key dates in the history of genocide, justice, and memory. You can now add images to each event.</p>
+            
+            <div style="margin-bottom: 30px;">
+                <button class="btn" onclick="showTimelineForm()">➕ Add Event</button>
+            </div>
+            
+            <div id="timelineFormContainer" style="display: none; background: #f8fafc; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 id="timelineFormTitle">Add Timeline Event</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Date *</label>
+                    <input type="text" id="timelineDate" class="form-control" placeholder="e.g., April 7, 1994">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Event Title *</label>
+                    <input type="text" id="timelineTitle" class="form-control" placeholder="e.g., Genocide Begins">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Description *</label>
+                    <textarea id="timelineDescription" class="form-control" rows="4" placeholder="Describe the event..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">🖼️ Image URL (optional)</label>
+                    <input type="url" id="timelineImageUrl" class="form-control" placeholder="https://example.com/image.jpg">
+                    <div id="imagePreview" style="margin-top: 10px; display: none;">
+                        <img src="" class="image-preview" alt="Preview">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select id="timelineCategory" class="form-control">
+                        <option value="Genocide">⚔️ Genocide</option>
+                        <option value="Justice">⚖️ Justice</option>
+                        <option value="Memory">🕯️ Memory</option>
+                        <option value="Survivor">👤 Survivor</option>
+                    </select>
+                </div>
+                
+                <div class="actions">
+                    <button type="button" class="btn" onclick="saveTimelineEvent()">💾 Save Event</button>
+                    <button type="button" class="btn btn-outline" onclick="cancelTimelineForm()">Cancel</button>
+                </div>
+            </div>
+            
+            <div id="timelineList" class="item-list"></div>
+        </div>
+        
+        <!-- ========== MEMORIAL - VICTIM PAGES (FIREBASE VERSION) ========== -->
+        <div id="memorial-victims" class="tab-content">
+            <h2>📖 Victim Testimony Pages</h2>
+            <p class="data-warning">Each victim gets their own page. Submissions from the public appear in "Pending" tab.</p>
+            
+            <div class="victim-tabs">
+                <button class="victim-tab active" onclick="showVictimTab('all')">📖 All Pages</button>
+                <button class="victim-tab" onclick="showVictimTab('pending')">⏳ Pending</button>
+                <button class="victim-tab" onclick="showVictimTab('add')">➕ Add New</button>
+            </div>
+            
+            <!-- All Pages View -->
+            <div id="victimAllView" style="display: block;">
+                <div id="victimAllList" class="item-list"></div>
+            </div>
+            
+            <!-- Pending View -->
+            <div id="victimPendingView" style="display: none;">
+                <div id="victimPendingList" class="item-list"></div>
+            </div>
+            
+            <!-- Add Victim Form -->
+            <div id="victimAddView" style="display: none; background: #f8fafc; padding: 30px; border-radius: 10px;">
+                <h3>Add New Victim Page</h3>
+                
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="victimName" class="form-control" placeholder="e.g., Mukamusoni Marie">
+                </div>
+                
+                <div class="form-group">
+                    <label>Photo URL</label>
+                    <input type="url" id="victimPhoto" class="form-control" placeholder="https://...">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Born</label>
+                        <input type="text" id="victimBorn" class="form-control" placeholder="e.g., 1965">
+                    </div>
+                    <div class="form-group">
+                        <label>Died</label>
+                        <input type="text" id="victimDied" class="form-control" placeholder="e.g., April 14, 1994">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Place of Death</label>
+                    <input type="text" id="victimPlace" class="form-control" placeholder="e.g., Nyamata Church">
+                </div>
+                
+                <div class="form-group">
+                    <label>Their Story *</label>
+                    <textarea id="victimStory" class="form-control" rows="5" placeholder="Tell their story..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Submitted By</label>
+                    <input type="text" id="victimSubmittedBy" class="form-control" placeholder="e.g., Family member">
+                </div>
+                
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="victimStatus" class="form-control">
+                        <option value="published">✅ Published</option>
+                        <option value="pending">⏳ Pending Review</option>
+                    </select>
+                </div>
+                
+                <div class="actions">
+                    <button class="btn" onclick="saveVictimPage()">💾 Save Page</button>
+                    <button class="btn btn-outline" onclick="cancelVictimForm()">Cancel</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ========== EXPORT (NOW FROM FIREBASE) ========== -->
+        <div id="export" class="tab-content">
+            <h2>📤 Export Data</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">🛡️</div>
+                    <h4>Evidence</h4>
+                    <button class="btn btn-sm" onclick="exportJSON('evidence')">Download</button>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">🧰</div>
+                    <h4>Tactics</h4>
+                    <button class="btn btn-sm" onclick="exportJSON('tactics')">Download</button>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">🎯</div>
+                    <h4>Scenarios</h4>
+                    <button class="btn btn-sm" onclick="exportJSON('scenarios')">Download</button>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">📚</div>
+                    <h4>Resources</h4>
+                    <button class="btn btn-sm" onclick="exportJSON('resources')">Download</button>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">🕯️</div>
+                    <h4>Testimonies</h4>
+                    <button class="btn btn-sm" onclick="exportJSON('testimonies')">Download</button>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">📅</div>
+                    <h4>Timeline</h4>
+                    <button class="btn btn-sm" onclick="exportJSON('timeline')">Download</button>
+                </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">📖</div>
+                    <h4>Victims</h4>
+                    <button class="btn btn-sm" onclick="exportJSON('victims')">Download</button>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn" onclick="exportAllData()">📦 Export ALL Data</button>
+            </div>
+        </div>
+        
+        <!-- ========== HELP ========== -->
+        <div id="help" class="tab-content">
+            <h2>❓ Help</h2>
+            <p>Admin password: <strong>rwanda2024</strong></p>
+            <p>All data is now stored in Firebase cloud database.</p>
+            <p>📖 Victim Pages support community submissions — check the Pending tab for new submissions.</p>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Rwanda Truth Platform - Admin Panel</p>
+        <div class="footer-links">
+            <a href="index.html">← Back to Public Site</a>
+            <a href="#" onclick="logout()">🚪 Logout</a>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9rem; color: #a0aec0;">
+            Session started: <span id="sessionTime">Just now</span>
+        </p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ==================== FIREBASE CONFIG ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMkuxVxbRFk6xNQAoM7Q9Px5GVEEufTwA",
+            authDomain: "rwanda-truth-platform.firebaseapp.com",
+            projectId: "rwanda-truth-platform",
+            storageBucket: "rwanda-truth-platform.firebasestorage.app",
+            messagingSenderId: "181266362218",
+            appId: "1:181266362218:web:8dd29cd96b15096c397f13"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        console.log('🔥 Firebase connected in Admin!');
+
+        // ==================== GLOBAL DATA ====================
+        let evidenceData = [];
+        let tacticData = [];
+        let scenarioData = [];
+        let resourceData = [];
+        let testimonyData = [];
+        let timelineData = [];
+        let victimData = [];
+        
+        // ==================== AUTHENTICATION ====================
+        const ADMIN_PASSWORD = "rwanda2024";
+        
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!sessionStorage.getItem('adminAuthenticated')) {
+                let password = prompt("🔐 Admin Access Required\n\nEnter admin password:");
+                if (password !== ADMIN_PASSWORD) {
+                    alert("Access denied.");
+                    window.location.href = "index.html";
+                    return;
+                } else {
+                    sessionStorage.setItem('adminAuthenticated', 'true');
+                }
+            }
+            
+            initializeForms();
+            document.getElementById('sessionTime').textContent = new Date().toLocaleTimeString();
+        });
+
+        // ==================== LOAD DATA FROM FIREBASE ====================
+        async function loadAllData() {
+            try {
+                // Load evidence
+                const evidenceSnapshot = await db.collection('evidence').get();
+                evidenceData = evidenceSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Load tactics
+                const tacticsSnapshot = await db.collection('tactics').get();
+                tacticData = tacticsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Load scenarios
+                const scenariosSnapshot = await db.collection('scenarios').get();
+                scenarioData = scenariosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Load resources
+                const resourcesSnapshot = await db.collection('resources').get();
+                resourceData = resourcesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Load testimonies
+                const testimoniesSnapshot = await db.collection('testimonies').get();
+                testimonyData = testimoniesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Load timeline
+                const timelineSnapshot = await db.collection('timeline').get();
+                timelineData = timelineSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Load victims
+                const victimsSnapshot = await db.collection('victims').get();
+                victimData = victimsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                console.log('✅ All data loaded from Firebase');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Error loading data from Firebase. Please refresh.');
+            }
+        }
+
+        function initializeForms() {
+            addEvidenceSection();
+            loadEvidenceList();
+            loadTacticsList();
+            loadScenariosList();
+            loadResourcesList();
+            loadTestimoniesList();
+            loadTimelineList();
+            loadVictimLists();
+        }
+
+        // ==================== DEFAULT DATA (for first time setup) ====================
+        async function initializeDefaultData() {
+            // Check if collections are empty and add defaults if needed
+            const tacticsSnapshot = await db.collection('tactics').limit(1).get();
+            if (tacticsSnapshot.empty) {
+                const defaultTactics = [
+                    {
+                        name: 'Minimization',
+                        icon: '📉',
+                        example: '"It wasn\'t that many people"',
+                        definition: 'Downplaying the scale, scope, or systematic nature of the genocide.',
+                        strategy: 'Acknowledge & Correct',
+                        steps: ['Acknowledge', 'State', 'Cite', 'Humanize'],
+                        level: 'beginner',
+                        realExample: 'Claim: "The death toll is exaggerated."\n\nResponse: "Multiple demographic studies converge on approximately 1,000,000 Tutsi killed."'
+                    },
+                    {
+                        name: 'Deflection',
+                        icon: '↪️',
+                        example: '"What about what they did?"',
+                        definition: 'Shifting focus away from perpetrators to create false equivalency.',
+                        strategy: 'Refocus & Reframe',
+                        steps: ['Acknowledge', 'Refocus', 'Distinguish', 'Redirect'],
+                        level: 'beginner'
+                    }
+                ];
+                
+                for (const tactic of defaultTactics) {
+                    await db.collection('tactics').add(tactic);
+                }
+                console.log('✅ Default tactics added');
+            }
+        }
+
+        // ==================== TAB SYSTEM ====================
+        window.showTab = async function(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            const tab = document.getElementById(tabId);
+            if (tab) tab.classList.add('active');
+            if (event) event.target.classList.add('active');
+            
+            await loadAllData();
+            
+            if (tabId === 'shield-manage') loadEvidenceList();
+            if (tabId === 'forge-tactics') loadTacticsList();
+            if (tabId === 'forge-scenarios') loadScenariosList();
+            if (tabId === 'resources') loadResourcesList();
+            if (tabId === 'memorial-testimonies') loadTestimoniesList();
+            if (tabId === 'memorial-timeline') loadTimelineList();
+            if (tabId === 'memorial-victims') loadVictimLists();
+        };
+
+        // ==================== VICTIM PAGE FUNCTIONS (FIREBASE) ====================
+        window.showVictimTab = function(tab) {
+            document.querySelectorAll('.victim-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('victimAllView').style.display = 'none';
+            document.getElementById('victimPendingView').style.display = 'none';
+            document.getElementById('victimAddView').style.display = 'none';
+            
+            if (tab === 'all') {
+                document.getElementById('victimAllView').style.display = 'block';
+                loadVictimAllList();
+            } else if (tab === 'pending') {
+                document.getElementById('victimPendingView').style.display = 'block';
+                loadVictimPendingList();
+            } else if (tab === 'add') {
+                document.getElementById('victimAddView').style.display = 'block';
+                clearVictimForm();
+            }
+        };
+
+        function loadVictimLists() {
+            loadVictimAllList();
+            loadVictimPendingList();
+        }
+
+        function loadVictimAllList() {
+            const container = document.getElementById('victimAllList');
+            if (!container) return;
+            
+            const published = victimData.filter(v => v.status === 'published');
+            
+            if (published.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">📖 No published victim pages yet</div>';
+                return;
+            }
+            
+            let html = '';
+            published.sort((a, b) => a.name.localeCompare(b.name)).forEach(v => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>${v.name}</h4>
+                            <div class="item-meta">${v.born || '?'} — ${v.died || '?'} • ${v.place || 'Rwanda'}</div>
+                            <p style="margin-top: 10px; font-style: italic;">${(v.story || '').substring(0, 100)}...</p>
+                            <div style="margin-top: 10px;">
+                                <span class="status-badge status-published">Published</span>
+                                <span style="margin-left: 10px;">🕯️ ${v.candles || 0} candles</span>
+                                <span style="margin-left: 10px;">💬 ${(v.messages || []).length} messages</span>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" onclick="editVictim('${v.id}')">Edit</button>
+                            <button class="btn btn-sm" onclick="unpublishVictim('${v.id}')">Unpublish</button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteVictim('${v.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function loadVictimPendingList() {
+            const container = document.getElementById('victimPendingList');
+            if (!container) return;
+            
+            const pending = victimData.filter(v => v.status === 'pending');
+            
+            if (pending.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">⏳ No pending submissions</div>';
+                return;
+            }
+            
+            let html = '';
+            pending.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(v => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>${v.name}</h4>
+                            <div class="item-meta">Submitted by: ${v.submittedBy || 'Anonymous'} • ${new Date(v.date).toLocaleDateString()}</div>
+                            <p style="margin-top: 10px; font-style: italic;">${(v.story || '').substring(0, 100)}...</p>
+                            ${v.email ? `<small>📧 ${v.email}</small>` : ''}
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" style="background: var(--rwanda-green); color: white;" onclick="approveVictim('${v.id}')">✅ Approve</button>
+                            <button class="btn btn-sm btn-outline" onclick="rejectVictim('${v.id}')">❌ Reject</button>
+                            <button class="btn btn-sm" onclick="editVictim('${v.id}')">Edit</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.approveVictim = async function(id) {
+            try {
+                await db.collection('victims').doc(id).update({
+                    status: 'published'
+                });
+                await loadAllData();
+                loadVictimLists();
+                alert('✅ Victim page published');
+            } catch (error) {
+                console.error('Error approving:', error);
+                alert('Error approving victim');
+            }
+        };
+
+        window.rejectVictim = async function(id) {
+            if (!confirm('Reject and delete this submission?')) return;
+            try {
+                await db.collection('victims').doc(id).delete();
+                await loadAllData();
+                loadVictimLists();
+                alert('❌ Submission rejected');
+            } catch (error) {
+                console.error('Error rejecting:', error);
+                alert('Error rejecting victim');
+            }
+        };
+
+        window.unpublishVictim = async function(id) {
+            try {
+                await db.collection('victims').doc(id).update({
+                    status: 'pending'
+                });
+                await loadAllData();
+                loadVictimLists();
+                alert('📝 Page moved to pending');
+            } catch (error) {
+                console.error('Error unpublishing:', error);
+                alert('Error unpublishing victim');
+            }
+        };
+
+        window.deleteVictim = async function(id) {
+            if (!confirm('Delete this victim page permanently?')) return;
+            try {
+                await db.collection('victims').doc(id).delete();
+                await loadAllData();
+                loadVictimLists();
+                alert('✅ Deleted');
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('Error deleting victim');
+            }
+        };
+
+        window.saveVictimPage = async function() {
+            const victim = {
+                name: document.getElementById('victimName').value.trim(),
+                photo: document.getElementById('victimPhoto').value.trim(),
+                born: document.getElementById('victimBorn').value.trim(),
+                died: document.getElementById('victimDied').value.trim(),
+                place: document.getElementById('victimPlace').value.trim(),
+                story: document.getElementById('victimStory').value.trim(),
+                submittedBy: document.getElementById('victimSubmittedBy').value.trim(),
+                status: document.getElementById('victimStatus').value,
+                candles: 0,
+                messages: [],
+                date: new Date().toISOString()
+            };
+            
+            if (!victim.name || !victim.story) {
+                alert('Please enter name and story');
+                return;
+            }
+            
+            try {
+                await db.collection('victims').add(victim);
+                await loadAllData();
+                alert('✅ Victim page saved');
+                cancelVictimForm();
+                loadVictimLists();
+                showVictimTab('all');
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving victim');
+            }
+        };
+
+        window.cancelVictimForm = function() {
+            document.getElementById('victimAddView').style.display = 'none';
+            document.querySelectorAll('.victim-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('.victim-tab').classList.add('active');
+            document.getElementById('victimAllView').style.display = 'block';
+        };
+
+        window.editVictim = function(id) {
+            const victim = victimData.find(v => v.id === id);
+            if (!victim) return;
+            
+            document.getElementById('victimName').value = victim.name || '';
+            document.getElementById('victimPhoto').value = victim.photo || '';
+            document.getElementById('victimBorn').value = victim.born || '';
+            document.getElementById('victimDied').value = victim.died || '';
+            document.getElementById('victimPlace').value = victim.place || '';
+            document.getElementById('victimStory').value = victim.story || '';
+            document.getElementById('victimSubmittedBy').value = victim.submittedBy || '';
+            document.getElementById('victimStatus').value = victim.status || 'pending';
+            
+            showVictimTab('add');
+        };
+
+        function clearVictimForm() {
+            document.getElementById('victimName').value = '';
+            document.getElementById('victimPhoto').value = '';
+            document.getElementById('victimBorn').value = '';
+            document.getElementById('victimDied').value = '';
+            document.getElementById('victimPlace').value = '';
+            document.getElementById('victimStory').value = '';
+            document.getElementById('victimSubmittedBy').value = '';
+            document.getElementById('victimStatus').value = 'published';
+        }
+
+        // ==================== SHIELD EVIDENCE (FIREBASE) ====================
+        window.addEvidenceSection = function() {
+            const container = document.getElementById('evidenceSections');
+            const count = container.children.length + 1;
+            const html = `
+                <div class="evidence-section">
+                    <div class="section-header">
+                        <h4>Section ${count}</h4>
+                        <button type="button" class="remove-section" onclick="this.closest('.evidence-section').remove()">Remove</button>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control section-title" placeholder="Section Title">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control section-content" rows="3" placeholder="Evidence content..."></textarea>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        };
+
+        window.saveEvidenceDraft = async function() {
+            const evidence = collectEvidenceForm();
+            if (!evidence) return;
+            
+            evidence.status = 'draft';
+            evidence.created = new Date().toISOString();
+            
+            try {
+                await db.collection('evidence').add(evidence);
+                await loadAllData();
+                alert('✅ Draft saved');
+                clearEvidenceForm();
+                loadEvidenceList();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving evidence');
+            }
+        };
+
+        window.saveEvidencePublished = async function() {
+            const evidence = collectEvidenceForm();
+            if (!evidence) return;
+            
+            evidence.status = 'published';
+            evidence.created = new Date().toISOString();
+            
+            try {
+                await db.collection('evidence').add(evidence);
+                await loadAllData();
+                alert('✅ Evidence published');
+                clearEvidenceForm();
+                loadEvidenceList();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving evidence');
+            }
+        };
+
+        function collectEvidenceForm() {
+            const claim = document.getElementById('claimTitle')?.value.trim();
+            const type = document.getElementById('claimType')?.value;
+            const level = document.getElementById('evidenceLevel')?.value;
+            
+            if (!claim || !type || !level) {
+                alert('Please fill in all required fields');
+                return null;
+            }
+            
+            const sections = [];
+            document.querySelectorAll('.evidence-section').forEach(section => {
+                const title = section.querySelector('.section-title')?.value.trim();
+                const content = section.querySelector('.section-content')?.value.trim();
+                if (title && content) sections.push({ title, content, tags: [] });
+            });
+            
+            if (sections.length === 0) {
+                alert('Add at least one evidence section');
+                return null;
+            }
+            
+            const sources = document.getElementById('sourceLinks')?.value.trim();
+            return {
+                claim, type, level, sections,
+                sources: sources ? sources.split('\n').filter(s => s.trim()) : []
+            };
+        }
+
+        window.clearEvidenceForm = function() {
+            document.getElementById('claimTitle').value = '';
+            document.getElementById('claimType').value = '';
+            document.getElementById('evidenceLevel').value = 'beginner';
+            document.getElementById('sourceLinks').value = '';
+            document.getElementById('evidenceSections').innerHTML = '';
+            addEvidenceSection();
+        };
+
+        function loadEvidenceList() {
+            const container = document.getElementById('evidenceList');
+            if (!container) return;
+            
+            if (evidenceData.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">📝 No evidence yet</div>';
+                return;
+            }
+            
+            let html = '';
+            evidenceData.forEach(item => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>"${item.claim.substring(0, 60)}..."</h4>
+                            <div class="item-meta">${item.type} • ${item.level} • ${item.status}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" onclick="deleteEvidence('${item.id}')">Delete</button>
+                            <button class="btn btn-sm" onclick="toggleEvidenceStatus('${item.id}')">
+                                ${item.status === 'published' ? 'Unpublish' : 'Publish'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.deleteEvidence = async function(id) {
+            if (!confirm('Delete this evidence?')) return;
+            try {
+                await db.collection('evidence').doc(id).delete();
+                await loadAllData();
+                loadEvidenceList();
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('Error deleting evidence');
+            }
+        };
+
+        window.toggleEvidenceStatus = async function(id) {
+            const item = evidenceData.find(e => e.id === id);
+            if (!item) return;
+            
+            try {
+                await db.collection('evidence').doc(id).update({
+                    status: item.status === 'published' ? 'draft' : 'published'
+                });
+                await loadAllData();
+                loadEvidenceList();
+            } catch (error) {
+                console.error('Error updating:', error);
+                alert('Error updating evidence');
+            }
+        };
+
+        // ==================== FORGE TACTICS (FIREBASE) ====================
+        window.showTacticForm = function() {
+            document.getElementById('tacticFormTitle').textContent = 'Add New Tactic';
+            document.getElementById('tacticFormContainer').style.display = 'block';
+            window.editingTacticId = null;
+        };
+
+        window.cancelTacticForm = function() {
+            document.getElementById('tacticFormContainer').style.display = 'none';
+        };
+
+        window.saveTactic = async function() {
+            const tactic = {
+                name: document.getElementById('tacticName').value.trim(),
+                icon: document.getElementById('tacticIcon').value.trim() || '📌',
+                example: document.getElementById('tacticExample').value.trim(),
+                definition: document.getElementById('tacticDefinition').value.trim(),
+                strategy: document.getElementById('tacticStrategy').value.trim(),
+                steps: [
+                    document.getElementById('step1').value.trim(),
+                    document.getElementById('step2').value.trim(),
+                    document.getElementById('step3').value.trim(),
+                    document.getElementById('step4').value.trim()
+                ],
+                level: document.getElementById('tacticLevel').value,
+                realExample: document.getElementById('tacticRealExample').value.trim()
+            };
+            
+            if (!tactic.name || !tactic.example || !tactic.definition) {
+                alert('Please fill in required fields');
+                return;
+            }
+            
+            try {
+                if (window.editingTacticId) {
+                    await db.collection('tactics').doc(window.editingTacticId).update(tactic);
+                } else {
+                    await db.collection('tactics').add(tactic);
+                }
+                await loadAllData();
+                alert('✅ Tactic saved');
+                cancelTacticForm();
+                loadTacticsList();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving tactic');
+            }
+        };
+
+        function loadTacticsList() {
+            const container = document.getElementById('tacticsList');
+            if (!container) return;
+            
+            if (tacticData.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">🧰 No tactics yet</div>';
+                return;
+            }
+            
+            let html = '';
+            tacticData.forEach(tactic => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>${tactic.icon} ${tactic.name} <span class="level-badge level-${tactic.level}">${tactic.level}</span></h4>
+                            <div class="item-meta">"${tactic.example}"</div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" onclick="editTactic('${tactic.id}')">Edit</button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteTactic('${tactic.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.editTactic = function(id) {
+            const tactic = tacticData.find(t => t.id === id);
+            if (!tactic) return;
+            
+            document.getElementById('tacticFormTitle').textContent = 'Edit Tactic';
+            document.getElementById('tacticName').value = tactic.name || '';
+            document.getElementById('tacticIcon').value = tactic.icon || '📌';
+            document.getElementById('tacticExample').value = tactic.example || '';
+            document.getElementById('tacticDefinition').value = tactic.definition || '';
+            document.getElementById('tacticStrategy').value = tactic.strategy || '';
+            if (tactic.steps) {
+                document.getElementById('step1').value = tactic.steps[0] || '';
+                document.getElementById('step2').value = tactic.steps[1] || '';
+                document.getElementById('step3').value = tactic.steps[2] || '';
+                document.getElementById('step4').value = tactic.steps[3] || '';
+            }
+            document.getElementById('tacticLevel').value = tactic.level || 'beginner';
+            document.getElementById('tacticRealExample').value = tactic.realExample || '';
+            
+            window.editingTacticId = id;
+            document.getElementById('tacticFormContainer').style.display = 'block';
+        };
+
+        window.deleteTactic = async function(id) {
+            if (!confirm('Delete this tactic?')) return;
+            try {
+                await db.collection('tactics').doc(id).delete();
+                await loadAllData();
+                loadTacticsList();
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('Error deleting tactic');
+            }
+        };
+
+        // ==================== FORGE SCENARIOS (FIREBASE) ====================
+        window.showScenarioForm = function() {
+            document.getElementById('scenarioFormTitle').textContent = 'Add New Scenario';
+            document.getElementById('scenarioFormContainer').style.display = 'block';
+            window.editingScenarioId = null;
+            
+            let responsesHTML = '';
+            for (let i = 0; i < 4; i++) {
+                responsesHTML += `
+                    <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h5>Response ${i + 1}</h5>
+                            <label><input type="radio" name="correctResponse" value="${i}" ${i === 0 ? 'checked' : ''}> Correct Answer</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="responseText${i}" placeholder="Response text">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="feedbackTitle${i}" placeholder="Feedback title">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="explanation${i}" rows="2" placeholder="Explanation"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="evidence${i}" placeholder="Evidence citation">
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('responsesContainer').innerHTML = responsesHTML;
+        };
+
+        window.cancelScenarioForm = function() {
+            document.getElementById('scenarioFormContainer').style.display = 'none';
+            window.editingScenarioId = null;
+        };
+
+        window.saveScenario = async function() {
+            const responses = [];
+            for (let i = 0; i < 4; i++) {
+                responses.push({
+                    text: document.getElementById(`responseText${i}`)?.value.trim() || '',
+                    feedback: document.getElementById(`feedbackTitle${i}`)?.value.trim() || '',
+                    explanation: document.getElementById(`explanation${i}`)?.value.trim() || '',
+                    evidence: document.getElementById(`evidence${i}`)?.value.trim() || ''
+                });
+            }
+            
+            const correctRadio = document.querySelector('input[name="correctResponse"]:checked');
+            const correctIndex = correctRadio ? parseInt(correctRadio.value) : 0;
+            
+            const scenario = {
+                claim: document.getElementById('scenarioClaim').value.trim(),
+                tactic: document.getElementById('scenarioTactic').value,
+                level: document.getElementById('scenarioLevel').value,
+                correctIndex: correctIndex,
+                responses: responses
+            };
+            
+            if (!scenario.claim || !responses.some(r => r.text)) {
+                alert('Please fill in the claim and at least the first response.');
+                return;
+            }
+            
+            try {
+                if (window.editingScenarioId) {
+                    await db.collection('scenarios').doc(window.editingScenarioId).update(scenario);
+                } else {
+                    await db.collection('scenarios').add(scenario);
+                }
+                await loadAllData();
+                alert('✅ Scenario saved');
+                cancelScenarioForm();
+                loadScenariosList();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving scenario');
+            }
+        };
+
+        function loadScenariosList() {
+            const container = document.getElementById('scenariosList');
+            if (!container) return;
+            
+            if (scenarioData.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">🎯 No scenarios yet</div>';
+                return;
+            }
+            
+            let html = '';
+            scenarioData.forEach(s => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>"${s.claim.substring(0, 60)}..."</h4>
+                            <div class="item-meta">${s.tactic} • ${s.level}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" onclick="editScenario('${s.id}')">Edit</button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteScenario('${s.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.editScenario = function(id) {
+            const scenario = scenarioData.find(s => s.id === id);
+            if (!scenario) return;
+            
+            document.getElementById('scenarioFormTitle').textContent = 'Edit Scenario';
+            document.getElementById('scenarioClaim').value = scenario.claim || '';
+            document.getElementById('scenarioTactic').value = scenario.tactic || 'minimization';
+            document.getElementById('scenarioLevel').value = scenario.level || 'beginner';
+            
+            showScenarioForm();
+            
+            scenario.responses.forEach((response, i) => {
+                document.getElementById(`responseText${i}`).value = response.text || '';
+                document.getElementById(`feedbackTitle${i}`).value = response.feedback || '';
+                document.getElementById(`explanation${i}`).value = response.explanation || '';
+                document.getElementById(`evidence${i}`).value = response.evidence || '';
+            });
+            
+            const radio = document.querySelector(`input[name="correctResponse"][value="${scenario.correctIndex}"]`);
+            if (radio) radio.checked = true;
+            
+            window.editingScenarioId = id;
+        };
+
+        window.deleteScenario = async function(id) {
+            if (!confirm('Delete this scenario?')) return;
+            try {
+                await db.collection('scenarios').doc(id).delete();
+                await loadAllData();
+                loadScenariosList();
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('Error deleting scenario');
+            }
+        };
+
+        // ==================== RESOURCES (FIREBASE) ====================
+        window.showResourceForm = function() {
+            document.getElementById('resourceFormTitle').textContent = 'Add New Resource';
+            document.getElementById('resourceFormContainer').style.display = 'block';
+            window.editingResourceId = null;
+        };
+
+        window.cancelResourceForm = function() {
+            document.getElementById('resourceFormContainer').style.display = 'none';
+            window.editingResourceId = null;
+        };
+
+        window.saveResource = async function() {
+            const resource = {
+                title: document.getElementById('resourceTitle').value.trim(),
+                icon: document.getElementById('resourceIcon').value.trim() || '📄',
+                description: document.getElementById('resourceDescription').value.trim(),
+                type: document.getElementById('resourceType').value,
+                url: document.getElementById('resourceUrl').value.trim(),
+                level: document.getElementById('resourceLevel').value,
+                created: new Date().toISOString()
+            };
+            
+            if (!resource.title || !resource.description) {
+                alert('Please fill in title and description.');
+                return;
+            }
+            
+            try {
+                if (window.editingResourceId) {
+                    await db.collection('resources').doc(window.editingResourceId).update(resource);
+                } else {
+                    await db.collection('resources').add(resource);
+                }
+                await loadAllData();
+                alert('✅ Resource saved');
+                cancelResourceForm();
+                loadResourcesList();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving resource');
+            }
+        };
+
+        function loadResourcesList() {
+            const container = document.getElementById('resourcesList');
+            if (!container) return;
+            
+            if (resourceData.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">📚 No resources yet</div>';
+                return;
+            }
+            
+            let html = '';
+            resourceData.forEach(r => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>${r.icon} ${r.title}</h4>
+                            <div class="item-meta">${r.type} • ${r.level}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" onclick="editResource('${r.id}')">Edit</button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteResource('${r.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.editResource = function(id) {
+            const resource = resourceData.find(r => r.id === id);
+            if (!resource) return;
+            
+            document.getElementById('resourceFormTitle').textContent = 'Edit Resource';
+            document.getElementById('resourceTitle').value = resource.title || '';
+            document.getElementById('resourceIcon').value = resource.icon || '📄';
+            document.getElementById('resourceDescription').value = resource.description || '';
+            document.getElementById('resourceType').value = resource.type || 'PDF';
+            document.getElementById('resourceUrl').value = resource.url || '';
+            document.getElementById('resourceLevel').value = resource.level || 'beginner';
+            
+            window.editingResourceId = id;
+            document.getElementById('resourceFormContainer').style.display = 'block';
+        };
+
+        window.deleteResource = async function(id) {
+            if (!confirm('Delete this resource?')) return;
+            try {
+                await db.collection('resources').doc(id).delete();
+                await loadAllData();
+                loadResourcesList();
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('Error deleting resource');
+            }
+        };
+
+        // ==================== MEMORIAL - TESTIMONIES (FIREBASE) ====================
+        window.showTestimonyForm = function() {
+            document.getElementById('testimonyFormTitle').textContent = 'Add Survivor Testimony';
+            document.getElementById('testimonyFormContainer').style.display = 'block';
+            window.editingTestimonyId = null;
+        };
+
+        window.cancelTestimonyForm = function() {
+            document.getElementById('testimonyFormContainer').style.display = 'none';
+            document.getElementById('testimonyName').value = '';
+            document.getElementById('testimonyLocation').value = '';
+            document.getElementById('testimonyYear').value = '';
+            document.getElementById('testimonyQuote').value = '';
+            document.getElementById('testimonyVideoId').value = '';
+        };
+
+        window.saveTestimony = async function() {
+            const testimony = {
+                name: document.getElementById('testimonyName').value.trim(),
+                location: document.getElementById('testimonyLocation').value.trim(),
+                year: document.getElementById('testimonyYear').value.trim(),
+                quote: document.getElementById('testimonyQuote').value.trim(),
+                videoId: document.getElementById('testimonyVideoId').value.trim(),
+                published: true
+            };
+            
+            if (!testimony.name || !testimony.quote) {
+                alert('Please enter name and quote');
+                return;
+            }
+            
+            try {
+                if (window.editingTestimonyId) {
+                    await db.collection('testimonies').doc(window.editingTestimonyId).update(testimony);
+                } else {
+                    await db.collection('testimonies').add(testimony);
+                }
+                await loadAllData();
+                alert('✅ Testimony saved');
+                cancelTestimonyForm();
+                loadTestimoniesList();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving testimony');
+            }
+        };
+
+        function loadTestimoniesList() {
+            const container = document.getElementById('testimoniesList');
+            if (!container) return;
+            
+            if (testimonyData.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">🕯️ No testimonies yet</div>';
+                return;
+            }
+            
+            let html = '';
+            testimonyData.forEach(t => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>${t.name} ${t.year ? `(${t.year})` : ''}</h4>
+                            <div class="item-meta">${t.location || 'Rwanda'}</div>
+                            <p style="margin-top: 10px; font-style: italic;">"${t.quote.substring(0, 100)}..."</p>
+                            ${t.videoId ? '<div style="color: #FF0000; font-size: 0.8rem;">▶️ RBA Video</div>' : ''}
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" onclick="editTestimony('${t.id}')">Edit</button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteTestimony('${t.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.editTestimony = function(id) {
+            const t = testimonyData.find(t => t.id === id);
+            if (!t) return;
+            
+            document.getElementById('testimonyFormTitle').textContent = 'Edit Testimony';
+            document.getElementById('testimonyName').value = t.name || '';
+            document.getElementById('testimonyLocation').value = t.location || '';
+            document.getElementById('testimonyYear').value = t.year || '';
+            document.getElementById('testimonyQuote').value = t.quote || '';
+            document.getElementById('testimonyVideoId').value = t.videoId || '';
+            
+            window.editingTestimonyId = id;
+            document.getElementById('testimonyFormContainer').style.display = 'block';
+        };
+
+        window.deleteTestimony = async function(id) {
+            if (!confirm('Delete this testimony?')) return;
+            try {
+                await db.collection('testimonies').doc(id).delete();
+                await loadAllData();
+                loadTestimoniesList();
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('Error deleting testimony');
+            }
+        };
+
+        // ==================== MEMORIAL - TIMELINE (FIREBASE) ====================
+        window.showTimelineForm = function() {
+            document.getElementById('timelineFormTitle').textContent = 'Add Timeline Event';
+            document.getElementById('timelineFormContainer').style.display = 'block';
+            window.editingTimelineId = null;
+            document.getElementById('timelineDate').value = '';
+            document.getElementById('timelineTitle').value = '';
+            document.getElementById('timelineDescription').value = '';
+            document.getElementById('timelineImageUrl').value = '';
+            document.getElementById('timelineCategory').value = 'Memory';
+            document.getElementById('imagePreview').style.display = 'none';
+        };
+
+        window.cancelTimelineForm = function() {
+            document.getElementById('timelineFormContainer').style.display = 'none';
+        };
+
+        document.getElementById('timelineImageUrl')?.addEventListener('input', function(e) {
+            const preview = document.getElementById('imagePreview');
+            const img = preview.querySelector('img');
+            if (e.target.value) {
+                img.src = e.target.value;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        window.saveTimelineEvent = async function() {
+            const event = {
+                date: document.getElementById('timelineDate').value.trim(),
+                title: document.getElementById('timelineTitle').value.trim(),
+                description: document.getElementById('timelineDescription').value.trim(),
+                imageUrl: document.getElementById('timelineImageUrl').value.trim(),
+                category: document.getElementById('timelineCategory').value
+            };
+            
+            if (!event.date || !event.title || !event.description) {
+                alert('Please fill in date, title, and description');
+                return;
+            }
+            
+            // Extract year for sorting
+            const yearMatch = event.date.match(/\b(19|20)\d{2}\b/);
+            event.dateSort = yearMatch ? parseInt(yearMatch[0]) : 9999;
+            
+            try {
+                if (window.editingTimelineId) {
+                    await db.collection('timeline').doc(window.editingTimelineId).update(event);
+                } else {
+                    await db.collection('timeline').add(event);
+                }
+                await loadAllData();
+                alert('✅ Timeline event saved' + (event.imageUrl ? ' with image' : ''));
+                cancelTimelineForm();
+                loadTimelineList();
+            } catch (error) {
+                console.error('Error saving:', error);
+                alert('Error saving timeline event');
+            }
+        };
+
+        function loadTimelineList() {
+            const container = document.getElementById('timelineList');
+            if (!container) return;
+            
+            if (timelineData.length === 0) {
+                container.innerHTML = '<div style="padding: 40px; text-align: center;">📅 No timeline events yet</div>';
+                return;
+            }
+            
+            let html = '';
+            timelineData.sort((a, b) => a.date.localeCompare(b.date)).forEach(event => {
+                html += `
+                    <div class="list-item">
+                        <div>
+                            <h4>${event.date} - ${event.title}</h4>
+                            <div class="item-meta">${event.category}</div>
+                            <p style="margin-top: 10px;">${event.description.substring(0, 100)}...</p>
+                            ${event.imageUrl ? `
+                                <div style="margin-top: 10px;">
+                                    <img src="${event.imageUrl}" class="image-preview" alt="Preview">
+                                    <span style="font-size: 0.8rem; color: #666; margin-left: 10px;">🖼️ Image attached</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn btn-sm" onclick="editTimelineEvent('${event.id}')">Edit</button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteTimelineEvent('${event.id}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.editTimelineEvent = function(id) {
+            const event = timelineData.find(e => e.id === id);
+            if (!event) return;
+            
+            document.getElementById('timelineFormTitle').textContent = 'Edit Timeline Event';
+            document.getElementById('timelineDate').value = event.date || '';
+            document.getElementById('timelineTitle').value = event.title || '';
+            document.getElementById('timelineDescription').value = event.description || '';
+            document.getElementById('timelineImageUrl').value = event.imageUrl || '';
+            document.getElementById('timelineCategory').value = event.category || 'Memory';
+            
+            if (event.imageUrl) {
+                const preview = document.getElementById('imagePreview');
+                const img = preview.querySelector('img');
+                img.src = event.imageUrl;
+                preview.style.display = 'block';
+            }
+            
+            window.editingTimelineId = id;
+            document.getElementById('timelineFormContainer').style.display = 'block';
+        };
+
+        window.deleteTimelineEvent = async function(id) {
+            if (!confirm('Delete this timeline event?')) return;
+            try {
+                await db.collection('timeline').doc(id).delete();
+                await loadAllData();
+                loadTimelineList();
+            } catch (error) {
+                console.error('Error deleting:', error);
+                alert('Error deleting timeline event');
+            }
+        };
+
+        // ==================== EXPORT FUNCTIONS ====================
+        window.exportJSON = async function(type) {
+            await loadAllData(); // Ensure latest data
+            
+            let data, filename;
+            switch(type) {
+                case 'evidence': data = evidenceData; filename = 'rwanda-shield-evidence.json'; break;
+                case 'tactics': data = tacticData; filename = 'rwanda-forge-tactics.json'; break;
+                case 'scenarios': data = scenarioData; filename = 'rwanda-forge-scenarios.json'; break;
+                case 'resources': data = resourceData; filename = 'rwanda-resources.json'; break;
+                case 'testimonies': data = testimonyData; filename = 'rwanda-testimonies.json'; break;
+                case 'timeline': data = timelineData; filename = 'rwanda-timeline.json'; break;
+                case 'victims': data = victimData; filename = 'rwanda-victims.json'; break;
+                default: return;
+            }
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        window.exportAllData = async function() {
+            await loadAllData();
+            
+            const allData = {
+                evidence: evidenceData,
+                tactics: tacticData,
+                scenarios: scenarioData,
+                resources: resourceData,
+                testimonies: testimonyData,
+                timeline: timelineData,
+                victims: victimData,
+                exported: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'rwanda-truth-full-backup.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        // ==================== UTILITIES ====================
+        window.logout = function() {
+            if (confirm('Logout?')) {
+                sessionStorage.removeItem('adminAuthenticated');
+                window.location.href = 'index.html';
+            }
+        };
+
+        // Initialize default data if needed
+        initializeDefaultData();
+    </script>
+</body>
+</html>
