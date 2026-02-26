@@ -3,9 +3,493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rwanda Truth - Against Genocide Denial</title>
+    <title>Rwanda Truth Platform</title>
     <link rel="stylesheet" href="styles.css">
-    
+    <style>
+        /* ===== WORLD-CLASS HOMEPAGE — RWANDA TRUTH ===== */
+        
+        :root {
+            --memorial-purple: #4B2E5B;
+            --memorial-amber: #F6AD55;
+            --memorial-gray: #2C3E50;
+            --memorial-light: #f8fafc;
+            --rwanda-blue: #00A1DE;
+            --rwanda-green: #008000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Warning Bar */
+        .warning-bar {
+            background: #2C3E50;
+            color: #FEEBC8;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-bottom: 2px solid var(--memorial-amber);
+        }
+
+        .warning-bar a {
+            color: var(--memorial-amber);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* Hero Section — Purple Majesty */
+        .home-hero {
+            background: linear-gradient(135deg, var(--memorial-purple) 0%, #2C3E50 100%);
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            isolation: isolate;
+        }
+
+        .home-hero::before {
+            content: '🕯️🕯️🕯️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            opacity: 0.05;
+            pointer-events: none;
+            white-space: nowrap;
+            letter-spacing: 40px;
+        }
+
+        .home-hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .home-hero h1 {
+            color: white;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .home-hero h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--memorial-amber);
+            margin: 25px auto;
+        }
+
+        .home-hero p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            color: white;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            color: var(--memorial-amber);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--memorial-gray);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .nav-item:hover {
+            background: var(--memorial-light);
+            color: var(--memorial-purple);
+        }
+
+        .nav-item.active {
+            background: var(--memorial-purple);
+            color: white;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            text-align: center;
+        }
+
+        .mission-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .mission-section h2 {
+            font-size: 2.5rem;
+            color: var(--memorial-purple);
+            margin-bottom: 30px;
+        }
+
+        .mission-section p {
+            font-size: 1.2rem;
+            color: #2C3E50;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .mission-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--memorial-gray);
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(75, 46, 91, 0.1);
+            margin-top: 40px;
+            border-left: 6px solid var(--memorial-amber);
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 100px 20px;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--memorial-purple);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--memorial-light);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(75, 46, 91, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(75, 46, 91, 0.2);
+            border-color: var(--memorial-amber);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            color: var(--memorial-purple);
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #4a5568;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .feature-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--memorial-purple);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .feature-btn:hover {
+            background: transparent;
+            color: var(--memorial-purple);
+            border-color: var(--memorial-purple);
+        }
+
+        /* How to Use Section */
+        .how-to-use {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--memorial-purple), #2C3E50);
+            color: white;
+            text-align: center;
+        }
+
+        .how-to-use h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--memorial-amber);
+            color: var(--memorial-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 20px;
+        }
+
+        .step h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Memorial Note */
+        .memorial-note {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+            border-top: 4px solid var(--memorial-amber);
+        }
+
+        .memorial-note h3 {
+            font-size: 2rem;
+            color: var(--memorial-purple);
+            margin-bottom: 25px;
+        }
+
+        .memorial-note p {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            font-size: 1.2rem;
+            color: #4a5568;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #1A2530, var(--memorial-purple));
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--memorial-amber);
+            color: var(--memorial-purple);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .cta-btn:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .cta-btn.secondary:hover {
+            background: white;
+            color: var(--memorial-purple);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1A2530;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .footer h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--memorial-amber);
+        }
+
+        .footer p {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .home-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .features-grid,
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-item {
+                flex-direction: row;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Warning Bar -->
@@ -13,134 +497,156 @@
         ⚠️ <strong>Content Warning:</strong> This site contains historical evidence of the 1994 Genocide against the Tutsi in Rwanda.
         <a href="#support" id="supportLink">Mental Health Support Resources</a>
     </div>
-    
-   <header class="hero home-hero">
-    <h1>Rwanda Truth Platform</h1>
-    <p>Documented evidence against genocide denial. Committed to truth, memory, and education about the 1994 Genocide against the Tutsi.</p>
-</header>
-    <!-- Main Navigation -->
+
+    <!-- Hero Section -->
+    <header class="home-hero">
+        <div class="home-hero-content">
+            <h1>RWANDA TRUTH PLATFORM</h1>
+            <p>Documented evidence against genocide denial. Committed to truth, memory, and education about the 1994 Genocide against the Tutsi.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">1,000,000+</span>
+                    <span class="stat-label">Lives Lost</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100</span>
+                    <span class="stat-label">Days</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">Years of Memory</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
             <a href="index.html" class="nav-item active">
                 <span class="nav-icon">🏠</span>
-                HOME
+                <span>HOME</span>
             </a>
             <a href="shield.html" class="nav-item">
                 <span class="nav-icon">🛡️</span>
-                THE SHIELD
+                <span>THE SHIELD</span>
             </a>
             <a href="forge.html" class="nav-item">
                 <span class="nav-icon">🔥</span>
-                THE FORGE
+                <span>THE FORGE</span>
             </a>
             <a href="memorial.html" class="nav-item">
                 <span class="nav-icon">🕯️</span>
-                THE MEMORIAL
+                <span>THE MEMORIAL</span>
             </a>
         </div>
     </nav>
-    
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Mission Statement -->
-        <section class="mission-box">
-            <h3>Our Mission</h3>
-            <p>
-                The Rwanda Truth Platform exists to counter genocide denial and distortion through verified evidence, 
-                survivor testimonies, and historical documentation about the 1994 Genocide against the Tutsi in Rwanda.
-            </p>
-            <p>
-                We provide educators, students, researchers, and the public with the tools to understand,
-                recognize, and respond to denialist narratives with factual, evidence-based information.
-            </p>
-            <p>
-                Our work is grounded in respect for victims and survivors, commitment to historical accuracy,
-                and dedication to education as a tool for prevention.
-            </p>
-        </section>
-        
-        <!-- Platform Features -->
-        <div class="section-title">
-            <h2>Our Platform Features</h2>
-            <p>Four interconnected pillars for understanding and countering genocide denial</p>
-        </div>
-        
-        <div class="features-grid">
-            <!-- The Shield -->
-            <div class="feature-card shield">
-                <span class="feature-icon">🛡️</span>
-                <h4>THE SHIELD</h4>
-                <p>Direct refutations of common genocide denial claims with evidence from ICTR verdicts, Gacaca court records, survivor testimonies, and historical documents.</p>
-                <a href="shield.html" class="feature-btn">Explore Evidence</a>
-            </div>
-            
-            <!-- The Forge -->
-            <div class="feature-card forge">
-                <span class="feature-icon">🔥</span>
-                <h4>THE FORGE</h4>
-                <p>Learn how genocide denial works, recognize common tactics, and build skills to counter misinformation with evidence-based arguments.</p>
-                <a href="forge.html" class="feature-btn">Learn Strategies</a>
-            </div>
-            
-            <!-- The Memorial -->
-            <div class="feature-card memorial">
-                <span class="feature-icon">🕯️</span>
-                <h4>THE MEMORIAL</h4>
-                <p>Honor victims through survivor testimonies, historical documentation, and preserving memory. Content presented with respect and appropriate warnings.</p>
-                <a href="memorial.html" class="feature-btn">Remember & Honor</a>
-            </div>
-            
-            <!-- Resources -->
-            <div class="feature-card home">
-                <span class="feature-icon">📚</span>
-                <h4>RESOURCES</h4>
-                <p>Educational materials, research guidelines, mental health support information, and tools for educators and researchers.</p>
-                <a href="#resources" class="feature-btn">Access Resources</a>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="mission-container">
+            <h2>Our Mission</h2>
+            <p>The Rwanda Truth Platform exists to counter genocide denial and distortion through verified evidence, survivor testimonies, and historical documentation about the 1994 Genocide against the Tutsi in Rwanda.</p>
+            <p>We provide educators, students, researchers, and the public with the tools to understand, recognize, and respond to denialist narratives with factual, evidence-based information.</p>
+            <div class="mission-quote">
+                "To remember is not only to look back. It is to carry forward. It is to say: you lived, you mattered, and your memory will not be erased."
             </div>
         </div>
-        
-        <!-- How to Use -->
-        <section class="how-to-use">
-            <h3>How to Use This Platform</h3>
-            <div class="steps">
+    </section>
+
+    <!-- Features Grid -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Platform Features</h2>
+                <p>Four interconnected pillars for understanding and countering genocide denial</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- The Shield -->
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>THE SHIELD</h3>
+                    <p>Direct refutations of common genocide denial claims with evidence from ICTR verdicts, Gacaca court records, survivor testimonies, and historical documents.</p>
+                    <a href="shield.html" class="feature-btn">Explore Evidence</a>
+                </div>
+
+                <!-- The Forge -->
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>THE FORGE</h3>
+                    <p>Learn how genocide denial works, recognize common tactics, and build skills to counter misinformation with evidence-based arguments.</p>
+                    <a href="forge.html" class="feature-btn">Learn Strategies</a>
+                </div>
+
+                <!-- The Memorial -->
+                <div class="feature-card">
+                    <div class="feature-icon">🕯️</div>
+                    <h3>THE MEMORIAL</h3>
+                    <p>Honor victims through survivor testimonies, historical documentation, and preserving memory. Each name, each life, each story matters.</p>
+                    <a href="memorial.html" class="feature-btn">Remember & Honor</a>
+                </div>
+
+                <!-- Resources -->
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>RESOURCES</h3>
+                    <p>Educational materials, research guidelines, mental health support information, and tools for educators and researchers worldwide.</p>
+                    <a href="#resources" class="feature-btn">Access Resources</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use -->
+    <section class="how-to-use">
+        <div class="container">
+            <h2>How to Use This Platform</h2>
+            <div class="steps-container">
                 <div class="step">
                     <div class="step-number">1</div>
                     <h4>Start with THE SHIELD</h4>
                     <p>Begin by exploring evidence against specific denial claims. Each claim is matched with verified evidence and documentation.</p>
                 </div>
-                
                 <div class="step">
                     <div class="step-number">2</div>
                     <h4>Visit THE FORGE</h4>
                     <p>Learn about denial tactics and how to respond effectively. Build your understanding of how misinformation spreads.</p>
                 </div>
-                
                 <div class="step">
                     <div class="step-number">3</div>
                     <h4>Explore THE MEMORIAL</h4>
                     <p>Engage with survivor testimonies and historical context. Understand the human impact and preserve memory.</p>
                 </div>
             </div>
-        </section>
-        
-        <!-- Memorial Note -->
-        <section class="memorial-note">
+        </div>
+    </section>
+
+    <!-- Memorial Note -->
+    <section class="memorial-note">
+        <div class="container">
             <h3>🕯️ In Memory</h3>
             <p>We remember the more than one million innocent lives lost during the 1994 Genocide against the Tutsi in Rwanda. This platform exists to honor their memory by preserving truth and countering denial.</p>
             <p>We stand with survivors and their families, and commit to educating future generations about this history.</p>
-        </section>
-        
-        <!-- Call to Action -->
-        <section class="cta">
-            <h3>Ready to Begin?</h3>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Begin?</h2>
             <p>Start exploring evidence against genocide denial and learn how to counter misinformation with factual, verified information.</p>
-            <a href="shield.html" class="btn">Begin with THE SHIELD →</a>
-        </section>
-    </main>
-    
+            <div class="cta-buttons">
+                <a href="shield.html" class="cta-btn">Begin with THE SHIELD →</a>
+                <a href="memorial.html" class="cta-btn secondary">Light a Candle 🕯️</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
-        <h3 style="margin-bottom: 20px;">Rwanda Truth Platform</h3>
+        <h3>Rwanda Truth Platform</h3>
         <p>Documented evidence against genocide denial</p>
         
         <div class="footer-links">
@@ -150,53 +656,18 @@
             <a href="memorial.html">The Memorial</a>
             <a href="#methodology">Our Methodology</a>
             <a href="#resources">Educational Resources</a>
-            <a href="#contact">Contact Researchers</a>
             <a href="#support">Support Resources</a>
         </div>
         
-        <p>
-            This platform is in development. We are committed to accuracy, respect for survivors, 
-            and educational value. Content will be expanded through partnerships with researchers, 
-            educators, and survivor organizations.
-        </p>
-        <p style="margin-top: 15px; font-size: 0.8rem;">
-            &copy; 2024 Rwanda Truth Platform. All content presented with respect for victims and survivors.
-        </p>
+        <p>This platform is dedicated to the memory of more than one million Tutsi lives lost in the 1994 Genocide against the Tutsi in Rwanda. We stand with survivors, honor their strength, and commit ourselves to preserving memory for generations to come.</p>
+        <p style="margin-top: 20px; font-size: 0.8rem;">© 2024 Rwanda Truth Platform — In memory. In truth. In solidarity.</p>
     </footer>
-    
+
     <script>
         // Support resources
         document.getElementById('supportLink').addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112 (toll-free)\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n• Local health centers provide counseling\n\nINTERNATIONAL:\n• Contact local mental health services\n• Genocide survivor organizations\n• Trauma counseling services\n\nThis platform will include detailed resources as we develop.');
-        });
-        
-        // Set active navigation
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('.nav-item').forEach(item => {
-            if (item.getAttribute('href') === currentPage) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-        
-        // Coming soon alerts for unfinished pages
-        document.querySelectorAll('.feature-btn, .btn').forEach(btn => {
-            if (btn.getAttribute('href') && !btn.getAttribute('href').includes('shield.html') && 
-                !btn.getAttribute('href').includes('index.html')) {
-                btn.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === 'forge.html' || this.getAttribute('href') === 'memorial.html') {
-                        e.preventDefault();
-                        alert('This section is coming soon!\n\nWe are currently developing:\n• ' + 
-                              (this.getAttribute('href') === 'forge.html' ? 
-                               'THE FORGE: Understanding denial tactics and building response skills' : 
-                               'THE MEMORIAL: Survivor testimonies and historical documentation') + 
-                              '\n\nCheck back soon or start with THE SHIELD section for available content.');
-                        window.location.href = 'shield.html';
-                    }
-                });
-            }
+            alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n\nINTERNATIONAL:\n• Contact local mental health services\n• Genocide survivor organizations\n• Trauma counseling services');
         });
     </script>
 </body>
