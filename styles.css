@@ -252,34 +252,87 @@ a:hover {
 }
 
 
+/* ===== MOBILE BOTTOM NAVIGATION — ALWAYS VISIBLE, IMPROVED STYLING ===== */
+.mobile-bottom-nav {
+    display: block;  /* Always visible */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
+    padding: 8px 0;
+    border-top: 2px solid var(--memorial-amber);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
 .mobile-nav-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 4px;
 }
 
 .mobile-nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: var(--memorial-gray);
-    font-size: 0.75rem;
-    padding: 8px 4px;
-    border-radius: 8px;
-    transition: all 0.2s;
+    font-size: 0.7rem;
+    padding: 8px 0;
+    flex: 1;
+    text-align: center;
+    transition: all 0.2s ease;
+    border-radius: 12px;
+    margin: 0 2px;
+    min-width: 0;
+}
+
+.mobile-nav-item:hover {
+    background: var(--memorial-light);
+    transform: translateY(-2px);
 }
 
 .mobile-nav-item.active {
     background: var(--memorial-purple);
     color: white;
+    box-shadow: 0 4px 10px rgba(75, 46, 91, 0.3);
 }
 
 .mobile-nav-icon {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-bottom: 2px;
+    display: block;
 }
 
+/* Hide text on very small screens, show only icons */
+@media (max-width: 480px) {
+    .mobile-nav-item span:last-child {
+        display: none;
+    }
+    
+    .mobile-nav-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+    }
+    
+    .mobile-nav-item {
+        padding: 10px 0;
+    }
+}
+
+/* Even smaller screens */
+@media (max-width: 360px) {
+    .mobile-nav-icon {
+        font-size: 1.6rem;
+    }
+}
 /* Buttons */
 .btn {
     display: inline-block;
@@ -904,5 +957,39 @@ textarea.form-control {
     .mobile-nav-icon {
         font-size: 1.8rem;
         margin-bottom: 0;
+    }
+}
+/* ================= SAFE STABILITY PATCH ================= */
+
+/* Prevent horizontal scroll everywhere */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Ensure fixed mobile nav behaves properly */
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Make nav items distribute evenly */
+.mobile-nav-container {
+    display: flex;
+    width: 100%;
+}
+
+.mobile-nav-item {
+    flex: 1;
+    text-align: center;
+}
+
+/* Hide desktop nav on mobile only */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none !important;
     }
 }

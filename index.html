@@ -24,12 +24,7 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            padding-bottom: 70px;
-        }
+       
 
         /* Rwandan flag accent */
         .flag-accent {
@@ -758,7 +753,28 @@
         <p style="margin-top: 20px; font-size: 0.8rem;">© 2024 Rwanda Truth Platform — In memory. In truth. In solidarity.</p>
     </footer>
 
-   
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <div class="mobile-nav-container">
+            <a href="index.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="shield.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🛡️</span>
+                <span>Shield</span>
+            </a>
+            <a href="forge.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🔥</span>
+                <span>Forge</span>
+            </a>
+            <a href="memorial.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🕯️</span>
+                <span>Memorial</span>
+            </a>
+        </div>
+    </nav>
+
     <script>
         // Support resources
         document.getElementById('supportLink').addEventListener('click', function(e) {
@@ -774,36 +790,7 @@
             }
         });
     </script>
-    <!-- Mobile Bottom Navigation -->
-<nav class="mobile-bottom-nav">
-    <div class="mobile-nav-container">
-        <a href="index.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🏠</span>
-            <span>Home</span>
-        </a>
-        <a href="shield.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🛡️</span>
-            <span>Shield</span>
-        </a>
-        <a href="forge.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🔥</span>
-            <span>Forge</span>
-        </a>
-        <a href="memorial.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🕯️</span>
-            <span>Memorial</span>
-        </a>
-    </div>
-</nav>
 
-<script>
-    // Highlight active page in mobile nav
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.mobile-nav-item').forEach(item => {
-        if (item.getAttribute('href') === currentPage) {
-            item.classList.add('active');
-        }
-    });
-</script>
+    <!-- NO EXTRA STYLES HERE — LET STYLES.CSS DO ITS JOB -->
 </body>
 </html>
