@@ -62,7 +62,7 @@
             font-weight: 600;
         }
 
-        /* Hero Section — Purple Majesty with Flag Overlay */
+        /* Hero Section */
         .home-hero {
             background: linear-gradient(135deg, var(--memorial-purple) 0%, #2C3E50 100%);
             position: relative;
@@ -511,56 +511,6 @@
             font-size: 0.9rem;
         }
 
-        /* ===== MOBILE BOTTOM NAVIGATION — FIXED ===== */
-        .mobile-bottom-nav {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
-            padding: 8px 0;
-            border-top: 2px solid var(--memorial-amber);
-        }
-
-        .mobile-nav-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .mobile-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: var(--memorial-gray);
-            font-size: 0.7rem;
-            padding: 6px 0;
-            flex: 1;
-            text-align: center;
-            transition: all 0.2s;
-            min-width: 0;
-        }
-
-        .mobile-nav-item.active {
-            background: var(--memorial-purple);
-            color: white;
-            border-radius: 8px;
-            margin: 0 2px;
-        }
-
-        .mobile-nav-icon {
-            font-size: 1.5rem;
-            margin-bottom: 2px;
-        }
-
         /* ===== RESPONSIVE BREAKPOINTS ===== */
         @media (max-width: 768px) {
             body {
@@ -569,10 +519,6 @@
             
             .main-nav {
                 display: none;
-            }
-            
-            .mobile-bottom-nav {
-                display: block;
             }
             
             .home-hero {
@@ -630,25 +576,6 @@
             
             .feature-card h3 {
                 font-size: 1.3rem;
-            }
-            
-            .mobile-nav-item span:last-child {
-                display: none;
-            }
-            
-            .mobile-nav-icon {
-                font-size: 1.8rem;
-                margin-bottom: 0;
-            }
-            
-            .mobile-nav-item {
-                padding: 10px 0;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .mobile-nav-icon {
-                font-size: 1.6rem;
             }
         }
     </style>
@@ -831,7 +758,7 @@
         <p style="margin-top: 20px; font-size: 0.8rem;">© 2024 Rwanda Truth Platform — In memory. In truth. In solidarity.</p>
     </footer>
 
-    <!-- Mobile Bottom Navigation — FIXED -->
+    <!-- Mobile Bottom Navigation -->
     <nav class="mobile-bottom-nav">
         <div class="mobile-nav-container">
             <a href="index.html" class="mobile-nav-item">
