@@ -251,19 +251,6 @@ a:hover {
     display: block;
 }
 
-/* ===== MOBILE BOTTOM NAVIGATION (APP STYLE) ===== */
-.mobile-bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-    z-index: 1000;
-    padding: 8px 4px;
-    border-top: 2px solid var(--memorial-amber);
-}
 
 .mobile-nav-container {
     display: grid;
