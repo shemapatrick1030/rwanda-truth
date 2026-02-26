@@ -803,19 +803,24 @@
     };
     
     // ==================== INITIALIZATION ====================
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('🔥 THE FORGE initializing...');
-        loadAllData();
-        
-        // Add support link handler
-        const supportLink = document.getElementById('supportLink');
-        if (supportLink) {
-            supportLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112 (toll-free)\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n\nINTERNATIONAL:\n• Contact local mental health services\n• Genocide survivor organizations\n• Trauma counseling services');
-            });
-        }
-    });
+   document.addEventListener('DOMContentLoaded', async function() {
+    console.log('🔥 THE FORGE initializing...');
+    
+    // Load from Firebase FIRST
+    await loadScenariosFromFirebase();
+    
+    // Then load everything else
+    loadAllData();
+    
+    // Add support link handler
+    const supportLink = document.getElementById('supportLink');
+    if (supportLink) {
+        supportLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112 (toll-free)\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n\nINTERNATIONAL:\n• Contact local mental health services\n• Genocide survivor organizations\n• Trauma counseling services');
+        });
+    }
+});
     
     function loadAllData() {
         // Load tactics
@@ -1244,24 +1249,39 @@ async function loadAllData() {
     
     // ==================== SCENARIOS ====================
    function filterScenariosByLevel(level) {
-    // STRICT filtering: only show scenarios of the exact level
-    if (level === 'beginner') {
-        filteredScenarios = scenarios.filter(s => s && s.level === 'beginner');
-    } else if (level === 'intermediate') {
-        filteredScenarios = scenarios.filter(s => s && s.level === 'intermediate');
-    } else if (level === 'advanced') {
-        filteredScenarios = scenarios.filter(s => s && s.level === 'advanced');
+    console.log(`🔍 Filtering for level: "${level}"`);
+    console.log('📊 Total scenarios array:', scenarios);
+    
+    // Make sure scenarios is an array
+    if (!Array.isArray(scenarios)) {
+        console.error('❌ scenarios is not an array:', scenarios);
+        filteredScenarios = [];
     } else {
-        filteredScenarios = scenarios;
+        // Log each scenario's level for debugging
+        scenarios.forEach((s, i) => {
+            console.log(`Scenario ${i}: level = "${s.level}" (type: ${typeof s.level})`);
+        });
+        
+        // Simple, direct filtering
+        filteredScenarios = scenarios.filter(s => {
+            // Handle different possible formats
+            if (!s) return false;
+            
+            // Compare as strings to be safe
+            const scenarioLevel = String(s.level || '').toLowerCase().trim();
+            const targetLevel = String(level).toLowerCase().trim();
+            
+            return scenarioLevel === targetLevel;
+        });
     }
     
-    console.log(`🎯 Filtered scenarios for ${level}: ${filteredScenarios.length} found`);
+    console.log(`🎯 Found ${filteredScenarios.length} scenarios for ${level}`);
     
     // Update total counter
     const totalScenariosEl = document.getElementById('totalScenarios');
     if (totalScenariosEl) totalScenariosEl.textContent = filteredScenarios.length;
     
-    // Update progress UI for this level
+    // Update progress UI
     updateProgressUI();
     
     // Load first scenario
@@ -1404,20 +1424,18 @@ async function loadAllData() {
 async function loadScenariosFromFirebase() {
     try {
         const snapshot = await db.collection('scenarios').get();
-        const scenarios = snapshot.docs.map(doc => ({
+        const firebaseScenarios = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
         }));
-        console.log(`📦 Loaded ${scenarios.length} scenarios from Firebase`);
         
-        // Update your scenario system here
-        // (depends how your Forge page is structured)
-        window.scenarios = scenarios;
+        console.log(`📦 Loaded ${firebaseScenarios.length} scenarios from Firebase`);
         
-        // If you have a render function, call it
-        if (typeof renderScenarios === 'function') {
-            renderScenarios();
-        }
+        // Update the global scenarios variable
+        scenarios = firebaseScenarios;
+        
+        // Trigger the display with current level
+        filterScenariosByLevel(currentLevel);
         
     } catch (error) {
         console.error('Error loading scenarios:', error);
