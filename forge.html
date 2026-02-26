@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -828,14 +829,68 @@
         }
         
         // Load scenarios
+       // Load scenarios from Firebase
+async function loadScenariosFromFirebase() {
+    try {
+        const snapshot = await db.collection('scenarios').get();
+        scenarios = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        console.log(`📦 Loaded ${scenarios.length} scenarios from Firebase`);
+        
+        // Re-filter and update UI
+        filterScenariosByLevel(currentLevel);
+        renderTacticsByLevel(currentLevel);
+        renderResourcesByLevel(currentLevel);
+        
+    } catch (error) {
+        console.error('Error loading scenarios from Firebase:', error);
+        // Fallback to localStorage if Firebase fails
         try {
             const saved = localStorage.getItem(STORAGE_KEYS.SCENARIOS);
             scenarios = saved ? JSON.parse(saved) : [];
-            console.log(`📦 Loaded ${scenarios.length} scenarios`);
-        } catch (error) {
-            console.error('Error loading scenarios:', error);
+            console.log(`📦 Fallback: loaded ${scenarios.length} scenarios from localStorage`);
+        } catch (e) {
             scenarios = [];
         }
+    }
+}
+
+// Update loadAllData to use Firebase
+async function loadAllData() {
+    // Load tactics (keep localStorage for now)
+    try {
+        const saved = localStorage.getItem(STORAGE_KEYS.TACTICS);
+        tactics = saved ? JSON.parse(saved) : [];
+        console.log(`📦 Loaded ${tactics.length} tactics`);
+    } catch (error) {
+        console.error('Error loading tactics:', error);
+        tactics = [];
+    }
+    
+    // Load scenarios from Firebase (NEW)
+    await loadScenariosFromFirebase();
+    
+    // Load resources (keep localStorage for now)
+    try {
+        const saved = localStorage.getItem(STORAGE_KEYS.RESOURCES);
+        resources = saved ? JSON.parse(saved) : [];
+        console.log(`📦 Loaded ${resources.length} resources`);
+    } catch (error) {
+        console.error('Error loading resources:', error);
+        resources = [];
+    }
+    
+    // Load user progress
+    loadUserProgress();
+    
+    // Render everything
+    renderTacticsByLevel(currentLevel);
+    renderResourcesByLevel(currentLevel);
+    
+    console.log('✅ THE FORGE ready!');
+}
         
         // Load resources
         try {
@@ -1188,39 +1243,40 @@
     }
     
     // ==================== SCENARIOS ====================
-    function filterScenariosByLevel(level) {
-        // Filter scenarios based on level
-        if (level === 'beginner') {
-            filteredScenarios = scenarios.filter(s => s && s.level === 'beginner');
-        } else if (level === 'intermediate') {
-            filteredScenarios = scenarios.filter(s => s && (s.level === 'beginner' || s.level === 'intermediate'));
-        } else {
-            filteredScenarios = scenarios; // Advanced shows all
-        }
-        
-        console.log(`🎯 Filtered scenarios for ${level}: ${filteredScenarios.length} found`);
-        
-        // Update total counter
-        const totalScenariosEl = document.getElementById('totalScenarios');
-        if (totalScenariosEl) totalScenariosEl.textContent = filteredScenarios.length;
-        
-        // Update progress UI for this level
-        updateProgressUI();
-        
-        // Load first scenario
-        if (filteredScenarios.length > 0) {
-            loadScenario(0);
-        } else {
-            const denialClaim = document.getElementById('denialClaim');
-            const responseOptions = document.getElementById('responseOptions');
-            const feedbackBox = document.getElementById('feedbackBox');
-            
-            if (denialClaim) denialClaim.textContent = 'No training scenarios available for this level.';
-            if (responseOptions) responseOptions.innerHTML = '';
-            if (feedbackBox) feedbackBox.style.display = 'none';
-        }
+   function filterScenariosByLevel(level) {
+    // STRICT filtering: only show scenarios of the exact level
+    if (level === 'beginner') {
+        filteredScenarios = scenarios.filter(s => s && s.level === 'beginner');
+    } else if (level === 'intermediate') {
+        filteredScenarios = scenarios.filter(s => s && s.level === 'intermediate');
+    } else if (level === 'advanced') {
+        filteredScenarios = scenarios.filter(s => s && s.level === 'advanced');
+    } else {
+        filteredScenarios = scenarios;
     }
     
+    console.log(`🎯 Filtered scenarios for ${level}: ${filteredScenarios.length} found`);
+    
+    // Update total counter
+    const totalScenariosEl = document.getElementById('totalScenarios');
+    if (totalScenariosEl) totalScenariosEl.textContent = filteredScenarios.length;
+    
+    // Update progress UI for this level
+    updateProgressUI();
+    
+    // Load first scenario
+    if (filteredScenarios.length > 0) {
+        loadScenario(0);
+    } else {
+        const denialClaim = document.getElementById('denialClaim');
+        const responseOptions = document.getElementById('responseOptions');
+        const feedbackBox = document.getElementById('feedbackBox');
+        
+        if (denialClaim) denialClaim.textContent = `No ${level} scenarios available yet. Add some in the admin panel.`;
+        if (responseOptions) responseOptions.innerHTML = '';
+        if (feedbackBox) feedbackBox.style.display = 'none';
+    }
+}
     function loadScenario(index) {
         if (filteredScenarios.length === 0) return;
         
@@ -1369,7 +1425,19 @@ async function loadScenariosFromFirebase() {
 }
 
 // Call it when page loads
-document.addEventListener('DOMContentLoaded', loadScenariosFromFirebase);
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('🔥 THE FORGE initializing...');
+    await loadAllData();  // ← added 'await'
+    
+    // Add support link handler
+    const supportLink = document.getElementById('supportLink');
+    if (supportLink) {
+        supportLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112 (toll-free)\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n\nINTERNATIONAL:\n• Contact local mental health services\n• Genocide survivor organizations\n• Trauma counseling services');
+        });
+    }
+});
     
     // ==================== UTILITY FUNCTIONS ====================
     function showTacticExample(example) {
