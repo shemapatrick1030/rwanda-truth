@@ -809,7 +809,7 @@
             color: rgba(255,255,255,0.7) !important;
         }
 
-        /* ===== MOBILE BOTTOM NAVIGATION ===== */
+        /* ===== MOBILE BOTTOM NAVIGATION — FIXED ===== */
         .mobile-bottom-nav {
             display: none;
             position: fixed;
@@ -819,31 +819,39 @@
             background: white;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
             z-index: 1000;
-            padding: 8px 4px;
+            padding: 8px 0;
             border-top: 2px solid var(--memorial-amber);
         }
 
         .mobile-nav-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
         }
 
         .mobile-nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-decoration: none;
             color: var(--memorial-gray);
             font-size: 0.7rem;
-            padding: 8px 4px;
-            border-radius: 8px;
+            padding: 6px 0;
+            flex: 1;
+            text-align: center;
             transition: all 0.2s;
+            min-width: 0;
+            border-radius: 8px;
         }
 
         .mobile-nav-item.active {
             background: var(--memorial-purple);
             color: white;
+            margin: 0 2px;
         }
 
         .mobile-nav-icon {
@@ -1061,7 +1069,7 @@
 
     <main id="mainContent"></main>
 
-    <!-- Mobile Bottom Navigation -->
+    <!-- Mobile Bottom Navigation — FIXED -->
     <nav class="mobile-bottom-nav">
         <div class="mobile-nav-container">
             <a href="index.html" class="mobile-nav-item">

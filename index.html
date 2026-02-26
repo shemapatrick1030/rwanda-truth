@@ -75,7 +75,6 @@
             isolation: isolate;
         }
 
-        /* Rwandan flag colors as subtle overlay */
         .home-hero::after {
             content: '';
             position: absolute;
@@ -170,7 +169,7 @@
             opacity: 0.8;
         }
 
-        /* Navigation - Hidden on mobile (uses bottom nav) */
+        /* Desktop Navigation */
         .main-nav {
             background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -512,7 +511,7 @@
             font-size: 0.9rem;
         }
 
-        /* ===== MOBILE BOTTOM NAVIGATION ===== */
+        /* ===== MOBILE BOTTOM NAVIGATION — FIXED ===== */
         .mobile-bottom-nav {
             display: none;
             position: fixed;
@@ -522,31 +521,39 @@
             background: white;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
             z-index: 1000;
-            padding: 8px 4px;
+            padding: 8px 0;
             border-top: 2px solid var(--memorial-amber);
         }
 
         .mobile-nav-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
         }
 
         .mobile-nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-decoration: none;
             color: var(--memorial-gray);
             font-size: 0.7rem;
-            padding: 8px 4px;
-            border-radius: 8px;
+            padding: 6px 0;
+            flex: 1;
+            text-align: center;
             transition: all 0.2s;
+            min-width: 0;
         }
 
         .mobile-nav-item.active {
             background: var(--memorial-purple);
             color: white;
+            border-radius: 8px;
+            margin: 0 2px;
         }
 
         .mobile-nav-icon {
@@ -624,9 +631,7 @@
             .feature-card h3 {
                 font-size: 1.3rem;
             }
-        }
-
-        @media (max-width: 360px) {
+            
             .mobile-nav-item span:last-child {
                 display: none;
             }
@@ -635,60 +640,17 @@
                 font-size: 1.8rem;
                 margin-bottom: 0;
             }
+            
+            .mobile-nav-item {
+                padding: 10px 0;
+            }
         }
-        /* ===== FIX MOBILE NAV OVERFLOW ===== */
-@media (max-width: 768px) {
-    .mobile-bottom-nav {
-        width: 100%;
-        left: 0;
-        right: 0;
-        padding: 5px 2px;
-    }
-    
-    .mobile-nav-container {
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-        gap: 2px;
-    }
-    
-    .mobile-nav-item {
-        flex: 1;
-        padding: 6px 2px;
-        font-size: 0.65rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    
-    .mobile-nav-icon {
-        font-size: 1.3rem;
-        margin-bottom: 2px;
-    }
-}
 
-/* Extra small phones */
-@media (max-width: 480px) {
-    .mobile-nav-item span:last-child {
-        display: none; /* Hide text, show only icons */
-    }
-    
-    .mobile-nav-icon {
-        font-size: 1.6rem;
-        margin-bottom: 0;
-    }
-    
-    .mobile-nav-item {
-        padding: 8px 0;
-    }
-}
-
-/* iPhone SE and smaller */
-@media (max-width: 375px) {
-    .mobile-nav-icon {
-        font-size: 1.4rem;
-    }
-}
+        @media (max-width: 360px) {
+            .mobile-nav-icon {
+                font-size: 1.6rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -869,7 +831,7 @@
         <p style="margin-top: 20px; font-size: 0.8rem;">© 2024 Rwanda Truth Platform — In memory. In truth. In solidarity.</p>
     </footer>
 
-    <!-- Mobile Bottom Navigation -->
+    <!-- Mobile Bottom Navigation — FIXED -->
     <nav class="mobile-bottom-nav">
         <div class="mobile-nav-container">
             <a href="index.html" class="mobile-nav-item">
