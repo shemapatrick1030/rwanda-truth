@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Rwanda Truth Platform</title>
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -28,6 +28,7 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
             color: #333;
+            padding-bottom: 70px;
         }
 
         /* Rwandan flag accent */
@@ -65,12 +66,12 @@
         .home-hero {
             background: linear-gradient(135deg, var(--memorial-purple) 0%, #2C3E50 100%);
             position: relative;
-            min-height: 600px;
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             isolation: isolate;
         }
 
@@ -109,15 +110,17 @@
             max-width: 900px;
             position: relative;
             z-index: 2;
+            width: 100%;
         }
 
         .home-hero h1 {
             color: white;
-            font-size: 4rem;
+            font-size: clamp(2rem, 8vw, 4rem);
             margin-bottom: 20px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
             font-weight: 800;
             letter-spacing: 2px;
+            word-wrap: break-word;
         }
 
         .home-hero h1::after {
@@ -126,45 +129,48 @@
             width: 100px;
             height: 3px;
             background: var(--memorial-amber);
-            margin: 25px auto;
+            margin: 20px auto;
         }
 
         .home-hero p {
             color: rgba(255,255,255,0.95);
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 4vw, 1.3rem);
             max-width: 700px;
             margin: 0 auto;
             font-weight: 300;
-            line-height: 1.8;
+            line-height: 1.6;
+            padding: 0 10px;
         }
 
         .hero-stats {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            margin-top: 60px;
+            gap: 40px;
+            margin-top: 40px;
             color: white;
+            flex-wrap: wrap;
         }
 
         .stat-item {
             text-align: center;
+            min-width: 120px;
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             font-weight: 800;
             display: block;
             color: var(--memorial-amber);
         }
 
         .stat-label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             opacity: 0.8;
         }
 
-        /* Navigation */
+        /* Navigation - Hidden on mobile (uses bottom nav) */
         .main-nav {
             background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -212,7 +218,7 @@
 
         /* Mission Section */
         .mission-section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: linear-gradient(135deg, #f8fafc, #f1f5f9);
             text-align: center;
         }
@@ -223,65 +229,67 @@
         }
 
         .mission-section h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             color: var(--memorial-purple);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .mission-section p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: #2C3E50;
-            margin-bottom: 25px;
-            line-height: 1.8;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            padding: 0 10px;
         }
 
         .mission-quote {
-            font-size: 1.4rem;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
             font-style: italic;
             color: var(--memorial-gray);
-            padding: 30px;
+            padding: 30px 20px;
             background: white;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(75, 46, 91, 0.1);
-            margin-top: 40px;
+            margin-top: 30px;
             border-left: 6px solid var(--memorial-amber);
         }
 
         /* Features Grid */
         .features-section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: white;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             color: var(--memorial-purple);
             margin-bottom: 15px;
         }
 
         .section-title p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: #666;
             max-width: 700px;
             margin: 0 auto;
+            padding: 0 15px;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .feature-card {
             background: var(--memorial-light);
-            padding: 40px;
+            padding: 30px 20px;
             border-radius: 20px;
             text-align: center;
             transition: all 0.3s;
@@ -289,31 +297,32 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(75, 46, 91, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(75, 46, 91, 0.15);
             border-color: var(--memorial-amber);
         }
 
         .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            margin-bottom: 15px;
         }
 
         .feature-card h3 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--memorial-purple);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .feature-card p {
             color: #4a5568;
-            margin-bottom: 25px;
-            line-height: 1.7;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
         .feature-btn {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 10px 25px;
             background: var(--memorial-purple);
             color: white;
             text-decoration: none;
@@ -321,6 +330,7 @@
             font-weight: 600;
             transition: all 0.3s;
             border: 2px solid transparent;
+            font-size: 0.9rem;
         }
 
         .feature-btn:hover {
@@ -331,21 +341,21 @@
 
         /* How to Use Section */
         .how-to-use {
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: linear-gradient(135deg, var(--memorial-purple), #2C3E50);
             color: white;
             text-align: center;
         }
 
         .how-to-use h2 {
-            font-size: 2.5rem;
-            margin-bottom: 50px;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 30px;
         }
 
         .steps-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -353,93 +363,97 @@
         .step {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
-            padding: 40px 20px;
+            padding: 30px 20px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.2);
         }
 
         .step-number {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: var(--memorial-amber);
             color: var(--memorial-purple);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 800;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
         }
 
         .step h4 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
         }
 
         .step p {
             color: rgba(255,255,255,0.9);
+            font-size: 0.95rem;
         }
 
         /* Memorial Note */
         .memorial-note {
             background: white;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
             border-top: 4px solid var(--memorial-amber);
         }
 
         .memorial-note h3 {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
             color: var(--memorial-purple);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .memorial-note p {
             max-width: 800px;
-            margin: 0 auto 20px;
-            font-size: 1.2rem;
+            margin: 0 auto 15px;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: #4a5568;
+            padding: 0 15px;
         }
 
         /* CTA Section */
         .cta-section {
             background: linear-gradient(135deg, #1A2530, var(--memorial-purple));
             color: white;
-            padding: 100px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
 
         .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 15px;
         }
 
         .cta-section p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             max-width: 700px;
-            margin: 0 auto 40px;
+            margin: 0 auto 30px;
             opacity: 0.9;
+            padding: 0 15px;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .cta-btn {
             display: inline-block;
-            padding: 16px 40px;
+            padding: 14px 30px;
             background: var(--memorial-amber);
             color: var(--memorial-purple);
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s;
             border: 2px solid transparent;
+            min-width: 200px;
         }
 
         .cta-btn:hover {
@@ -463,20 +477,20 @@
         .footer {
             background: #1A2530;
             color: white;
-            padding: 60px 20px;
+            padding: 50px 20px;
             text-align: center;
         }
 
         .footer h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
+            gap: 20px;
+            margin: 30px 0;
             flex-wrap: wrap;
         }
 
@@ -484,6 +498,7 @@
             color: rgba(255,255,255,0.8);
             text-decoration: none;
             transition: color 0.3s;
+            font-size: 0.9rem;
         }
 
         .footer-links a:hover {
@@ -494,33 +509,131 @@
             max-width: 800px;
             margin: 0 auto;
             opacity: 0.7;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
-        /* Responsive */
+        /* ===== MOBILE BOTTOM NAVIGATION ===== */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            padding: 8px 4px;
+            border-top: 2px solid var(--memorial-amber);
+        }
+
+        .mobile-nav-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--memorial-gray);
+            font-size: 0.7rem;
+            padding: 8px 4px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .mobile-nav-item.active {
+            background: var(--memorial-purple);
+            color: white;
+        }
+
+        .mobile-nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 2px;
+        }
+
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
         @media (max-width: 768px) {
-            .home-hero h1 {
-                font-size: 2.5rem;
+            body {
+                padding-bottom: 70px;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .mobile-bottom-nav {
+                display: block;
+            }
+            
+            .home-hero {
+                min-height: 400px;
+                padding: 40px 15px;
             }
             
             .hero-stats {
-                flex-direction: column;
                 gap: 20px;
             }
             
-            .features-grid,
+            .stat-item {
+                min-width: 100px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .steps-container {
                 grid-template-columns: 1fr;
             }
             
-            .nav-container {
-                flex-direction: column;
-                gap: 10px;
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-hero h1::after {
+                width: 60px;
             }
             
-            .nav-item {
-                flex-direction: row;
-                gap: 10px;
+            .stat-item {
+                min-width: 80px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .stat-label {
+                font-size: 0.8rem;
+            }
+            
+            .mission-quote {
+                padding: 20px 15px;
+                font-size: 1rem;
+            }
+            
+            .feature-card {
+                padding: 25px 15px;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .mobile-nav-item span:last-child {
+                display: none;
+            }
+            
+            .mobile-nav-icon {
+                font-size: 1.8rem;
+                margin-bottom: 0;
             }
         }
     </style>
@@ -534,16 +647,9 @@
         ⚠️ <strong>Content Warning:</strong> This site contains historical evidence of the 1994 Genocide against the Tutsi in Rwanda.
         <a href="#support" id="supportLink">Mental Health Support Resources</a>
     </div>
+    
     <!-- Rwandan Flag Stripe -->
-<div style="
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, 
-        #00A1DE 33%, 
-        #FAD201 33% 66%, 
-        #008000 66%
-    );
-"></div>
+    <div style="width:100%; height:4px; background:linear-gradient(90deg, #00A1DE 33%, #FAD201 33% 66%, #008000 66%);"></div>
 
     <!-- Hero Section -->
     <header class="home-hero">
@@ -568,7 +674,7 @@
         </div>
     </header>
 
-    <!-- Navigation -->
+    <!-- Desktop Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
             <a href="index.html" class="nav-item active">
@@ -710,43 +816,42 @@
         <p style="margin-top: 20px; font-size: 0.8rem;">© 2024 Rwanda Truth Platform — In memory. In truth. In solidarity.</p>
     </footer>
 
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <div class="mobile-nav-container">
+            <a href="index.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="shield.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🛡️</span>
+                <span>Shield</span>
+            </a>
+            <a href="forge.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🔥</span>
+                <span>Forge</span>
+            </a>
+            <a href="memorial.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🕯️</span>
+                <span>Memorial</span>
+            </a>
+        </div>
+    </nav>
+
     <script>
         // Support resources
         document.getElementById('supportLink').addEventListener('click', function(e) {
             e.preventDefault();
             alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112\n• Ndera Neuropsychiatric Hospital\n• IBUKA (Survivors\' Organization)\n\nINTERNATIONAL:\n• Contact local mental health services\n• Genocide survivor organizations\n• Trauma counseling services');
         });
-    </script>
-    <!-- Mobile Bottom Navigation -->
-<nav class="mobile-bottom-nav">
-    <div class="mobile-nav-container">
-        <a href="index.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🏠</span>
-            <span>Home</span>
-        </a>
-        <a href="shield.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🛡️</span>
-            <span>Shield</span>
-        </a>
-        <a href="forge.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🔥</span>
-            <span>Forge</span>
-        </a>
-        <a href="memorial.html" class="mobile-nav-item">
-            <span class="mobile-nav-icon">🕯️</span>
-            <span>Memorial</span>
-        </a>
-    </div>
-</nav>
 
-<script>
-    // Highlight active page in mobile nav
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.mobile-nav-item').forEach(item => {
-        if (item.getAttribute('href') === currentPage) {
-            item.classList.add('active');
-        }
-    });
-</script>
+        // Highlight active page in mobile nav
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            if (item.getAttribute('href') === currentPage) {
+                item.classList.add('active');
+            }
+        });
+    </script>
 </body>
 </html>
