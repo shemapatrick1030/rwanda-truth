@@ -822,102 +822,57 @@
     }
 });
     
-    function loadAllData() {
-        // Load tactics
-        try {
-            const saved = localStorage.getItem(STORAGE_KEYS.TACTICS);
-            tactics = saved ? JSON.parse(saved) : [];
-            console.log(`📦 Loaded ${tactics.length} tactics`);
-        } catch (error) {
-            console.error('Error loading tactics:', error);
-            tactics = [];
-        }
-        
-        // Load scenarios
-       // Load scenarios from Firebase
-async function loadScenariosFromFirebase() {
+    async function loadAllData() {
+    // Load tactics from Firebase
     try {
-        const snapshot = await db.collection('scenarios').get();
-        scenarios = snapshot.docs.map(doc => ({
+        const tacticsSnapshot = await db.collection('tactics').get();
+        tactics = tacticsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        console.log(`📦 Loaded ${tactics.length} tactics from Firebase`);
+    } catch (error) {
+        console.error('Error loading tactics from Firebase:', error);
+        tactics = [];
+    }
+    
+    // Load scenarios from Firebase
+    try {
+        const scenariosSnapshot = await db.collection('scenarios').get();
+        scenarios = scenariosSnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
         }));
         console.log(`📦 Loaded ${scenarios.length} scenarios from Firebase`);
-        
-        // Re-filter and update UI
-        filterScenariosByLevel(currentLevel);
-        renderTacticsByLevel(currentLevel);
-        renderResourcesByLevel(currentLevel);
-        
     } catch (error) {
         console.error('Error loading scenarios from Firebase:', error);
-        // Fallback to localStorage if Firebase fails
-        try {
-            const saved = localStorage.getItem(STORAGE_KEYS.SCENARIOS);
-            scenarios = saved ? JSON.parse(saved) : [];
-            console.log(`📦 Fallback: loaded ${scenarios.length} scenarios from localStorage`);
-        } catch (e) {
-            scenarios = [];
-        }
-    }
-}
-
-// Update loadAllData to use Firebase
-async function loadAllData() {
-    // Load tactics (keep localStorage for now)
-    try {
-        const saved = localStorage.getItem(STORAGE_KEYS.TACTICS);
-        tactics = saved ? JSON.parse(saved) : [];
-        console.log(`📦 Loaded ${tactics.length} tactics`);
-    } catch (error) {
-        console.error('Error loading tactics:', error);
-        tactics = [];
+        scenarios = [];
     }
     
-    // Load scenarios from Firebase (NEW)
-    await loadScenariosFromFirebase();
-    
-    // Load resources (keep localStorage for now)
+    // Load resources from Firebase
     try {
-        const saved = localStorage.getItem(STORAGE_KEYS.RESOURCES);
-        resources = saved ? JSON.parse(saved) : [];
-        console.log(`📦 Loaded ${resources.length} resources`);
+        const resourcesSnapshot = await db.collection('resources').get();
+        resources = resourcesSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        console.log(`📦 Loaded ${resources.length} resources from Firebase`);
     } catch (error) {
-        console.error('Error loading resources:', error);
+        console.error('Error loading resources from Firebase:', error);
         resources = [];
     }
     
-    // Load user progress
+    // Load user progress from sessionStorage
     loadUserProgress();
     
-    // Render everything
+    // Render everything with current level
     renderTacticsByLevel(currentLevel);
+    filterScenariosByLevel(currentLevel);
     renderResourcesByLevel(currentLevel);
+    updateLevelUI(currentLevel);
     
-    console.log('✅ THE FORGE ready!');
+    console.log('✅ THE FORGE ready with Firebase data!');
 }
-        
-        // Load resources
-        try {
-            const saved = localStorage.getItem(STORAGE_KEYS.RESOURCES);
-            resources = saved ? JSON.parse(saved) : [];
-            console.log(`📦 Loaded ${resources.length} resources`);
-        } catch (error) {
-            console.error('Error loading resources:', error);
-            resources = [];
-        }
-        
-        // Load user progress from sessionStorage
-        loadUserProgress();
-        
-        // Render everything with beginner level
-        renderTacticsByLevel('beginner');
-        filterScenariosByLevel('beginner');
-        renderResourcesByLevel('beginner');
-        updateLevelUI('beginner');
-        
-        console.log('✅ THE FORGE ready!');
-    }
     
     // ==================== USER PROGRESS ====================
     function loadUserProgress() {
@@ -1420,27 +1375,7 @@ async function loadAllData() {
         
         grid.innerHTML = html;
     }
-    // Load scenarios from Firebase
-async function loadScenariosFromFirebase() {
-    try {
-        const snapshot = await db.collection('scenarios').get();
-        const firebaseScenarios = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
-        
-        console.log(`📦 Loaded ${firebaseScenarios.length} scenarios from Firebase`);
-        
-        // Update the global scenarios variable
-        scenarios = firebaseScenarios;
-        
-        // Trigger the display with current level
-        filterScenariosByLevel(currentLevel);
-        
-    } catch (error) {
-        console.error('Error loading scenarios:', error);
-    }
-}
+
 
 // Call it when page loads
 document.addEventListener('DOMContentLoaded', async function() {
