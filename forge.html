@@ -1344,6 +1344,32 @@
         
         grid.innerHTML = html;
     }
+    // Load scenarios from Firebase
+async function loadScenariosFromFirebase() {
+    try {
+        const snapshot = await db.collection('scenarios').get();
+        const scenarios = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        console.log(`📦 Loaded ${scenarios.length} scenarios from Firebase`);
+        
+        // Update your scenario system here
+        // (depends how your Forge page is structured)
+        window.scenarios = scenarios;
+        
+        // If you have a render function, call it
+        if (typeof renderScenarios === 'function') {
+            renderScenarios();
+        }
+        
+    } catch (error) {
+        console.error('Error loading scenarios:', error);
+    }
+}
+
+// Call it when page loads
+document.addEventListener('DOMContentLoaded', loadScenariosFromFirebase);
     
     // ==================== UTILITY FUNCTIONS ====================
     function showTacticExample(example) {
@@ -1365,6 +1391,30 @@
     window.resetProgress = resetProgress;
     window.showTacticExample = showTacticExample;
     window.downloadResource = downloadResource;
+</script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // Your Firebase config (copy from memorial.html)
+    const firebaseConfig = {
+        apiKey: "AIzaSyCMkuxVxbRFk6xNQAoM7Q9Px5GVEEufTwA",
+        authDomain: "rwanda-truth-platform.firebaseapp.com",
+        projectId: "rwanda-truth-platform",
+        storageBucket: "rwanda-truth-platform.firebasestorage.app",
+        messagingSenderId: "181266362218",
+        appId: "1:181266362218:web:8dd29cd96b15096c397f13"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    
+    // Make db available globally
+    window.db = db;
+    
+    console.log('🔥 Firebase connected on Forge page!');
 </script>
 </body>
 </html>
