@@ -966,5 +966,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 console.log('✅ Shield script loaded - Hybrid Mode active');
 </script>
+<!-- Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav">
+    <div class="mobile-nav-container">
+        <a href="index.html" class="mobile-nav-item">
+            <span class="mobile-nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="shield.html" class="mobile-nav-item">
+            <span class="mobile-nav-icon">🛡️</span>
+            <span>Shield</span>
+        </a>
+        <a href="forge.html" class="mobile-nav-item">
+            <span class="mobile-nav-icon">🔥</span>
+            <span>Forge</span>
+        </a>
+        <a href="memorial.html" class="mobile-nav-item">
+            <span class="mobile-nav-icon">🕯️</span>
+            <span>Memorial</span>
+        </a>
+    </div>
+</nav>
+
+<script>
+    // Highlight active page in mobile nav
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.mobile-nav-item').forEach(item => {
+        if (item.getAttribute('href') === currentPage) {
+            item.classList.add('active');
+        }
+    });
+</script>
 </body>
 </html>
