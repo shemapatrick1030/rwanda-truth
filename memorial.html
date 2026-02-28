@@ -1123,49 +1123,74 @@
         let timelineEvents = [];
         let victims = [];
 
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', function () {
-            loadAllData();
-            setupSupportLink();
+        // ==================== DEFINE ALL FUNCTIONS FIRST ====================
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const victimId = urlParams.get('id');
-
-            if (victimId) {
-                showVictimPage(victimId);
-            } else {
-                renderMemorialHome();
-            }
-        });
-
-        async function loadAllData() {
+        window.showVictimPage = async function(id) {
             try {
-                const testimoniesSnapshot = await db.collection('testimonies')
-                    .where('published', '==', true)
-                    .get();
-                testimonies = testimoniesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                const timelineSnapshot = await db.collection('timeline')
-                    .orderBy('dateSort', 'asc')
-                    .get();
-                timelineEvents = timelineSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                const victimsSnapshot = await db.collection('victims')
-                    .where('status', '==', 'published')
-                    .get();
-                victims = victimsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                if (!document.getElementById('victim-page')) {
-                    renderTestimonies();
-                    renderTimeline();
-                    renderNamesGrid();
+                const doc = await db.collection('victims').doc(id).get();
+                if (!doc.exists) {
+                    window.location.href = 'memorial.html';
+                    return;
                 }
-            } catch (error) {
-                console.error('Error loading from Firebase:', error);
-            }
-        }
 
-        function renderMemorialHome() {
+                const victim = { id: doc.id, ...doc.data() };
+
+                const main = document.getElementById('mainContent');
+
+                main.innerHTML = `
+                    <div class="container">
+                        <button class="back-button" onclick="window.location.href='memorial.html'">← Back to Memorial</button>
+                        
+                        <div class="victim-page">
+                            <div class="victim-header">
+                                <div class="victim-photo">
+                                    <img src="${victim.photo || 'https://via.placeholder.com/150?text=🕯️'}" alt="${victim.name}">
+                                </div>
+                                <h1>${victim.name}</h1>
+                                <p class="victim-dates">${victim.born || ''} — ${victim.died || ''}</p>
+                                <p class="victim-place">🕯️ ${victim.place || 'Rwanda'}</p>
+                            </div>
+                            
+                            <div class="victim-story">
+                                <h2>Their Story</h2>
+                                <p>${victim.story || 'No story provided yet.'}</p>
+                                ${victim.submittedBy ? `<p style="margin-top: 20px; font-style: italic; color: #718096;">— Submitted by ${victim.submittedBy}</p>` : ''}
+                            </div>
+                            
+                            <div class="victim-candles" id="victimCandles_${victim.id}">
+                                <h3>Light a Candle for ${victim.name.split(' ')[0]}</h3>
+                                <div class="mini-candles">
+                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 1)">🕯️</span>
+                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 2)">🕯️</span>
+                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 3)">🕯️</span>
+                                </div>
+                                <p id="candleCount_${victim.id}">${victim.candles || 0} candles lit</p>
+                            </div>
+                            
+                            <div class="victim-messages">
+                                <h3>Leave a Message</h3>
+                                <textarea id="messageText_${victim.id}" class="message-input" rows="3" placeholder="Share a memory or message..."></textarea>
+                                <button class="btn" onclick="postMessage('${victim.id}')">Post Message</button>
+                                
+                                <div id="messages_${victim.id}" class="message-list">
+                                    ${(victim.messages || []).map(m => `
+                                        <div class="message-item">
+                                            <p>"${m.text}"</p>
+                                            <small style="color: #718096;">— ${m.date}</small>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading victim:', error);
+                window.location.href = 'memorial.html';
+            }
+        };
+
+        window.renderMemorialHome = function() {
             const main = document.getElementById('mainContent');
             main.innerHTML = `
                 <div class="container">
@@ -1247,30 +1272,52 @@
                         <p>If you lost a loved one in the 1994 Genocide against the Tutsi, you can submit their name and story here. Our team will review and add them to our memorial.</p>
                         
                         <form id="submitNameForm">
-                            <div class="form-group">
-                                <label>Victim's Full Name *</label>
-                                <input type="text" id="submitName" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Your Name *</label>
-                                <input type="text" id="submitterName" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Your Email *</label>
-                                <input type="email" id="submitterEmail" class="form-control" required>
-                                <small>We'll notify you when their page is published.</small>
-                            </div>
-                            <div class="form-group">
-                                <label>Victim's Story (optional)</label>
-                                <textarea id="submitStory" class="form-control" rows="4" placeholder="Tell us about them..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Relationship to Victim</label>
-                                <input type="text" id="submitRelationship" class="form-control" placeholder="e.g., Daughter, Son, Friend">
-                            </div>
-                            <button type="button" class="btn" style="width: 100%;" onclick="submitVictimName()">🕯️ Submit for Review</button>
-                        </form>
-                        
+    <div class="form-group">
+        <label>Victim's Full Name *</label>
+        <input type="text" id="submitName" class="form-control" required>
+    </div>
+    
+    <!-- NEW: Born field -->
+    <div class="form-group">
+        <label>Born (Year or full date)</label>
+        <input type="text" id="submitBorn" class="form-control" placeholder="e.g., 1965 or April 12, 1965">
+    </div>
+    
+    <!-- NEW: Died field -->
+    <div class="form-group">
+        <label>Died *</label>
+        <input type="text" id="submitDied" class="form-control" placeholder="e.g., April 14, 1994" required>
+    </div>
+    
+    <!-- NEW: Place of death -->
+    <div class="form-group">
+        <label>Place of Death</label>
+        <input type="text" id="submitPlace" class="form-control" placeholder="e.g., Nyamata Church, Kigali">
+    </div>
+    
+    <div class="form-group">
+        <label>Your Name *</label>
+        <input type="text" id="submitterName" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Your Email *</label>
+        <input type="email" id="submitterEmail" class="form-control" required>
+        <small>We'll notify you when their page is published.</small>
+    </div>
+    
+    <div class="form-group">
+        <label>Victim's Story (optional)</label>
+        <textarea id="submitStory" class="form-control" rows="4" placeholder="Tell us about them..."></textarea>
+    </div>
+    
+    <div class="form-group">
+        <label>Relationship to Victim</label>
+        <input type="text" id="submitRelationship" class="form-control" placeholder="e.g., Daughter, Son, Friend">
+    </div>
+    
+    <button type="button" class="btn" style="width: 100%;" onclick="submitVictimName()">🕯️ Submit for Review</button>
+</form>
                         <p style="text-align: center; margin-top: 20px; font-size: 0.9rem;">All submissions are reviewed to ensure accuracy and respect.</p>
                     </div>
                 </div>
@@ -1279,9 +1326,9 @@
             renderTestimonies();
             renderTimeline();
             renderNamesGrid();
-        }
+        };
 
-        function renderTestimonies() {
+        window.renderTestimonies = function() {
             const grid = document.getElementById('testimoniesGrid');
             if (!grid) return;
 
@@ -1312,9 +1359,9 @@
                 `;
             });
             grid.innerHTML = html;
-        }
+        };
 
-        function renderTimeline() {
+        window.renderTimeline = function() {
             const container = document.getElementById('timelineContainer');
             if (!container) return;
 
@@ -1362,9 +1409,9 @@
                 `;
             }
             container.innerHTML = html;
-        }
+        };
 
-        function renderNamesGrid() {
+        window.renderNamesGrid = function() {
             const grid = document.getElementById('namesGrid');
             if (!grid) return;
             if (victims.length === 0) {
@@ -1376,7 +1423,7 @@
                 html += `<div class="name-card" onclick="window.location.href='?id=${v.id}'"><h4>${v.name}</h4><p>${v.born || ''} — ${v.died || ''}</p><small>${v.place || 'Rwanda'}</small></div>`;
             });
             grid.innerHTML = html;
-        }
+        };
 
         window.searchNames = function () {
             const term = document.getElementById('nameSearch').value.toLowerCase();
@@ -1385,22 +1432,84 @@
             });
         };
 
-        window.submitVictimName = async function () {
-            const name = document.getElementById('submitName')?.value.trim();
-            const submitter = document.getElementById('submitterName')?.value.trim();
-            const email = document.getElementById('submitterEmail')?.value.trim();
-            const story = document.getElementById('submitStory')?.value.trim();
-            const relationship = document.getElementById('submitRelationship')?.value.trim();
-            if (!name || !submitter || !email) return alert('Please fill in required fields');
+       window.submitVictimName = async function () {
+    const name = document.getElementById('submitName')?.value.trim();
+    const born = document.getElementById('submitBorn')?.value.trim();
+    const died = document.getElementById('submitDied')?.value.trim();
+    const place = document.getElementById('submitPlace')?.value.trim();
+    const submitter = document.getElementById('submitterName')?.value.trim();
+    const email = document.getElementById('submitterEmail')?.value.trim();
+    const story = document.getElementById('submitStory')?.value.trim();
+    const relationship = document.getElementById('submitRelationship')?.value.trim();
+    
+    if (!name || !died || !submitter || !email) {
+        alert('Please fill in: Victim\'s Full Name, Died, Your Name, and Your Email');
+        return;
+    }
 
-            await db.collection('victims').add({
-                name, born: '', died: '', place: '', story: story || '',
-                submittedBy: `${submitter} (${relationship || 'Family'})`,
-                status: 'pending', candles: 0, messages: [], email,
-                date: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            alert('✅ Thank you. Your submission has been sent for review.');
-            document.getElementById('submitNameForm').reset();
+    await db.collection('victims').add({
+        name,
+        born: born || '',
+        died,
+        place: place || '',
+        story: story || '',
+        submittedBy: `${submitter} (${relationship || 'Family'})`,
+        status: 'pending',
+        candles: 0,
+        messages: [],
+        email,
+        date: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    alert('✅ Thank you. Your submission has been sent for review.');
+    document.getElementById('submitNameForm').reset();
+};
+        window.lightVictimCandle = async function (victimId, count) {
+            try {
+                const victimRef = db.collection('victims').doc(victimId);
+                await victimRef.update({
+                    candles: firebase.firestore.FieldValue.increment(count)
+                });
+
+                const candleEl = document.getElementById(`candleCount_${victimId}`);
+                if (candleEl) {
+                    const current = parseInt(candleEl.textContent) || 0;
+                    candleEl.textContent = `${current + count} candles lit`;
+                }
+            } catch (error) {
+                console.error('Error lighting candle:', error);
+            }
+        };
+
+        window.postMessage = async function (victimId) {
+            const messageText = document.getElementById(`messageText_${victimId}`)?.value.trim();
+            if (!messageText) return;
+
+            try {
+                const victimRef = db.collection('victims').doc(victimId);
+                const newMessage = {
+                    text: messageText,
+                    date: new Date().toLocaleDateString()
+                };
+
+                await victimRef.update({
+                    messages: firebase.firestore.FieldValue.arrayUnion(newMessage)
+                });
+
+                const messagesDiv = document.getElementById(`messages_${victimId}`);
+                if (messagesDiv) {
+                    messagesDiv.insertAdjacentHTML('beforeend', `
+                        <div class="message-item">
+                            <p>"${messageText}"</p>
+                            <small style="color: #718096;">— ${newMessage.date}</small>
+                        </div>
+                    `);
+                }
+
+                document.getElementById(`messageText_${victimId}`).value = '';
+            } catch (error) {
+                console.error('Error posting message:', error);
+            }
         };
 
         window.toggleFullTimeline = function () {
@@ -1420,12 +1529,55 @@
                            `🕯️ ${count} flames burn bright tonight. Each light carries a name, a memory, a promise.`;
         };
 
-        function setupSupportLink() {
+        window.setupSupportLink = function() {
             document.getElementById('supportLink')?.addEventListener('click', e => {
                 e.preventDefault();
                 alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112\n• IBUKA (Survivors\' Organization)');
             });
+        };
+
+        // ==================== LOAD DATA FROM FIREBASE ====================
+        async function loadAllData() {
+            try {
+                const testimoniesSnapshot = await db.collection('testimonies')
+                    .where('published', '==', true)
+                    .get();
+                testimonies = testimoniesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                const timelineSnapshot = await db.collection('timeline')
+                    .orderBy('dateSort', 'asc')
+                    .get();
+                timelineEvents = timelineSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                const victimsSnapshot = await db.collection('victims')
+                    .where('status', '==', 'published')
+                    .get();
+                victims = victimsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                if (!window.location.search.includes('id')) {
+                    renderTestimonies();
+                    renderTimeline();
+                    renderNamesGrid();
+                }
+            } catch (error) {
+                console.error('Error loading from Firebase:', error);
+            }
         }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function () {
+            loadAllData();
+            setupSupportLink();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const victimId = urlParams.get('id');
+
+            if (victimId) {
+                showVictimPage(victimId);
+            } else {
+                renderMemorialHome();
+            }
+        });
 
         // Highlight active page in mobile nav
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
