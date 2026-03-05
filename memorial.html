@@ -1132,71 +1132,100 @@
         let victims = [];
 
         // ==================== DEFINE ALL FUNCTIONS FIRST ====================
+window.showVictimPage = async function(id) {
+    try {
+        console.log('🔍 Loading victim:', id);
+        
+        const doc = await db.collection('victims').doc(id).get();
+        if (!doc.exists) {
+            console.log('❌ Victim not found');
+            window.location.href = 'memorial.html';
+            return;
+        }
 
-        window.showVictimPage = async function(id) {
-            try {
-                const doc = await db.collection('victims').doc(id).get();
-                if (!doc.exists) {
-                    window.location.href = 'memorial.html';
-                    return;
-                }
+        const victim = { id: doc.id, ...doc.data() };
+        
+        // 🆕 TRACK THIS VISIT
+        const userId = localStorage.getItem('userId');
+        console.log('👤 User ID:', userId);
+        
+        if (userId) {
+            const userRef = db.collection('users').doc(userId);
+            const userDoc = await userRef.get();
+            let recent = userDoc.data()?.recentVictims || [];
+            console.log('📋 Current recent victims:', recent);
+            
+            // Remove if already exists (to move it to front)
+            recent = recent.filter(vId => vId !== id);
+            
+            // Add new visit to the beginning
+            recent.unshift(id);
+            
+            // Keep only last 5
+            if (recent.length > 5) recent.pop();
+            
+            await userRef.set({
+                recentVictims: recent,
+                lastActive: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+            
+            console.log('✅ Visit tracked. New recent victims:', recent);
+        }
 
-                const victim = { id: doc.id, ...doc.data() };
+        const main = document.getElementById('mainContent');
 
-                const main = document.getElementById('mainContent');
-
-                main.innerHTML = `
-                    <div class="container">
-                        <button class="back-button" onclick="window.location.href='memorial.html'">← Back to Memorial</button>
+        main.innerHTML = `
+            <div class="container">
+                <button class="back-button" onclick="window.location.href='memorial.html'">← Back to Memorial</button>
+                
+                <div class="victim-page">
+                    <div class="victim-header">
+                        <div class="victim-photo">
+                            <img src="${victim.photo || 'https://via.placeholder.com/150?text=🕯️'}" alt="${victim.name}">
+                        </div>
+                        <h1>${victim.name}</h1>
+                        <p class="victim-dates">${victim.born || ''} — ${victim.died || ''}</p>
+                        <p class="victim-place">🕯️ ${victim.place || 'Rwanda'}</p>
+                    </div>
+                    
+                    <div class="victim-story">
+                        <h2>Their Story</h2>
+                        <p>${victim.story || 'No story provided yet.'}</p>
+                        ${victim.submittedBy ? `<p style="margin-top: 20px; font-style: italic; color: #718096;">— Submitted by ${victim.submittedBy}</p>` : ''}
+                    </div>
+                    
+                    <div class="victim-candles" id="victimCandles_${victim.id}">
+                        <h3>Light a Candle for ${victim.name.split(' ')[0]}</h3>
+                        <div class="mini-candles">
+                            <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 1)">🕯️</span>
+                            <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 2)">🕯️</span>
+                            <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 3)">🕯️</span>
+                        </div>
+                        <p id="candleCount_${victim.id}">${victim.candles || 0} candles lit</p>
+                    </div>
+                    
+                    <div class="victim-messages">
+                        <h3>Leave a Message</h3>
+                        <textarea id="messageText_${victim.id}" class="message-input" rows="3" placeholder="Share a memory or message..."></textarea>
+                        <button class="btn" onclick="postMessage('${victim.id}')">Post Message</button>
                         
-                        <div class="victim-page">
-                            <div class="victim-header">
-                                <div class="victim-photo">
-                                    <img src="${victim.photo || 'https://via.placeholder.com/150?text=🕯️'}" alt="${victim.name}">
+                        <div id="messages_${victim.id}" class="message-list">
+                            ${(victim.messages || []).map(m => `
+                                <div class="message-item">
+                                    <p>"${m.text}"</p>
+                                    <small style="color: #718096;">— ${m.date}</small>
                                 </div>
-                                <h1>${victim.name}</h1>
-                                <p class="victim-dates">${victim.born || ''} — ${victim.died || ''}</p>
-                                <p class="victim-place">🕯️ ${victim.place || 'Rwanda'}</p>
-                            </div>
-                            
-                            <div class="victim-story">
-                                <h2>Their Story</h2>
-                                <p>${victim.story || 'No story provided yet.'}</p>
-                                ${victim.submittedBy ? `<p style="margin-top: 20px; font-style: italic; color: #718096;">— Submitted by ${victim.submittedBy}</p>` : ''}
-                            </div>
-                            
-                            <div class="victim-candles" id="victimCandles_${victim.id}">
-                                <h3>Light a Candle for ${victim.name.split(' ')[0]}</h3>
-                                <div class="mini-candles">
-                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 1)">🕯️</span>
-                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 2)">🕯️</span>
-                                    <span class="mini-candle" onclick="lightVictimCandle('${victim.id}', 3)">🕯️</span>
-                                </div>
-                                <p id="candleCount_${victim.id}">${victim.candles || 0} candles lit</p>
-                            </div>
-                            
-                            <div class="victim-messages">
-                                <h3>Leave a Message</h3>
-                                <textarea id="messageText_${victim.id}" class="message-input" rows="3" placeholder="Share a memory or message..."></textarea>
-                                <button class="btn" onclick="postMessage('${victim.id}')">Post Message</button>
-                                
-                                <div id="messages_${victim.id}" class="message-list">
-                                    ${(victim.messages || []).map(m => `
-                                        <div class="message-item">
-                                            <p>"${m.text}"</p>
-                                            <small style="color: #718096;">— ${m.date}</small>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
+                            `).join('')}
                         </div>
                     </div>
-                `;
-            } catch (error) {
-                console.error('Error loading victim:', error);
-                window.location.href = 'memorial.html';
-            }
-        };
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        console.error('Error loading victim:', error);
+        window.location.href = 'memorial.html';
+    }
+};
 
         window.renderMemorialHome = function() {
             const main = document.getElementById('mainContent');
@@ -1472,54 +1501,78 @@
     alert('✅ Thank you. Your submission has been sent for review.');
     document.getElementById('submitNameForm').reset();
 };
-        window.lightVictimCandle = async function (victimId, count) {
-            try {
-                const victimRef = db.collection('victims').doc(victimId);
-                await victimRef.update({
-                    candles: firebase.firestore.FieldValue.increment(count)
-                });
+       window.lightVictimCandle = async function (victimId, count) {
+    try {
+        const victimRef = db.collection('victims').doc(victimId);
+        await victimRef.update({
+            candles: firebase.firestore.FieldValue.increment(count)
+        });
 
-                const candleEl = document.getElementById(`candleCount_${victimId}`);
-                if (candleEl) {
-                    const current = parseInt(candleEl.textContent) || 0;
-                    candleEl.textContent = `${current + count} candles lit`;
-                }
-            } catch (error) {
-                console.error('Error lighting candle:', error);
-            }
+        // 🆕 Track this candle for the CURRENT USER
+        const userId = localStorage.getItem('userId');
+        const userRef = db.collection('users').doc(userId);
+        
+        await userRef.set({
+            totalCandles: firebase.firestore.FieldValue.increment(count),
+            lastActive: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+
+        // Also track which victim they lit
+        await userRef.update({
+            [`victimCandles.${victimId}`]: firebase.firestore.FieldValue.increment(count)
+        });
+
+        const candleEl = document.getElementById(`candleCount_${victimId}`);
+        if (candleEl) {
+            const current = parseInt(candleEl.textContent) || 0;
+            candleEl.textContent = `${current + count} candles lit`;
+        }
+    } catch (error) {
+        console.error('Error lighting candle:', error);
+    }
+};
+
+       window.postMessage = async function (victimId) {
+    const messageText = document.getElementById(`messageText_${victimId}`)?.value.trim();
+    if (!messageText) return;
+
+    try {
+        const victimRef = db.collection('victims').doc(victimId);
+        const newMessage = {
+            text: messageText,
+            date: new Date().toLocaleDateString(),
+            userId: localStorage.getItem('userId')  // 🆕 Track who left it
         };
 
-        window.postMessage = async function (victimId) {
-            const messageText = document.getElementById(`messageText_${victimId}`)?.value.trim();
-            if (!messageText) return;
+        await victimRef.update({
+            messages: firebase.firestore.FieldValue.arrayUnion(newMessage)
+        });
 
-            try {
-                const victimRef = db.collection('victims').doc(victimId);
-                const newMessage = {
-                    text: messageText,
-                    date: new Date().toLocaleDateString()
-                };
+        // 🆕 Track this message for the CURRENT USER
+        const userId = localStorage.getItem('userId');
+        const userRef = db.collection('users').doc(userId);
+        
+        await userRef.set({
+            totalMessages: firebase.firestore.FieldValue.increment(1),
+            lastActive: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
 
-                await victimRef.update({
-                    messages: firebase.firestore.FieldValue.arrayUnion(newMessage)
-                });
+        // Update display
+        const messagesDiv = document.getElementById(`messages_${victimId}`);
+        if (messagesDiv) {
+            messagesDiv.insertAdjacentHTML('beforeend', `
+                <div class="message-item">
+                    <p>"${messageText}"</p>
+                    <small style="color: #718096;">— ${newMessage.date}</small>
+                </div>
+            `);
+        }
 
-                const messagesDiv = document.getElementById(`messages_${victimId}`);
-                if (messagesDiv) {
-                    messagesDiv.insertAdjacentHTML('beforeend', `
-                        <div class="message-item">
-                            <p>"${messageText}"</p>
-                            <small style="color: #718096;">— ${newMessage.date}</small>
-                        </div>
-                    `);
-                }
-
-                document.getElementById(`messageText_${victimId}`).value = '';
-            } catch (error) {
-                console.error('Error posting message:', error);
-            }
-        };
-
+        document.getElementById(`messageText_${victimId}`).value = '';
+    } catch (error) {
+        console.error('Error posting message:', error);
+    }
+};
         window.toggleFullTimeline = function () {
             const show = sessionStorage.getItem('showFullTimeline') === 'true';
             sessionStorage.setItem('showFullTimeline', !show);

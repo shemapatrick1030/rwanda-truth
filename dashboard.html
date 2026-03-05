@@ -422,8 +422,7 @@
         <div class="welcome-header">
             <h1>👋 Welcome back, <span id="userName">Friend</span></h1>
             <div class="last-visit">
-                <span>🕯️ <span id="totalCandles">0</span> candles lit</span>
-                <span>•</span>
+               
                 <span>📅 Last visit: <span id="lastVisit">today</span></span>
             </div>
         </div>
@@ -641,133 +640,145 @@
         localStorage.setItem('lastVisit', new Date().toLocaleDateString());
 
         // ==================== LOAD USER DATA ====================
-        async function loadUserData() {
-            try {
-                // Load user's activity from Firestore
-                const userRef = db.collection('users').doc(userId);
-                const userDoc = await userRef.get();
+async function loadUserData() {
+    try {
+        if (!userId) return;
 
-                if (!userDoc.exists) {
-                    // Create new user profile
-                    await userRef.set({
-                        name: userName,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        totalCandles: 0,
-                        totalMessages: 0,
-                        submissions: [],
-                        recentVictims: [],
-                        forgeProgress: {
-                            beginner: 0,
-                            intermediate: 0,
-                            advanced: 0,
-                            badges: []
-                        }
-                    });
+        // 👇 Get user document (ONCE)
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+
+        if (!userDoc.exists) {
+            // Create new user profile
+            await userRef.set({
+                name: localStorage.getItem('userName') || 'Friend',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                totalCandles: 0,
+                totalMessages: 0,
+                submissions: [],
+                recentVictims: [],
+                forgeProgress: {
+                    beginner: 0,
+                    intermediate: 0,
+                    advanced: 0,
+                    badges: []
                 }
-
-                // Load actual data
-                const userData = (await userRef.get()).data() || {};
-
-                // Update stats
-                document.getElementById('statCandles').textContent = userData.totalCandles || 0;
-                document.getElementById('statMessages').textContent = userData.totalMessages || 0;
-                document.getElementById('statSubmissions').textContent = (userData.submissions || []).length;
-                
-                // Load Forge progress from sessionStorage
-                const forgeProgress = JSON.parse(sessionStorage.getItem('forgeProgress')) || { completed: [] };
-                const allScenarios = await db.collection('scenarios').get();
-                const scenarios = allScenarios.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                const beginnerTotal = scenarios.filter(s => s.level === 'beginner').length;
-                const intermediateTotal = scenarios.filter(s => s.level === 'intermediate').length;
-                const advancedTotal = scenarios.filter(s => s.level === 'advanced').length;
-
-                const beginnerCompleted = forgeProgress.completed.filter(id => 
-                    scenarios.find(s => s.id === id && s.level === 'beginner')
-                ).length;
-                const intermediateCompleted = forgeProgress.completed.filter(id => 
-                    scenarios.find(s => s.id === id && s.level === 'intermediate')
-                ).length;
-                const advancedCompleted = forgeProgress.completed.filter(id => 
-                    scenarios.find(s => s.id === id && s.level === 'advanced')
-                ).length;
-
-                // Update progress bars
-                document.getElementById('beginnerProgress').textContent = `${beginnerCompleted}/${beginnerTotal} (${Math.round(beginnerCompleted/beginnerTotal*100)}%)`;
-                document.getElementById('intermediateProgress').textContent = `${intermediateCompleted}/${intermediateTotal} (${Math.round(intermediateCompleted/intermediateTotal*100)}%)`;
-                document.getElementById('advancedProgress').textContent = `${advancedCompleted}/${advancedTotal} (${Math.round(advancedCompleted/advancedTotal*100)}%)`;
-                
-                document.getElementById('beginnerBar').style.width = beginnerTotal > 0 ? (beginnerCompleted/beginnerTotal * 100) + '%' : '0%';
-                document.getElementById('intermediateBar').style.width = intermediateTotal > 0 ? (intermediateCompleted/intermediateTotal * 100) + '%' : '0%';
-                document.getElementById('advancedBar').style.width = advancedTotal > 0 ? (advancedCompleted/advancedTotal * 100) + '%' : '0%';
-
-                document.getElementById('statScenarios').textContent = forgeProgress.completed.length;
-
-                // Update badges
-                const totalCompleted = forgeProgress.completed.length;
-                if (totalCompleted >= 1) document.getElementById('badge1').classList.add('unlocked');
-                if (totalCompleted >= 3) document.getElementById('badge2').classList.add('unlocked');
-                if (totalCompleted >= 6) document.getElementById('badge3').classList.add('unlocked');
-                if (totalCompleted >= 10) document.getElementById('badge4').classList.add('unlocked');
-
-                // Load recent victims
-                const recentVictims = document.getElementById('recentVictims');
-                if (userData.recentVictims && userData.recentVictims.length > 0) {
-                    let html = '';
-                    for (let victimId of userData.recentVictims.slice(0, 3)) {
-                        const victimDoc = await db.collection('victims').doc(victimId).get();
-                        if (victimDoc.exists) {
-                            const v = victimDoc.data();
-                            html += `
-                                <div class="victim-card" onclick="window.location.href='memorial.html?id=${victimDoc.id}'">
-                                    <div class="victim-name">${v.name}</div>
-                                    <div class="victim-meta">
-                                        <span>${v.born || '?'} — ${v.died || '?'}</span>
-                                    </div>
-                                    <span class="victim-action">View →</span>
-                                </div>
-                            `;
-                        }
-                    }
-                    if (html) recentVictims.innerHTML = html;
-                }
-
-                // Load submissions
-                const submissionsTable = document.getElementById('submissionsTable');
-                if (userData.submissions && userData.submissions.length > 0) {
-                    let html = '<div class="submission-row header"><div>Victim Name</div><div>Submitted</div><div>Status</div><div>Action</div></div>';
-                    for (let sub of userData.submissions) {
-                        const statusClass = sub.status === 'published' ? 'status-published' : 'status-pending';
-                        const statusText = sub.status === 'published' ? '✅ Published' : '⏳ Pending';
-                        html += `
-                            <div class="submission-row">
-                                <div><strong>${sub.name}</strong></div>
-                                <div>${new Date(sub.date).toLocaleDateString()}</div>
-                                <div><span class="status-badge ${statusClass}">${statusText}</span></div>
-                                <div>
-                                    ${sub.status === 'published' ? 
-                                        `<button class="btn btn-sm" onclick="window.location.href='memorial.html?id=${sub.victimId}'">View</button>` : 
-                                        `<span style="color: #666;">Awaiting review</span>`}
-                                </div>
-                            </div>
-                        `;
-                    }
-                    submissionsTable.innerHTML = html;
-                }
-
-                // Update global stats
-                const victimsSnap = await db.collection('victims').get();
-                const messagesSnap = await db.collection('victims').where('messages', '!=', null).get();
-                const totalCandles = victimsSnap.docs.reduce((acc, doc) => acc + (doc.data().candles || 0), 0);
-                
-                document.getElementById('globalCandles').textContent = totalCandles;
-                document.getElementById('globalMessages').textContent = messagesSnap.size;
-                document.getElementById('globalNames').textContent = victimsSnap.size;
-
-            } catch (error) {
-                console.error('Error loading user data:', error);
-            }
+            });
         }
+
+        // Get fresh data after potential creation
+        const freshDoc = await userRef.get();
+        const userData = freshDoc.data() || {};
+
+        // Update personal stats
+        document.getElementById('statCandles').textContent = userData.totalCandles || 0;
+        document.getElementById('statMessages').textContent = userData.totalMessages || 0;
+        document.getElementById('statSubmissions').textContent = (userData.submissions || []).length;
+        document.getElementById('userName').textContent = localStorage.getItem('userName') || 'Friend';
+        
+        // ========== FORGE PROGRESS ==========
+        const forgeProgress = JSON.parse(sessionStorage.getItem('forgeProgress')) || { completed: [] };
+        const allScenarios = await db.collection('scenarios').get();
+        const scenarios = allScenarios.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        
+        const beginnerTotal = scenarios.filter(s => s.level === 'beginner').length;
+        const intermediateTotal = scenarios.filter(s => s.level === 'intermediate').length;
+        const advancedTotal = scenarios.filter(s => s.level === 'advanced').length;
+
+        const beginnerCompleted = forgeProgress.completed.filter(id => 
+            scenarios.find(s => s.id === id && s.level === 'beginner')
+        ).length;
+        const intermediateCompleted = forgeProgress.completed.filter(id => 
+            scenarios.find(s => s.id === id && s.level === 'intermediate')
+        ).length;
+        const advancedCompleted = forgeProgress.completed.filter(id => 
+            scenarios.find(s => s.id === id && s.level === 'advanced')
+        ).length;
+
+        // Update progress bars
+        document.getElementById('beginnerProgress').textContent = `${beginnerCompleted}/${beginnerTotal} (${Math.round(beginnerCompleted/beginnerTotal*100)}%)`;
+        document.getElementById('intermediateProgress').textContent = `${intermediateCompleted}/${intermediateTotal} (${Math.round(intermediateCompleted/intermediateTotal*100)}%)`;
+        document.getElementById('advancedProgress').textContent = `${advancedCompleted}/${advancedTotal} (${Math.round(advancedCompleted/advancedTotal*100)}%)`;
+        
+        document.getElementById('beginnerBar').style.width = beginnerTotal > 0 ? (beginnerCompleted/beginnerTotal * 100) + '%' : '0%';
+        document.getElementById('intermediateBar').style.width = intermediateTotal > 0 ? (intermediateCompleted/intermediateTotal * 100) + '%' : '0%';
+        document.getElementById('advancedBar').style.width = advancedTotal > 0 ? (advancedCompleted/advancedTotal * 100) + '%' : '0%';
+
+        document.getElementById('statScenarios').textContent = forgeProgress.completed.length;
+
+        // Update badges
+        const totalCompleted = forgeProgress.completed.length;
+        if (totalCompleted >= 1) document.getElementById('badge1').classList.add('unlocked');
+        if (totalCompleted >= 3) document.getElementById('badge2').classList.add('unlocked');
+        if (totalCompleted >= 6) document.getElementById('badge3').classList.add('unlocked');
+        if (totalCompleted >= 10) document.getElementById('badge4').classList.add('unlocked');
+
+        // ========== RECENT VICTIMS ==========
+        const recentVictims = document.getElementById('recentVictims');
+        if (userData.recentVictims && userData.recentVictims.length > 0) {
+            let html = '';
+            for (let victimId of userData.recentVictims.slice(0, 3)) {
+                const victimDoc = await db.collection('victims').doc(victimId).get();
+                if (victimDoc.exists) {
+                    const v = victimDoc.data();
+                    html += `
+                        <div class="victim-card" onclick="window.location.href='memorial.html?id=${victimDoc.id}'">
+                            <div class="victim-name">${v.name}</div>
+                            <div class="victim-meta">
+                                <span>${v.born || '?'} — ${v.died || '?'}</span>
+                            </div>
+                            <span class="victim-action">View →</span>
+                        </div>
+                    `;
+                }
+            }
+            if (html) recentVictims.innerHTML = html;
+        }
+
+        // ========== SUBMISSIONS ==========
+        const submissionsTable = document.getElementById('submissionsTable');
+        if (userData.submissions && userData.submissions.length > 0) {
+            let html = '<div class="submission-row header"><div>Victim Name</div><div>Submitted</div><div>Status</div><div>Action</div></div>';
+            for (let sub of userData.submissions) {
+                const statusClass = sub.status === 'published' ? 'status-published' : 'status-pending';
+                const statusText = sub.status === 'published' ? '✅ Published' : '⏳ Pending';
+                html += `
+                    <div class="submission-row">
+                        <div><strong>${sub.name}</strong></div>
+                        <div>${new Date(sub.date).toLocaleDateString()}</div>
+                        <div><span class="status-badge ${statusClass}">${statusText}</span></div>
+                        <div>
+                            ${sub.status === 'published' ? 
+                                `<button class="btn btn-sm" onclick="window.location.href='memorial.html?id=${sub.victimId}'">View</button>` : 
+                                `<span style="color: #666;">Awaiting review</span>`}
+                        </div>
+                    </div>
+                `;
+            }
+            submissionsTable.innerHTML = html;
+        }
+
+        // ========== GLOBAL STATS ==========
+        const victimsSnap = await db.collection('victims').get();
+        
+        // Count total candles
+        const totalCandles = victimsSnap.docs.reduce((acc, doc) => acc + (doc.data().candles || 0), 0);
+        document.getElementById('globalCandles').textContent = totalCandles;
+        
+        // Count total messages
+        let totalMessages = 0;
+        victimsSnap.forEach(doc => {
+            totalMessages += (doc.data().messages || []).length;
+        });
+        document.getElementById('globalMessages').textContent = totalMessages;
+        
+        // Count total victims
+        document.getElementById('globalNames').textContent = victimsSnap.size;
+
+    } catch (error) {
+        console.error('Error loading user data:', error);
+    }
+}
 
         // ==================== SUPPORT LINK ====================
         document.getElementById('supportLink')?.addEventListener('click', (e) => {
