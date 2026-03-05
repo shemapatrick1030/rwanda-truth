@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>My Dashboard — Rwanda Truth</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#4B2E5B">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --memorial-purple: #4B2E5B;
+            --memorial-amber: #F6AD55;
+            --memorial-gray: #2C3E50;
+            --memorial-light: #f8fafc;
+            --success-green: #10b981;
+            --warning-yellow: #f59e0b;
+            --pending-orange: #f97316;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Welcome Header */
+        .welcome-header {
+            background: linear-gradient(135deg, var(--memorial-purple), #2C3E50);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(75, 46, 91, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-header::before {
+            content: '🕯️';
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            font-size: 120px;
+            opacity: 0.1;
+            transform: rotate(-10deg);
+        }
+
+        .welcome-header h1 {
+             color: rgba(255,255,255,0.9);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .welcome-header .last-visit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(75, 46, 91, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(75, 46, 91, 0.15);
+            border-color: var(--memorial-amber);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--memorial-purple);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Forge Progress Section */
+        .forge-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(75, 46, 91, 0.1);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--memorial-gray);
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--memorial-purple), var(--memorial-amber));
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .badges-grid {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 8px 20px;
+            background: #f1f5f9;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge.unlocked {
+            background: linear-gradient(135deg, #FFD700, #FDB931);
+            color: #1A202C;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Recent Victims Grid */
+        .victims-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .victim-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(75, 46, 91, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .victim-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--memorial-amber);
+            box-shadow: 0 10px 25px rgba(75, 46, 91, 0.15);
+        }
+
+        .victim-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--memorial-gray);
+            margin-bottom: 8px;
+        }
+
+        .victim-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .victim-action {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--memorial-light);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--memorial-purple);
+            font-weight: 600;
+        }
+
+        /* Submissions Table */
+        .submissions-table {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid rgba(75, 46, 91, 0.1);
+        }
+
+        .submission-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            align-items: center;
+        }
+
+        .submission-row:last-child {
+            border-bottom: none;
+        }
+
+        .submission-row.header {
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--memorial-gray);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-published {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-pending {
+            background: #feebc8;
+            color: #7b341e;
+        }
+
+        .status-rejected {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px solid rgba(75, 46, 91, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-btn:hover {
+            border-color: var(--memorial-amber);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(75, 46, 91, 0.1);
+        }
+
+        .action-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .action-btn span {
+            display: block;
+            font-weight: 600;
+            color: var(--memorial-gray);
+        }
+
+        .action-btn small {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        /* Global Impact */
+        .impact-section {
+            background: linear-gradient(135deg, #1A2530, var(--memorial-purple));
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .impact-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--memorial-amber);
+            line-height: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid,
+            .victims-grid,
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .submission-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .submission-row.header {
+                display: none;
+            }
+
+            .welcome-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid,
+            .victims-grid,
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Warning Bar -->
+    <div class="warning-bar">
+        ⚠️ <strong>Content Warning:</strong> This site contains historical evidence of the 1994 Genocide against the Tutsi in Rwanda.
+        <a href="#support" id="supportLink">Mental Health Support Resources</a>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                <span>HOME</span>
+            </a>
+            <a href="shield.html" class="nav-item">
+                <span class="nav-icon">🛡️</span>
+                <span>THE SHIELD</span>
+            </a>
+            <a href="forge.html" class="nav-item">
+                <span class="nav-icon">🔥</span>
+                <span>THE FORGE</span>
+            </a>
+            <a href="memorial.html" class="nav-item">
+                <span class="nav-icon">🕯️</span>
+                <span>THE MEMORIAL</span>
+            </a>
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span>MY DASHBOARD</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Welcome Header -->
+        <div class="welcome-header">
+            <h1>👋 Welcome back, <span id="userName">Friend</span></h1>
+            <div class="last-visit">
+                <span>🕯️ <span id="totalCandles">0</span> candles lit</span>
+                <span>•</span>
+                <span>📅 Last visit: <span id="lastVisit">today</span></span>
+            </div>
+        </div>
+
+        <!-- Impact Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🕯️</div>
+                <div class="stat-number" id="statCandles">0</div>
+                <div class="stat-label">Candles Lit</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-number" id="statMessages">0</div>
+                <div class="stat-label">Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👤</div>
+                <div class="stat-number" id="statSubmissions">0</div>
+                <div class="stat-label">Names Submitted</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-number" id="statScenarios">0</div>
+                <div class="stat-label">Scenarios</div>
+            </div>
+        </div>
+
+        <!-- Forge Progress Section -->
+        <div class="forge-section">
+            <div class="section-title">
+                <span style="font-size: 2rem;">🔥</span>
+                <h2>Your Forge Progress</h2>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-header">
+                    <span>Beginner</span>
+                    <span id="beginnerProgress">0/4 (0%)</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="beginnerBar" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-header">
+                    <span>Intermediate</span>
+                    <span id="intermediateProgress">0/5 (0%)</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="intermediateBar" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-header">
+                    <span>Advanced</span>
+                    <span id="advancedProgress">0/5 (0%)</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="advancedBar" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="badges-grid" id="badgesContainer">
+                <span class="badge" id="badge1">🏅 Shield Bearer</span>
+                <span class="badge" id="badge2">🔰 Denial Spotter</span>
+                <span class="badge" id="badge3">⚔️ Response Ready</span>
+                <span class="badge" id="badge4">🛡️ Truth Guardian</span>
+            </div>
+        </div>
+
+        <!-- Recent Victims -->
+        <div class="section-title">
+            <span style="font-size: 2rem;">🕯️</span>
+            <h2>Recently Visited</h2>
+        </div>
+        <div class="victims-grid" id="recentVictims">
+            <!-- Will be populated by JavaScript -->
+            <div class="victim-card">
+                <div class="victim-name">Loading...</div>
+                <div class="victim-meta">
+                    <span>Just now</span>
+                </div>
+                <span class="victim-action">View →</span>
+            </div>
+        </div>
+
+        <!-- My Submissions -->
+        <div class="section-title">
+            <span style="font-size: 2rem;">📝</span>
+            <h2>My Submissions</h2>
+        </div>
+        <div class="submissions-table" id="submissionsTable">
+            <div class="submission-row header">
+                <div>Victim Name</div>
+                <div>Submitted</div>
+                <div>Status</div>
+                <div>Action</div>
+            </div>
+            <!-- Will be populated by JavaScript -->
+            <div class="submission-row">
+                <div colspan="4" style="text-align: center; padding: 30px; color: #666;">
+                    No submissions yet. Be the first to submit a name.
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="memorial.html" class="action-btn">
+                <div class="action-icon">🕯️</div>
+                <span>Light a Candle</span>
+                <small>Honor a victim</small>
+            </a>
+            <a href="memorial.html#submissionSection" class="action-btn">
+                <div class="action-icon">📝</div>
+                <span>Submit a Name</span>
+                <small>Add someone</small>
+            </a>
+            <a href="forge.html" class="action-btn">
+                <div class="action-icon">🔥</div>
+                <span>Continue Forge</span>
+                <small>Next scenario</small>
+            </a>
+            <a href="memorial.html" class="action-btn">
+                <div class="action-icon">📖</div>
+                <span>Read Names</span>
+                <small>Browse victims</small>
+            </a>
+        </div>
+
+        <!-- Global Impact -->
+        <div class="impact-section">
+            <h2 style="margin-bottom: 20px;">🌍 Your Global Impact</h2>
+            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <div>
+                    <div class="impact-number" id="globalCandles">0</div>
+                    <div>Total Candles</div>
+                </div>
+                <div>
+                    <div class="impact-number" id="globalMessages">0</div>
+                    <div>Messages Left</div>
+                </div>
+                <div>
+                    <div class="impact-number" id="globalNames">0</div>
+                    <div>Names Preserved</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <div class="mobile-nav-container">
+            <a href="index.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="shield.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🛡️</span>
+                <span>Shield</span>
+            </a>
+            <a href="forge.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🔥</span>
+                <span>Forge</span>
+            </a>
+            <a href="memorial.html" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🕯️</span>
+                <span>Memorial</span>
+            </a>
+            <a href="dashboard.html" class="mobile-nav-item active">
+                <span class="mobile-nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ==================== FIREBASE CONFIG ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMkuxVxbRFk6xNQAoM7Q9Px5GVEEufTwA",
+            authDomain: "rwanda-truth-platform.firebaseapp.com",
+            projectId: "rwanda-truth-platform",
+            storageBucket: "rwanda-truth-platform.firebasestorage.app",
+            messagingSenderId: "181266362218",
+            appId: "1:181266362218:web:8dd29cd96b15096c397f13"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // ==================== USER DATA ====================
+        let userId = localStorage.getItem('userId');
+        if (!userId) {
+            userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('userId', userId);
+        }
+
+        let userName = localStorage.getItem('userName');
+        if (!userName) {
+            userName = prompt('What should we call you?', 'Friend') || 'Friend';
+            localStorage.setItem('userName', userName);
+        }
+        document.getElementById('userName').textContent = userName;
+
+        // Last visit
+        let lastVisit = localStorage.getItem('lastVisit') || 'today';
+        document.getElementById('lastVisit').textContent = lastVisit;
+        localStorage.setItem('lastVisit', new Date().toLocaleDateString());
+
+        // ==================== LOAD USER DATA ====================
+        async function loadUserData() {
+            try {
+                // Load user's activity from Firestore
+                const userRef = db.collection('users').doc(userId);
+                const userDoc = await userRef.get();
+
+                if (!userDoc.exists) {
+                    // Create new user profile
+                    await userRef.set({
+                        name: userName,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        totalCandles: 0,
+                        totalMessages: 0,
+                        submissions: [],
+                        recentVictims: [],
+                        forgeProgress: {
+                            beginner: 0,
+                            intermediate: 0,
+                            advanced: 0,
+                            badges: []
+                        }
+                    });
+                }
+
+                // Load actual data
+                const userData = (await userRef.get()).data() || {};
+
+                // Update stats
+                document.getElementById('statCandles').textContent = userData.totalCandles || 0;
+                document.getElementById('statMessages').textContent = userData.totalMessages || 0;
+                document.getElementById('statSubmissions').textContent = (userData.submissions || []).length;
+                
+                // Load Forge progress from sessionStorage
+                const forgeProgress = JSON.parse(sessionStorage.getItem('forgeProgress')) || { completed: [] };
+                const allScenarios = await db.collection('scenarios').get();
+                const scenarios = allScenarios.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                const beginnerTotal = scenarios.filter(s => s.level === 'beginner').length;
+                const intermediateTotal = scenarios.filter(s => s.level === 'intermediate').length;
+                const advancedTotal = scenarios.filter(s => s.level === 'advanced').length;
+
+                const beginnerCompleted = forgeProgress.completed.filter(id => 
+                    scenarios.find(s => s.id === id && s.level === 'beginner')
+                ).length;
+                const intermediateCompleted = forgeProgress.completed.filter(id => 
+                    scenarios.find(s => s.id === id && s.level === 'intermediate')
+                ).length;
+                const advancedCompleted = forgeProgress.completed.filter(id => 
+                    scenarios.find(s => s.id === id && s.level === 'advanced')
+                ).length;
+
+                // Update progress bars
+                document.getElementById('beginnerProgress').textContent = `${beginnerCompleted}/${beginnerTotal} (${Math.round(beginnerCompleted/beginnerTotal*100)}%)`;
+                document.getElementById('intermediateProgress').textContent = `${intermediateCompleted}/${intermediateTotal} (${Math.round(intermediateCompleted/intermediateTotal*100)}%)`;
+                document.getElementById('advancedProgress').textContent = `${advancedCompleted}/${advancedTotal} (${Math.round(advancedCompleted/advancedTotal*100)}%)`;
+                
+                document.getElementById('beginnerBar').style.width = beginnerTotal > 0 ? (beginnerCompleted/beginnerTotal * 100) + '%' : '0%';
+                document.getElementById('intermediateBar').style.width = intermediateTotal > 0 ? (intermediateCompleted/intermediateTotal * 100) + '%' : '0%';
+                document.getElementById('advancedBar').style.width = advancedTotal > 0 ? (advancedCompleted/advancedTotal * 100) + '%' : '0%';
+
+                document.getElementById('statScenarios').textContent = forgeProgress.completed.length;
+
+                // Update badges
+                const totalCompleted = forgeProgress.completed.length;
+                if (totalCompleted >= 1) document.getElementById('badge1').classList.add('unlocked');
+                if (totalCompleted >= 3) document.getElementById('badge2').classList.add('unlocked');
+                if (totalCompleted >= 6) document.getElementById('badge3').classList.add('unlocked');
+                if (totalCompleted >= 10) document.getElementById('badge4').classList.add('unlocked');
+
+                // Load recent victims
+                const recentVictims = document.getElementById('recentVictims');
+                if (userData.recentVictims && userData.recentVictims.length > 0) {
+                    let html = '';
+                    for (let victimId of userData.recentVictims.slice(0, 3)) {
+                        const victimDoc = await db.collection('victims').doc(victimId).get();
+                        if (victimDoc.exists) {
+                            const v = victimDoc.data();
+                            html += `
+                                <div class="victim-card" onclick="window.location.href='memorial.html?id=${victimDoc.id}'">
+                                    <div class="victim-name">${v.name}</div>
+                                    <div class="victim-meta">
+                                        <span>${v.born || '?'} — ${v.died || '?'}</span>
+                                    </div>
+                                    <span class="victim-action">View →</span>
+                                </div>
+                            `;
+                        }
+                    }
+                    if (html) recentVictims.innerHTML = html;
+                }
+
+                // Load submissions
+                const submissionsTable = document.getElementById('submissionsTable');
+                if (userData.submissions && userData.submissions.length > 0) {
+                    let html = '<div class="submission-row header"><div>Victim Name</div><div>Submitted</div><div>Status</div><div>Action</div></div>';
+                    for (let sub of userData.submissions) {
+                        const statusClass = sub.status === 'published' ? 'status-published' : 'status-pending';
+                        const statusText = sub.status === 'published' ? '✅ Published' : '⏳ Pending';
+                        html += `
+                            <div class="submission-row">
+                                <div><strong>${sub.name}</strong></div>
+                                <div>${new Date(sub.date).toLocaleDateString()}</div>
+                                <div><span class="status-badge ${statusClass}">${statusText}</span></div>
+                                <div>
+                                    ${sub.status === 'published' ? 
+                                        `<button class="btn btn-sm" onclick="window.location.href='memorial.html?id=${sub.victimId}'">View</button>` : 
+                                        `<span style="color: #666;">Awaiting review</span>`}
+                                </div>
+                            </div>
+                        `;
+                    }
+                    submissionsTable.innerHTML = html;
+                }
+
+                // Update global stats
+                const victimsSnap = await db.collection('victims').get();
+                const messagesSnap = await db.collection('victims').where('messages', '!=', null).get();
+                const totalCandles = victimsSnap.docs.reduce((acc, doc) => acc + (doc.data().candles || 0), 0);
+                
+                document.getElementById('globalCandles').textContent = totalCandles;
+                document.getElementById('globalMessages').textContent = messagesSnap.size;
+                document.getElementById('globalNames').textContent = victimsSnap.size;
+
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        // ==================== SUPPORT LINK ====================
+        document.getElementById('supportLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Mental Health Support Resources:\n\nIN RWANDA:\n• Rwanda Biomedical Centre: Call 112\n• IBUKA (Survivors\' Organization)');
+        });
+
+        // ==================== INITIALIZE ====================
+        loadUserData();
+
+        // Highlight active page in mobile nav
+        const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            if (item.getAttribute('href') === currentPage) {
+                item.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
